@@ -159,7 +159,7 @@
 				CC2F5B1621F8785E000B1909 /* Sources */,
 				CC2F5B1721F8785E000B1909 /* Frameworks */,
 				CC2F5B1821F8785E000B1909 /* Resources */,
-				BCCC4F1E21F8D1C4006863AB /* ShellScript */,
+				BCCC4F1E21F8D1C4006863AB /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -278,7 +278,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BCCC4F1E21F8D1C4006863AB /* ShellScript */ = {
+		BCCC4F1E21F8D1C4006863AB /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -287,6 +287,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (

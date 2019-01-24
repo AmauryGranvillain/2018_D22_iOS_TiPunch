@@ -18,8 +18,10 @@ class ContactListTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
-        tableView.register(UINib(nibName: "ContactListTableViewCell", bundle: nil), forCellReuseIdentifier: "ContactListTableViewCell")
+        tableView.register(UINib(
+            nibName: "ContactListTableViewCell",
+            bundle: nil),
+            forCellReuseIdentifier: "ContactListTableViewCell")
     }
 
     // MARK: - Table view data source
@@ -34,26 +36,22 @@ class ContactListTableViewController: UITableViewController {
         return 1
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactListTableViewCell", for: indexPath) as! ContactListTableViewCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "ContactListTableViewCell",
+            for: indexPath) as! ContactListTableViewCell
 
         // Configure the cell...
 
         return cell
     }
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailsContactViewController") as! DetailsContactViewController
-        
-        
-        
-        
+        let controller = UIStoryboard.init(
+            name: "Main",
+            bundle: nil).instantiateViewController(
+                withIdentifier: "DetailsContactViewController") as! DetailsContactViewController
         self.show(controller, sender: self)
     }
-    
-
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

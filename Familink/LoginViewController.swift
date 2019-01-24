@@ -9,22 +9,14 @@
 import UIKit
 
 class LoginViewController: UITableViewController {
-    
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
     }
     @IBAction func tapOnLogin(_ sender: UIButton) {
-        
         print("tap login")
-        //TODO: if verif :
+        //Todo: if verif
             NotificationCenter.default.post(name: Notification.Name("login"), object: self)
-        
         // else
-        
-        
     }
 }
