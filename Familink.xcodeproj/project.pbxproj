@@ -8,13 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		CC2F5B1E21F8785E000B1909 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */; };
-		CC2F5B2021F8785E000B1909 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B1F21F8785E000B1909 /* ViewController.swift */; };
+		CC2F5B2021F8785E000B1909 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B1F21F8785E000B1909 /* MasterViewController.swift */; };
 		CC2F5B2321F8785E000B1909 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC2F5B2121F8785E000B1909 /* Main.storyboard */; };
 		CC2F5B2621F8785E000B1909 /* Familink.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B2421F8785E000B1909 /* Familink.xcdatamodeld */; };
 		CC2F5B2821F8785F000B1909 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC2F5B2721F8785F000B1909 /* Assets.xcassets */; };
 		CC2F5B2B21F8785F000B1909 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC2F5B2921F8785F000B1909 /* LaunchScreen.storyboard */; };
 		CC2F5B3621F8785F000B1909 /* FamilinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B3521F8785F000B1909 /* FamilinkTests.swift */; };
 		CC2F5B4121F8785F000B1909 /* FamilinkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B4021F8785F000B1909 /* FamilinkUITests.swift */; };
+		CC2F5B5321F8C065000B1909 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B5221F8C065000B1909 /* LoginViewController.swift */; };
+		CC771FF121F8CABD0058FAD5 /* ContactListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC771FF021F8CABD0058FAD5 /* ContactListTableViewController.swift */; };
+		CC771FF421F8CADF0058FAD5 /* ContactListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC771FF221F8CADF0058FAD5 /* ContactListTableViewCell.swift */; };
+		CC771FF521F8CADF0058FAD5 /* ContactListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC771FF321F8CADF0058FAD5 /* ContactListTableViewCell.xib */; };
+		CC771FF721F8CE980058FAD5 /* DetailsContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC771FF621F8CE980058FAD5 /* DetailsContactViewController.swift */; };
+		CC771FF921F8CEA80058FAD5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC771FF821F8CEA80058FAD5 /* ProfileViewController.swift */; };
+		CC771FFB21F8CEB70058FAD5 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC771FFA21F8CEB70058FAD5 /* AddContactViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +44,7 @@
 /* Begin PBXFileReference section */
 		CC2F5B1A21F8785E000B1909 /* Familink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Familink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CC2F5B1F21F8785E000B1909 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CC2F5B1F21F8785E000B1909 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		CC2F5B2221F8785E000B1909 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CC2F5B2521F8785E000B1909 /* Familink.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Familink.xcdatamodel; sourceTree = "<group>"; };
 		CC2F5B2721F8785F000B1909 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +56,13 @@
 		CC2F5B3C21F8785F000B1909 /* FamilinkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FamilinkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2F5B4021F8785F000B1909 /* FamilinkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilinkUITests.swift; sourceTree = "<group>"; };
 		CC2F5B4221F8785F000B1909 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC2F5B5221F8C065000B1909 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		CC771FF021F8CABD0058FAD5 /* ContactListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListTableViewController.swift; sourceTree = "<group>"; };
+		CC771FF221F8CADF0058FAD5 /* ContactListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListTableViewCell.swift; sourceTree = "<group>"; };
+		CC771FF321F8CADF0058FAD5 /* ContactListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactListTableViewCell.xib; sourceTree = "<group>"; };
+		CC771FF621F8CE980058FAD5 /* DetailsContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsContactViewController.swift; sourceTree = "<group>"; };
+		CC771FF821F8CEA80058FAD5 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		CC771FFA21F8CEB70058FAD5 /* AddContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,12 +114,19 @@
 			isa = PBXGroup;
 			children = (
 				CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */,
-				CC2F5B1F21F8785E000B1909 /* ViewController.swift */,
+				CC2F5B1F21F8785E000B1909 /* MasterViewController.swift */,
+				CC2F5B5221F8C065000B1909 /* LoginViewController.swift */,
 				CC2F5B2121F8785E000B1909 /* Main.storyboard */,
 				CC2F5B2721F8785F000B1909 /* Assets.xcassets */,
 				CC2F5B2921F8785F000B1909 /* LaunchScreen.storyboard */,
 				CC2F5B2C21F8785F000B1909 /* Info.plist */,
 				CC2F5B2421F8785E000B1909 /* Familink.xcdatamodeld */,
+				CC771FF021F8CABD0058FAD5 /* ContactListTableViewController.swift */,
+				CC771FF221F8CADF0058FAD5 /* ContactListTableViewCell.swift */,
+				CC771FF321F8CADF0058FAD5 /* ContactListTableViewCell.xib */,
+				CC771FF621F8CE980058FAD5 /* DetailsContactViewController.swift */,
+				CC771FF821F8CEA80058FAD5 /* ProfileViewController.swift */,
+				CC771FFA21F8CEB70058FAD5 /* AddContactViewController.swift */,
 			);
 			path = Familink;
 			sourceTree = "<group>";
@@ -233,6 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC771FF521F8CADF0058FAD5 /* ContactListTableViewCell.xib in Resources */,
 				CC2F5B2B21F8785F000B1909 /* LaunchScreen.storyboard in Resources */,
 				CC2F5B2821F8785F000B1909 /* Assets.xcassets in Resources */,
 				CC2F5B2321F8785E000B1909 /* Main.storyboard in Resources */,
@@ -280,8 +302,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC2F5B2021F8785E000B1909 /* ViewController.swift in Sources */,
+				CC771FF721F8CE980058FAD5 /* DetailsContactViewController.swift in Sources */,
+				CC2F5B5321F8C065000B1909 /* LoginViewController.swift in Sources */,
+				CC2F5B2021F8785E000B1909 /* MasterViewController.swift in Sources */,
+				CC771FFB21F8CEB70058FAD5 /* AddContactViewController.swift in Sources */,
 				CC2F5B2621F8785E000B1909 /* Familink.xcdatamodeld in Sources */,
+				CC771FF121F8CABD0058FAD5 /* ContactListTableViewController.swift in Sources */,
+				CC771FF421F8CADF0058FAD5 /* ContactListTableViewCell.swift in Sources */,
+				CC771FF921F8CEA80058FAD5 /* ProfileViewController.swift in Sources */,
 				CC2F5B1E21F8785E000B1909 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
