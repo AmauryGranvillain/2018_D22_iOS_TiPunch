@@ -20,11 +20,11 @@ class APIClient {
     private let PHONE = "phone"
     private let PASSWORD = "password"
     private var TOKEN = "token"
-    private init (){
+    private init () {
         
     }
     
-    func login (phone: String, password: String,onSucces:@escaping (String)->(), onError :@escaping (String)->()) -> URLSessionTask{
+    func login (phone: String, password: String, onSucces:@escaping (String)->(), onError :@escaping (String)->()) -> URLSessionTask {
         //préparation de la requete
         var request = URLRequest(url: URL(string: "\(urlServer)\(urlLogin)")! )
         let json : [String : Any] = [self.PHONE: phone, self.PASSWORD: password]
