@@ -336,6 +336,9 @@
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <outlet property="searchBar" destination="tSE-cs-aFX" id="YzW-Yx-Zru"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m5r-cS-GPj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
