@@ -122,10 +122,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
             return
         }
         UIApplication.shared.open(url)
-        
-        /*if let url = URL(string: "tel://0641382323") {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }*/
+    
     }
     override var prefersStatusBarHidden: Bool{
         return true
