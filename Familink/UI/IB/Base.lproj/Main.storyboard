@@ -712,9 +712,9 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VOL-Lv-vwJ">
-                                    <rect key="frame" x="68" y="275" width="38" height="30"/>
+                                    <rect key="frame" x="67" y="275" width="40" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="appel"/>
+                                    <state key="normal" title="Appel"/>
                                     <connections>
                                         <action selector="tapToCall:" destination="OHf-SR-kAu" eventType="touchUpInside" id="NcO-WZ-EeD"/>
                                     </connections>
@@ -722,7 +722,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJb-r1-Kzc">
                                     <rect key="frame" x="157" y="275" width="62" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="message"/>
+                                    <state key="normal" title="Message"/>
                                     <connections>
                                         <action selector="tapToMessage:" destination="OHf-SR-kAu" eventType="touchUpInside" id="We7-Pb-HwW"/>
                                     </connections>
@@ -730,7 +730,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RLf-7J-NkF">
                                     <rect key="frame" x="263" y="275" width="30" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="mail"/>
+                                    <state key="normal" title="Mail"/>
                                     <connections>
                                         <action selector="tapToMail:" destination="OHf-SR-kAu" eventType="touchUpInside" id="Mcj-9u-23j"/>
                                     </connections>
@@ -781,7 +781,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7MR-fb-Lq7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1796" y="1147"/>
+            <point key="canvasLocation" x="1796" y="1146.4767616191905"/>
         </scene>
     </scenes>
 </document>

@@ -7,10 +7,17 @@
 //
 
 import UIKit
+import CoreData
+import MessageUI
 
-class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    var contact: Contact = Contact();
+class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+    }
+    
+
+    
     
 
     @IBOutlet weak var saveButton: UIButton!
@@ -24,6 +31,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet weak var phoneNumberTextLabel: UILabel!
     @IBOutlet weak var mailTextLabel: UILabel!
     @IBOutlet weak var profilPickerTextLabel: UILabel!
+     var contact: Contact!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +39,11 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         profilPicker.dataSource = self
         self.saveButton.isHidden = true
         self.editButton.isHidden = false
-        
-        self.firstNameTextInput.text = self.contact.firstName
-        self.lastNameTextInput.text = self.contact.lastName
-        self.phoneTextInput.text = self.contact.phone
-        self.emailTextInput.text = self.contact.email
+       
+        self.firstNameTextInput.text = contact.firstName
+        self.lastNameTextInput.text = contact.lastName
+        self.phoneTextInput.text = contact.phone
+        self.emailTextInput.text = contact.email
         if let url = URL(string: contact.gravatar!) {
             DispatchQueue.global().async {
                 guard let data = try? Data(contentsOf: url) else {return}
@@ -45,18 +53,85 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
             }
         }
         
-        
+         self.gravatarImageView.transform = CGAffineTransform.init(scaleX: 0, y:0 )
+    }
+
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIView.animate(withDuration:-1, animations: {
+            self.gravatarImageView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+        })
         
     }
     
     @IBAction func tapToMail(_ sender: UIButton) {
+        
+        if MFMailComposeViewController.canSendMail() {
+        let message:String  = "Changes in mail composer ios 11"
+        let composePicker = MFMailComposeViewController()
+        composePicker.mailComposeDelegate = self
+            composePicker.delegate = self as! UINavigationControllerDelegate
+        composePicker.setToRecipients(["example@gmail.com"])
+        composePicker.setSubject("Testing Email")
+        composePicker.setMessageBody(message, isHTML: false)
+        self.present(composePicker, animated: true, completion: nil)
+    } else {
+        self .showErrorMessage()
+        }
+    }
+    func showErrorMessage() {
+        let alertMessage = UIAlertController(title: "could not sent email", message: "check if your device have email support!", preferredStyle: UIAlertController.Style.alert)
+        let action = UIAlertAction(title:"Okay", style: UIAlertAction.Style.default, handler: nil)
+        alertMessage.addAction(action)
+        self.present(alertMessage, animated: true, completion: nil)
+    }
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result {
+        case .cancelled:
+            print("Mail cancelled")
+        case .saved:
+            print("Mail saved")
+        case .sent:
+            print("Mail sent")
+        case .failed:
+            break
+        }
+        self.dismiss(animated: true, completion: nil)
+      
     }
     
     @IBAction func tapToMessage(_ sender: UIButton) {
+        let composeVC = MFMessageComposeViewController()
+        composeVC.messageComposeDelegate = self
+        
+        composeVC.recipients = ["0641382323"]
+        composeVC.body = "Hola Chico"
+        
+        if MFMessageComposeViewController.canSendText() {
+            self.present(composeVC, animated: true, completion: nil)
+        } else {
+            print("Impossible d'envoyer un message.")
+        }
     }
     
     @IBAction func tapToCall(_ sender: UIButton) {
+        
+        guard let numberString = contact.phone, let url =
+            URL(string:"telprompt://\(numberString)") else {
+            return
+        }
+        UIApplication.shared.open(url)
+        
+        /*if let url = URL(string: "tel://0641382323") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }*/
     }
+    override var prefersStatusBarHidden: Bool{
+        return true
+    }
+    
+    
     @IBAction func tapToSave(_ sender: UIButton) {
         self.saveButton.isHidden = true
         self.editButton.isHidden = false
@@ -89,5 +164,11 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return 3
+    }
+    func getContext() -> NSManagedObjectContext? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return nil
+        }
+        return appDelegate.persistentContainer.viewContext
     }
 }
