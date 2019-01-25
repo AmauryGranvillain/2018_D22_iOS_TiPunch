@@ -10,6 +10,12 @@ import UIKit
 
 class LoginViewController: UITableViewController {
 
+    @IBOutlet weak var phoneTextInput: UITextField!
+    @IBOutlet weak var passwordTextInput: UITextField!
+    @IBOutlet weak var phoneNumberTextLabel: UILabel!
+    @IBOutlet weak var passwordTextLabel: UILabel!
+    @IBOutlet weak var rememberMeTextLabel: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -18,5 +24,10 @@ class LoginViewController: UITableViewController {
         //Todo: if verif
             NotificationCenter.default.post(name: Notification.Name("login"), object: self)
         // else
+    }
+
+    @IBAction func tapOnforgetPassword(_ sender: Any) {
+    }
+    @IBAction func switchRemenberMe(_ sender: Any) {
     }
 }
