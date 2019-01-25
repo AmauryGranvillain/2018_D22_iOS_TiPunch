@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C290F2821F8C2BD006BF5DE /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C290F2721F8C2BD006BF5DE /* APIClient.swift */; };
 		CC2F5B1E21F8785E000B1909 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */; };
 		CC2F5B2021F8785E000B1909 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B1F21F8785E000B1909 /* MasterViewController.swift */; };
 		CC2F5B2321F8785E000B1909 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC2F5B2121F8785E000B1909 /* Main.storyboard */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7C290F2721F8C2BD006BF5DE /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		CC2F5B1A21F8785E000B1909 /* Familink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Familink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC2F5B1F21F8785E000B1909 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +92,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C290F2321F8C259006BF5DE /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				7C290F2621F8C282006BF5DE /* IB */,
+				7C290F2521F8C278006BF5DE /* Cells */,
+				7C290F2421F8C265006BF5DE /* ViewControllers */,
+			);
+			name = UI;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		7C290F2421F8C265006BF5DE /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				CC2F5B1F21F8785E000B1909 /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		7C290F2521F8C278006BF5DE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		7C290F2621F8C282006BF5DE /* IB */ = {
+			isa = PBXGroup;
+			children = (
+				CC2F5B2921F8785F000B1909 /* LaunchScreen.storyboard */,
+				CC2F5B2121F8785E000B1909 /* Main.storyboard */,
+			);
+			path = IB;
+			sourceTree = "<group>";
+		};
 		CC2F5B1121F8785E000B1909 = {
 			isa = PBXGroup;
 			children = (
@@ -114,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */,
+<<<<<<< Updated upstream
 				CC2F5B1F21F8785E000B1909 /* MasterViewController.swift */,
 				CC2F5B5221F8C065000B1909 /* LoginViewController.swift */,
 				CC2F5B2121F8785E000B1909 /* Main.storyboard */,
@@ -127,6 +165,13 @@
 				CC771FF621F8CE980058FAD5 /* DetailsContactViewController.swift */,
 				CC771FF821F8CEA80058FAD5 /* ProfileViewController.swift */,
 				CC771FFA21F8CEB70058FAD5 /* AddContactViewController.swift */,
+=======
+				CC2F5B2421F8785E000B1909 /* Familink.xcdatamodeld */,
+				CC2F5B2C21F8785F000B1909 /* Info.plist */,
+				CC2F5B2721F8785F000B1909 /* Assets.xcassets */,
+				7C290F2721F8C2BD006BF5DE /* APIClient.swift */,
+				7C290F2321F8C259006BF5DE /* UI */,
+>>>>>>> Stashed changes
 			);
 			path = Familink;
 			sourceTree = "<group>";
@@ -312,6 +357,7 @@
 				CC771FF421F8CADF0058FAD5 /* ContactListTableViewCell.swift in Sources */,
 				CC771FF921F8CEA80058FAD5 /* ProfileViewController.swift in Sources */,
 				CC2F5B1E21F8785E000B1909 /* AppDelegate.swift in Sources */,
+				7C290F2821F8C2BD006BF5DE /* APIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
