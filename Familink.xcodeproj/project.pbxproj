@@ -22,6 +22,7 @@
 		CC771FF721F8CE980058FAD5 /* DetailsContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC771FF621F8CE980058FAD5 /* DetailsContactViewController.swift */; };
 		CC771FF921F8CEA80058FAD5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC771FF821F8CEA80058FAD5 /* ProfileViewController.swift */; };
 		CC771FFB21F8CEB70058FAD5 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC771FFA21F8CEB70058FAD5 /* AddContactViewController.swift */; };
+		CC937AD121F9CB2A0099858D /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC937AD021F9CB2A0099858D /* SignUpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		CC771FF621F8CE980058FAD5 /* DetailsContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsContactViewController.swift; sourceTree = "<group>"; };
 		CC771FF821F8CEA80058FAD5 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CC771FFA21F8CEB70058FAD5 /* AddContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
+		CC937AD021F9CB2A0099858D /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 				CC771FF621F8CE980058FAD5 /* DetailsContactViewController.swift */,
 				CC771FF821F8CEA80058FAD5 /* ProfileViewController.swift */,
 				CC771FFA21F8CEB70058FAD5 /* AddContactViewController.swift */,
+				CC937AD021F9CB2A0099858D /* SignUpViewController.swift */,
 			);
 			path = Familink;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				CC2F5B5321F8C065000B1909 /* LoginViewController.swift in Sources */,
 				CC2F5B2021F8785E000B1909 /* MasterViewController.swift in Sources */,
 				CC771FFB21F8CEB70058FAD5 /* AddContactViewController.swift in Sources */,
+				CC937AD121F9CB2A0099858D /* SignUpViewController.swift in Sources */,
 				CC2F5B2621F8785E000B1909 /* Familink.xcdatamodeld in Sources */,
 				CC771FF121F8CABD0058FAD5 /* ContactListTableViewController.swift in Sources */,
 				CC771FF421F8CADF0058FAD5 /* ContactListTableViewCell.swift in Sources */,

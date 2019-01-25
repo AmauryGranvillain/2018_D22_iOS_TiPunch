@@ -12,7 +12,10 @@ class LoginViewController: UITableViewController {
 
     @IBOutlet weak var phoneTextInput: UITextField!
     @IBOutlet weak var passwordTextInput: UITextField!
-    
+    @IBOutlet weak var phoneNumberTextLabel: UILabel!
+    @IBOutlet weak var passwordTextLabel: UILabel!
+    @IBOutlet weak var rememberMeTextLabel: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }

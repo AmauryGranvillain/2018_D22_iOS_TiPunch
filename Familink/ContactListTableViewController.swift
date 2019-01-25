@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import CoreData
 
 class ContactListTableViewController: UITableViewController {
 
+    @IBOutlet weak var searchContactBar: UISearchBar!
+    var contacts: [Contact] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,10 +21,25 @@ class ContactListTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Contact", in: context)
+        let exampleContact = NSManagedObject(entity: entity!, insertInto: context)
+        exampleContact.setValue( "firstName", forKey: "firstName")
+        exampleContact.setValue( "lastName", forKey: "lastName")
+        exampleContact.setValue( "https://img.ohmymag.com/article/humour/mr-bean-s-incruste-dans-avatar_8d73c59406e9ab1833b2cb3cb403bf93ee3dfe26.jpg", forKey: "gravatar")
+        self.contacts.append(exampleContact as! Contact)
+        self.contacts.append(exampleContact as! Contact)
+        self.contacts.append(exampleContact as! Contact)
+        
+        //TODO: chercher la liste de contact avec l'api
+        
         tableView.register(UINib(
             nibName: "ContactListTableViewCell",
             bundle: nil),
             forCellReuseIdentifier: "ContactListTableViewCell")
+        
+        
     }
 
     // MARK: - Table view data source
@@ -33,7 +51,7 @@ class ContactListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return self.contacts.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -41,7 +59,17 @@ class ContactListTableViewController: UITableViewController {
             withIdentifier: "ContactListTableViewCell",
             for: indexPath) as! ContactListTableViewCell
 
-        // Configure the cell...
+        let contactIndex = self.contacts[indexPath.row]
+        cell.contactNameLabel.text = contactIndex.firstName! + " " + contactIndex.lastName!
+        guard let imageUrl = contactIndex.gravatar else {return cell}
+        if let url = URL(string: imageUrl) {
+            DispatchQueue.global().async {
+                guard let data = try? Data(contentsOf: url) else {return}
+                DispatchQueue.main.async {
+                    cell.gravatarContactImageView.image = UIImage(data: data)
+                }
+            }
+        }
 
         return cell
     }
@@ -50,6 +78,9 @@ class ContactListTableViewController: UITableViewController {
             name: "Main",
             bundle: nil).instantiateViewController(
                 withIdentifier: "DetailsContactViewController") as! DetailsContactViewController
+        
+        controller.contact = self.contacts[indexPath.row]
+        
         self.show(controller, sender: self)
     }
     /*
