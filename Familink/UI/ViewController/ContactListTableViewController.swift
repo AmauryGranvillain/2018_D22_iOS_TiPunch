@@ -18,22 +18,15 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
         
-        APIClient.instance.login(phone: "0606060608", password: "0000", onSucces: { (token) in
-            APIClient.instance.getAllContact(onSucces: { (contactsData) in
-                self.contacts = contactsData
-                self.filterContacts = self.contacts
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }) { (e) in
-                print(e)
-            }
-        }) { (e) in
-            print(e)
-        }
+        
+        
+       
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector (loadContactList),
+            name: Notification.Name("login"), object: nil)
         
         self.searchBar.delegate = self
         
@@ -43,6 +36,18 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
             forCellReuseIdentifier: "ContactListTableViewCell")
         
         
+    }
+    
+    @objc func loadContactList(){
+        APIClient.instance.getAllContact(onSucces: { (contactsData) in
+            self.contacts = contactsData
+            self.filterContacts = self.contacts
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }) { (e) in
+            print(e)
+        }
     }
 
     // MARK: - Table view data source
