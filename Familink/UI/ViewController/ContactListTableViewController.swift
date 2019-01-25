@@ -9,30 +9,26 @@
 import UIKit
 import CoreData
 
-class ContactListTableViewController: UITableViewController {
 
-    @IBOutlet weak var searchContactBar: UISearchBar!
+class ContactListTableViewController: UITableViewController, UISearchBarDelegate {
+
+    @IBOutlet weak var searchBar: UISearchBar!
     var contacts: [Contact] = []
+    var filterContacts: [Contact] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "Contact", in: context)
-        let exampleContact = NSManagedObject(entity: entity!, insertInto: context)
-        exampleContact.setValue( "firstName", forKey: "firstName")
-        exampleContact.setValue( "lastName", forKey: "lastName")
-        exampleContact.setValue( "https://img.ohmymag.com/article/humour/mr-bean-s-incruste-dans-avatar_8d73c59406e9ab1833b2cb3cb403bf93ee3dfe26.jpg", forKey: "gravatar")
-        self.contacts.append(exampleContact as! Contact)
-        self.contacts.append(exampleContact as! Contact)
-        self.contacts.append(exampleContact as! Contact)
         
-        //TODO: chercher la liste de contact avec l'api
+        
+        
+       
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector (loadContactList),
+            name: Notification.Name("login"), object: nil)
+        
+        self.searchBar.delegate = self
         
         tableView.register(UINib(
             nibName: "ContactListTableViewCell",
@@ -41,9 +37,37 @@ class ContactListTableViewController: UITableViewController {
         
         
     }
+    
+    @objc func loadContactList(){
+        APIClient.instance.getAllContact(onSucces: { (contactsData) in
+            self.contacts = contactsData
+            self.filterContacts = self.contacts
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }) { (e) in
+            print(e)
+        }
+    }
 
     // MARK: - Table view data source
-
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            filterContacts = contacts
+        } else {
+            filterContacts.removeAll()
+            for contact in contacts {
+                if(contact.firstName?.lowercased().starts(with: searchText.lowercased()))!
+                    || (contact.lastName?.lowercased().starts(with: searchText.lowercased()))!{
+                    filterContacts.append(contact)
+                }
+            }
+        }
+        
+        tableView.reloadData()
+    }
+    
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -51,7 +75,7 @@ class ContactListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.contacts.count
+        return self.filterContacts.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,8 +83,11 @@ class ContactListTableViewController: UITableViewController {
             withIdentifier: "ContactListTableViewCell",
             for: indexPath) as! ContactListTableViewCell
 
-        let contactIndex = self.contacts[indexPath.row]
+        let contactIndex = self.filterContacts[indexPath.row]
         cell.contactNameLabel.text = contactIndex.firstName! + " " + contactIndex.lastName!
+        
+        cell.contactProfileLabel.text = contactIndex.profile
+        
         guard let imageUrl = contactIndex.gravatar else {return cell}
         if let url = URL(string: imageUrl) {
             DispatchQueue.global().async {
@@ -79,10 +106,13 @@ class ContactListTableViewController: UITableViewController {
             bundle: nil).instantiateViewController(
                 withIdentifier: "DetailsContactViewController") as! DetailsContactViewController
         
-        controller.contact = self.contacts[indexPath.row]
+        controller.contact = self.filterContacts[indexPath.row]
         
         self.show(controller, sender: self)
     }
+    
+
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
