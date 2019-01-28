@@ -24,14 +24,16 @@ class LoginViewController: UITableViewController {
     @IBAction func tapOnLogin(_ sender: UIButton) {
         userPhone =  phoneTextInput.text
         userPassword = passwordTextInput.text
-        print(userPhone ?? "")
-        print(userPassword ?? "")
         APIClient.instance.login(phone: userPhone ?? "", password: userPassword ?? "", onSucces: { (Result) in
-            NotificationCenter.default.post(name: Notification.Name("login"), object: self)
-            print(Result)
-        }) { (Error) in
-            print(Error)
-            self.checkError(error: Error)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name("login"), object: self)
+                print(Result)
+            }
+        }) { (error) in
+            DispatchQueue.main.async {
+                print(error)
+                self.checkError(error: error)
+            }
         }
     }
 
@@ -43,7 +45,6 @@ class LoginViewController: UITableViewController {
     func checkError(error: String) {
         switch error {
         case "User not found":
-            DispatchQueue.main.async {
                 let alert = UIAlertController(
                     title: "Erreur sur le formulaire",
                     message: "Le numéro de téléphone est incorrecte",
@@ -52,9 +53,7 @@ class LoginViewController: UITableViewController {
                 alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
                 
                 self.present(alert, animated: true)
-            }
         case "Password is not valid":
-             DispatchQueue.main.async {
                 let alert = UIAlertController(
                     title: "Erreur sur le formulaire",
                     message: "Le mot de passe est incorrecte",
@@ -63,7 +62,6 @@ class LoginViewController: UITableViewController {
                 alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
                 
                 self.present(alert, animated: true)
-            }
         default :
             let alert = UIAlertController(
                 title: "Erreur sur le formulaire",
