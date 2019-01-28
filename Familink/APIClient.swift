@@ -24,31 +24,26 @@ class APIClient {
         
     }
     
-    func login (phone: String, password: String, onSucces:@escaping (String)->(), onError :@escaping (String)->()) -> URLSessionTask {
+    func login (phone: String, password: String, onSucces: @escaping (String)->(), onError: @escaping (String)->()) -> URLSessionTask {
         //préparation de la requete
         var request = URLRequest(url: URL(string: "\(urlServer)\(urlLogin)")! )
-        let json : [String : Any] = [self.PHONE: phone, self.PASSWORD: password]
+        let json: [String: Any] = [self.PHONE: phone, self.PASSWORD: password]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         request.httpMethod = "POST"
         request.httpBody = jsonData
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-             if let requestResponse = response as? HTTPURLResponse{
-                if(requestResponse.statusCode != 200 && requestResponse.statusCode != 204){
+             if let requestResponse = response as? HTTPURLResponse {
+                if requestResponse.statusCode != 200 && requestResponse.statusCode != 204 {
                     onError(self.errorToken(data: data))
                 } else {
                     // si j'ai de la donnée
                     if let dataReceive = data {
-                        
-                        if let jsonResponse = try? JSONSerialization.jsonObject(with: dataReceive, options: []) as! [String:String]{
+                        if let jsonResponse = try? JSONSerialization.jsonObject(with: dataReceive, options: []) as! [String: String] {
                             self.TOKEN = jsonResponse["token"] ?? ""
                             print(self.TOKEN)
-                        } else {
-                            
                         }
-                        
-                        onSucces(self.TOKEN)
-                        
+                        onSucces("Connexion réussi !")
                     }
                 }
             }
@@ -60,7 +55,7 @@ class APIClient {
         return task
     }
     
-    func getAllContact (onSucces:@escaping ([Contact])->(), onError :@escaping (String)->()) -> URLSessionTask{
+    func getAllContact (onSucces: @escaping ([Contact])->(), onError: @escaping (String)->()) -> URLSessionTask {
         //préparation de la requete
         var request = URLRequest(url: URL(string: "\(urlServer)\(urlContact)")! )
         request.httpMethod = "GET"
@@ -70,8 +65,8 @@ class APIClient {
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             //test de la validation du token
-            if let requestResponse = response as? HTTPURLResponse{
-                if(requestResponse.statusCode != 200 && requestResponse.statusCode != 204){
+            if let requestResponse = response as? HTTPURLResponse {
+                if requestResponse.statusCode != 200 && requestResponse.statusCode != 204 {
                    onError(self.errorToken(data: data))
                 } else {
                     // si j'ai de la donnée
@@ -81,7 +76,7 @@ class APIClient {
                         let dataArray = try! JSONSerialization.jsonObject(with: dataReceive, options: []) as! [Any]
                         var contactToReturn = [Contact]()
                         for object in dataArray {
-                            let objectDictionary = object as! [String:Any]
+                            let objectDictionary = object as! [String: Any]
                             let c = Contact(context: self.getContext()!)
                             c.id = (objectDictionary["_id"] as! String)
                             c.phone = (objectDictionary["phone"] as! String)
@@ -107,7 +102,7 @@ class APIClient {
         return task
     }
     
-    func createContact (c : Contact, onSucces:@escaping (Contact)->(), onError :@escaping (String)->()) -> URLSessionTask{
+    func createContact (c: Contact, onSucces: @escaping (String)->(), onError: @escaping (String)->()) -> URLSessionTask {
         //préparation de la requete
         var request = URLRequest(url: URL(string: "\(urlServer)\(urlContact)")! )
         request.httpMethod = "POST"
@@ -118,13 +113,13 @@ class APIClient {
         // preparation de la tache de telechargezmebnt des données
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             //test de la validation du token
-            if let requestResponse = response as? HTTPURLResponse{
-                if(requestResponse.statusCode != 200 && requestResponse.statusCode != 204){
+            if let requestResponse = response as? HTTPURLResponse {
+                if requestResponse.statusCode != 200 && requestResponse.statusCode != 204 {
                    onError(self.errorToken(data: data))
                 } else {
                     // si j'ai de la donnée
                     if let data = data {
-                        onSucces(c)
+                        onSucces("Contact ajouté !")
                     }
                 }
             }
@@ -136,7 +131,7 @@ class APIClient {
         return task
     }
     
-    func deleteContact (c : Contact, onSucces:@escaping (Contact)->(), onError :@escaping (String)->()) -> URLSessionTask{
+    func deleteContact (c: Contact, onSucces: @escaping (String)->(), onError: @escaping (String)->()) -> URLSessionTask {
         //préparation de la requete
         var request = URLRequest(url: URL(string: "\(urlServer)\(urlContact)\(c.id!)")! )
         request.httpMethod = "DELETE"
@@ -147,13 +142,13 @@ class APIClient {
         // preparation de la tache de telechargezmebnt des données
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             //test de la validation du token
-            if let requestResponse = response as? HTTPURLResponse{
-                if(requestResponse.statusCode != 200 && requestResponse.statusCode != 204){
+            if let requestResponse = response as? HTTPURLResponse {
+                if requestResponse.statusCode != 200 && requestResponse.statusCode != 204 {
                    onError(self.errorToken(data: data))
                 } else {
                     // si j'ai de la donnée
                     if let data = data {
-                        onSucces(c)
+                        onSucces("Contact supprimé")
                     }
                 }
             }
@@ -165,7 +160,7 @@ class APIClient {
         return task
     }
     
-    func updateContact (c : Contact, onSucces:@escaping (Contact)->(), onError :@escaping (String)->()) -> URLSessionTask{
+    func updateContact (c: Contact, onSucces: @escaping (String)->(), onError: @escaping (String)->()) -> URLSessionTask {
         //préparation de la requete
         var request = URLRequest(url: URL(string: "\(urlServer)\(urlContact)\(c.id!)")! )
         print(request)
@@ -176,13 +171,13 @@ class APIClient {
         request.httpBody = jsonData
         // preparation de la tache de telechargezmebnt des données
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if let requestResponse = response as? HTTPURLResponse{
-                if(requestResponse.statusCode != 200 && requestResponse.statusCode != 204){
+            if let requestResponse = response as? HTTPURLResponse {
+                if requestResponse.statusCode != 200 && requestResponse.statusCode != 204 {
                     onError(self.errorToken(data: data))
                 } else {
                     // si j'ai de la donnée
                     if let data = data {
-                        onSucces(c)
+                        onSucces("Contact modifié")
                     }
                 }
             }
@@ -194,7 +189,7 @@ class APIClient {
         return task
     }
     
-    func getUser(onSucces:@escaping ([User])->(), onError :@escaping (String)->()) -> URLSessionTask{
+    func getUser(onSucces: @escaping ([User])->(), onError: @escaping (Int)->()) -> URLSessionTask {
         //préparation de la requete
         var request = URLRequest(url: URL(string: "\(urlServer)\(urlUserCurrent)")! )
         request.httpMethod = "GET"
@@ -204,14 +199,15 @@ class APIClient {
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             //test de la validation du token
-            if let requestResponse = response as? HTTPURLResponse{
-                if(requestResponse.statusCode != 200 && requestResponse.statusCode != 204){
-                    onError(self.errorToken(data: data))
+            if let requestResponse = response as? HTTPURLResponse {
+                if requestResponse.statusCode != 200 && requestResponse.statusCode != 204 {
+                    onError(requestResponse.statusCode)
                 } else {
                     // si j'ai de la donnée
                     if let dataReceive = data {
                         var userToReturn = [User]()
-                        if let jsonResponse = try? JSONSerialization.jsonObject(with: dataReceive, options: []) as! [String:String]{
+                        if let jsonResponse = try? JSONSerialization.jsonObject(with: dataReceive, options: [])
+                            as! [String: String] {
                             let u = User(context: self.getContext()!)
                             u.phone = jsonResponse["phone"]
                             u.firstName = jsonResponse["firstName"]
@@ -232,30 +228,30 @@ class APIClient {
         return task
     }
     
-    func createUser(u : User, password: String, onSucces:@escaping (User)->(), onError :@escaping (String)->()) -> URLSessionTask{
+    func createUser(u: User, password: String, onSucces: @escaping (String)->(), onError: @escaping (String)->()) -> URLSessionTask {
         //préparation de la requete
         var request = URLRequest(url: URL(string: "\(urlServer)\(urlSignIn)")! )
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        let json: [String : Any] = ["phone" : u.phone ?? "",
-                                    "password" : password,
-                                    "firstName" : u.firstName ?? "",
-                                    "lastName" : u.lastName ?? "",
-                                    "email" : u.email ?? "",
-                                    "profile" : u.profile ?? "",
+        let json: [String: Any] = ["phone": u.phone ?? "",
+                                    "password": password,
+                                    "firstName": u.firstName ?? "",
+                                    "lastName": u.lastName ?? "",
+                                    "email": u.email ?? "",
+                                    "profile": u.profile ?? ""
                                     ]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         request.httpBody = jsonData
         // preparation de la tache de telechargezmebnt des données
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             //test de la validation du token
-            if let requestResponse = response as? HTTPURLResponse{
-                if(requestResponse.statusCode != 200 && requestResponse.statusCode != 204){
+            if let requestResponse = response as? HTTPURLResponse {
+                if requestResponse.statusCode != 200 && requestResponse.statusCode != 204 {
                     onError(self.errorToken(data: data))
                 } else {
                     // si j'ai de la donnée
                     if let data = data {
-                        onSucces(u)
+                        onSucces("Compte crée")
                     }
                 }
             }
@@ -267,9 +263,10 @@ class APIClient {
         return task
     }
     
-    func errorToken(data : Data?) -> String {
+    func errorToken(data: Data?) -> String {
         if let dataResponse = data {
-            if let jsonResponse = try? JSONSerialization.jsonObject(with: dataResponse, options: [])  as! [String: String] {
+            if let jsonResponse = try? JSONSerialization.jsonObject(with: dataResponse, options: [])
+            as! [String: String] {
                 return jsonResponse["message"] ?? ""
             }
             return "Erreur inconnue"
@@ -285,14 +282,14 @@ class APIClient {
     }
     
     func getJsonForContact (c: Contact) -> Data? {
-        let json: [String : Any] = ["phone" : c.phone ?? "",
-                                    "firstName" : c.firstName ?? "",
-                                    "lastName" : c.lastName ?? "",
-                                    "email" : c.email ?? "",
-                                    "profile" : c.profile ?? "",
-                                    "gravatar" : c.gravatar ?? "",
-                                    "isFamilinkUser" : c.isFamilinkUser,
-                                    "isEmergencyUser" : c.isEmergencyUser]
+        let json: [String: Any] = ["phone": c.phone ?? "",
+                                    "firstName": c.firstName ?? "",
+                                    "lastName": c.lastName ?? "",
+                                    "email": c.email ?? "",
+                                    "profile": c.profile ?? "",
+                                    "gravatar": c.gravatar ?? "",
+                                    "isFamilinkUser": c.isFamilinkUser,
+                                    "isEmergencyUser": c.isEmergencyUser]
         return try? JSONSerialization.data(withJSONObject: json)
     }
 }
