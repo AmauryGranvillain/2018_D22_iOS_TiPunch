@@ -19,14 +19,15 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-       
-        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector (loadContactList),
             name: Notification.Name("login"), object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector (loadContactList),
+            name: Notification.Name("addContact"), object: nil)
         
         self.searchBar.delegate = self
         
@@ -38,7 +39,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         
     }
     
-    @objc func loadContactList(){
+    @objc func loadContactList() {
         APIClient.instance.getAllContact(onSucces: { (contactsData) in
             self.contacts = contactsData
             self.filterContacts = self.contacts
