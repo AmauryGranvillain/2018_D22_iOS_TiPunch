@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import CoreData
 
 class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    var contact: Contact = Contact();
+    var contact: Contact = Contact()
+    var imageUrl = ""
+    let alert = UIAlertController(
+        title: "Erreur sur le formulaire",
+        message: "Informations invalide",
+        preferredStyle: .alert
+    )
     
-
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var lastNameTextInput: UITextField!
@@ -24,29 +30,49 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet weak var phoneNumberTextLabel: UILabel!
     @IBOutlet weak var mailTextLabel: UILabel!
     @IBOutlet weak var profilPickerTextLabel: UILabel!
+    @IBOutlet weak var editGravatar: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         profilPicker.delegate = self
         profilPicker.dataSource = self
         self.saveButton.isHidden = true
         self.editButton.isHidden = false
-        
-        self.firstNameTextInput.text = self.contact.firstName
-        self.lastNameTextInput.text = self.contact.lastName
-        self.phoneTextInput.text = self.contact.phone
-        self.emailTextInput.text = self.contact.email
-        if let url = URL(string: contact.gravatar!) {
-            DispatchQueue.global().async {
-                guard let data = try? Data(contentsOf: url) else {return}
-                DispatchQueue.main.async {
-                    self.gravatarImageView.image = UIImage(data: data)
-                }
-            }
-        }
+        self.editGravatar.isHidden = true
+        self.contact = Contact(context: self.getContext()!)
+        self.imageUrl = contact.gravatar!
         
     }
     
+    @IBAction func tapToChangeImage(_ sender: UIButton) {
+        
+        let alert = UIAlertController(
+            title: "Nouvel Image",
+            message: "Entrez l'url de l'image souhaité :",
+            preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            textField.text = "https://s.hs-data.com/bilder/spieler/gross/29566.jpg"
+        }
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
+            self.imageUrl = textField.text!
+            if let url = URL(string: self.imageUrl) {
+                DispatchQueue.global().async {
+                    guard let data = try? Data(contentsOf: url) else {return}
+                    DispatchQueue.main.async {
+                        let newImage = UIImage(data: data)
+                        self.gravatarImageView.image = newImage
+                    }
+                }
+            }
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
     @IBAction func tapToMail(_ sender: UIButton) {
     }
     
@@ -57,18 +83,33 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     @IBAction func tapToSave(_ sender: UIButton) {
         
-        if !isValidEmail(email:self.emailTextInput.text!) && !isValidPhone(phone: self.phoneTextInput.text!){
+        if !isValidEmail(email:self.emailTextInput.text!) || !isValidPhone(phone: self.phoneTextInput.text!){
+            self.present(alert, animated: true)
+        }
+        else {
             self.saveButton.isHidden = true
             self.editButton.isHidden = false
+            self.editGravatar.isHidden = true
             self.firstNameTextInput.isUserInteractionEnabled = false
             self.lastNameTextInput.isUserInteractionEnabled = false
             self.emailTextInput.isUserInteractionEnabled = false
             self.firstNameTextInput.isUserInteractionEnabled = false
             self.profilPicker.isUserInteractionEnabled = false
+            let contact = Contact(context: self.getContext()!)
+            contact.firstName = self.firstNameTextInput.text
+            contact.lastName = self.firstNameTextInput.text
+            contact.email = self.firstNameTextInput.text
+            contact.phone = self.firstNameTextInput.text
+            contact.profile = self.profilPickerTextLabel.text
+            
+            APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
+            }) { (e) in
+                print("Das Problem")
+            }
         }
-       
         //TODO: update avec l'api
     }
+    
     @IBAction func tapToEdit(_ sender: UIButton) {
         
         self.saveButton.isHidden = false
@@ -117,4 +158,11 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         }
         return validPhone
     }
+    func getContext() -> NSManagedObjectContext? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return nil
+        }
+        return appDelegate.persistentContainer.viewContext
+    }
 }
+
