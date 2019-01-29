@@ -29,6 +29,11 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
             selector: #selector (loadContactList),
             name: Notification.Name("addContact"), object: nil)
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector (loadContactList),
+            name: Notification.Name("deleteContact"), object: nil)
+        
         self.searchBar.delegate = self
         
         tableView.register(UINib(
