@@ -15,7 +15,13 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     var imageUrl = ""
     let alert = UIAlertController(
         title: "Erreur sur le formulaire",
-        message: "Informations invalide",
+        message: "Email invalide",
+        preferredStyle: .alert
+    )
+    
+    let alertPhone = UIAlertController(
+        title: "Erreur sur le formulaire",
+        message: "Téléphone invalide",
         preferredStyle: .alert
     )
     
@@ -36,13 +42,32 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         super.viewDidLoad()
         
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        alertPhone.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         profilPicker.delegate = self
         profilPicker.dataSource = self
         self.saveButton.isHidden = true
         self.editButton.isHidden = false
         self.editGravatar.isHidden = true
-        self.contact = Contact(context: self.getContext()!)
-        self.imageUrl = contact.gravatar!
+        self.firstNameTextInput.isUserInteractionEnabled = false
+        self.lastNameTextInput.isUserInteractionEnabled = false
+        self.phoneTextInput.isUserInteractionEnabled = false
+        self.emailTextInput.isUserInteractionEnabled = false
+        self.firstNameTextInput.isUserInteractionEnabled = false
+        self.profilPicker.isUserInteractionEnabled = false
+        
+        
+        self.firstNameTextInput.text = self.contact.firstName
+        self.lastNameTextInput.text = self.contact.lastName
+        self.phoneTextInput.text = self.contact.phone
+        self.emailTextInput.text = self.contact.email
+        if let url = URL(string: contact.gravatar!) {
+            DispatchQueue.global().async {
+                guard let data = try? Data(contentsOf: url) else {return}
+                DispatchQueue.main.async {
+                    self.gravatarImageView.image = UIImage(data: data)
+                }
+            }
+        }
         
     }
     
@@ -83,15 +108,17 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     @IBAction func tapToSave(_ sender: UIButton) {
         
-        if !isValidEmail(email:self.emailTextInput.text!) || !isValidPhone(phone: self.phoneTextInput.text!){
+        if !isValidEmail(email:self.emailTextInput.text!) {
             self.present(alert, animated: true)
-        }
-        else {
+        } else if (self.phoneTextInput.text?.count)! > 10 {
+            self.present(alertPhone, animated: true)
+        } else {
             self.saveButton.isHidden = true
             self.editButton.isHidden = false
             self.editGravatar.isHidden = true
             self.firstNameTextInput.isUserInteractionEnabled = false
             self.lastNameTextInput.isUserInteractionEnabled = false
+            self.phoneTextInput.isUserInteractionEnabled = false
             self.emailTextInput.isUserInteractionEnabled = false
             self.firstNameTextInput.isUserInteractionEnabled = false
             self.profilPicker.isUserInteractionEnabled = false
@@ -102,25 +129,26 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
             contact.phone = self.firstNameTextInput.text
             contact.profile = self.profilPickerTextLabel.text
             
-            APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
+            /*APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
             }) { (e) in
                 print("Das Problem")
-            }
+            }*/
         }
-        //TODO: update avec l'api
     }
     
     @IBAction func tapToEdit(_ sender: UIButton) {
         
         self.saveButton.isHidden = false
         self.editButton.isHidden = true
+        self.editGravatar.isHidden = false
         
         self.firstNameTextInput.isUserInteractionEnabled = true
         self.lastNameTextInput.isUserInteractionEnabled = true
+        self.phoneTextInput.isUserInteractionEnabled = true
         self.emailTextInput.isUserInteractionEnabled = true
         self.firstNameTextInput.isUserInteractionEnabled = true
         self.profilPicker.isUserInteractionEnabled = true
-        // TODO: change UI
+        // TODO: change UI<
     }
     /*
     // MARK: - Navigation
@@ -150,14 +178,6 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         }
         return validEmail
     }
-    func isValidPhone(phone: String) -> Bool {
-        let phoneRegex = "^\\d{3}-\\d{3}-\\d{4}$"
-        var validPhone = NSPredicate(format: "SELF MATCHES %@", phoneRegex).evaluate(with: phone)
-        if validPhone {
-            validPhone = !phone.contains("..")
-        }
-        return validPhone
-    }
     func getContext() -> NSManagedObjectContext? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return nil
@@ -165,4 +185,3 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         return appDelegate.persistentContainer.viewContext
     }
 }
-

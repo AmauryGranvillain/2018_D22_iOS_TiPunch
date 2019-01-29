@@ -770,7 +770,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="43"/>
                                     <state key="normal" title="+">
-                                        <color key="titleColor" red="0.0" green="1" blue="0.49831159060000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="titleColor" red="0.0" green="1" blue="0.48187491129999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
                                     <connections>
                                         <action selector="tapToChangeImage:" destination="OHf-SR-kAu" eventType="touchUpInside" id="gfq-3N-Yyo"/>
