@@ -12,6 +12,7 @@ class ContactListTableViewCell: UITableViewCell {
 
     @IBOutlet weak var arrowImageview: UIImageView!
     @IBOutlet weak var contactNameLabel: UILabel!
+    @IBOutlet weak var contactProfileLabel: UILabel!
     @IBOutlet weak var gravatarContactImageView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()

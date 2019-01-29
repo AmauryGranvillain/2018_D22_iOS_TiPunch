@@ -19,31 +19,64 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="64.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kne-O6-TJx" userLabel="ContactAvatar">
-                        <rect key="frame" x="8" y="7" width="50" height="50"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kne-O6-TJx" userLabel="ContactAvatar">
+                        <rect key="frame" x="8" y="7.5" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="Td3-pM-Lld"/>
+                            <constraint firstAttribute="width" constant="50" id="W0j-bn-erv"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rfg-3m-2lt" userLabel="ContactName">
-                        <rect key="frame" x="66" y="7" width="182" height="47"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rfg-3m-2lt" userLabel="ContactName">
+                        <rect key="frame" x="66" y="7" width="209" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="209" id="ho8-g3-XUq"/>
+                            <constraint firstAttribute="height" constant="32" id="uPk-NH-7D3"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pYb-uS-Fh4">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="pYb-uS-Fh4">
                         <rect key="frame" x="283" y="18" width="28" height="29"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="28" id="ieh-8f-y9p"/>
+                            <constraint firstAttribute="height" constant="29" id="rT4-iC-bJz"/>
+                        </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSu-Xb-2en">
+                        <rect key="frame" x="66" y="36" width="209" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="KgL-Vm-TKC"/>
+                            <constraint firstAttribute="width" constant="209" id="U84-DQ-y1w"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="highlightedColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="Rfg-3m-2lt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="5Rj-jv-eGx"/>
+                    <constraint firstItem="Rfg-3m-2lt" firstAttribute="leading" secondItem="Kne-O6-TJx" secondAttribute="trailing" constant="8" id="8xZ-mf-7b4"/>
+                    <constraint firstAttribute="trailing" secondItem="pYb-uS-Fh4" secondAttribute="trailing" constant="9" id="CiK-Tz-2fK"/>
+                    <constraint firstItem="xSu-Xb-2en" firstAttribute="top" secondItem="Rfg-3m-2lt" secondAttribute="bottom" constant="-3" id="LrW-7s-JvE"/>
+                    <constraint firstItem="pYb-uS-Fh4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="RM6-ES-d75"/>
+                    <constraint firstItem="xSu-Xb-2en" firstAttribute="leading" secondItem="Kne-O6-TJx" secondAttribute="trailing" constant="8" id="TAF-u9-O6q"/>
+                    <constraint firstItem="Kne-O6-TJx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="b7z-7K-y8D"/>
+                    <constraint firstItem="Kne-O6-TJx" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="vjo-16-leo"/>
+                </constraints>
             </tableViewCellContentView>
             <accessibility key="accessibilityConfiguration" identifier="ContactListTableViewCell"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="arrowImageview" destination="pYb-uS-Fh4" id="nG7-Eu-i0f"/>
                 <outlet property="contactNameLabel" destination="Rfg-3m-2lt" id="VGx-7z-Awv"/>
+                <outlet property="contactProfileLabel" destination="xSu-Xb-2en" id="klJ-uM-deb"/>
                 <outlet property="gravatarContactImageView" destination="Kne-O6-TJx" id="th4-Av-MCc"/>
             </connections>
             <point key="canvasLocation" x="132.80000000000001" y="164.16791604197903"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="right_arrow" width="491.51998901367188" height="491.51998901367188"/>
+    </resources>
 </document>
