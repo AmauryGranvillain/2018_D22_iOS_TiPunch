@@ -27,17 +27,32 @@ class LoginViewController: UIViewController {
     @IBAction func tapOnLogin(_ sender: UIButton) {
         userPhone =  phoneTextInput.text
         userPassword = passwordTextInput.text
-        APIClient.instance.login(phone: userPhone ?? "", password: userPassword ?? "", onSucces: { (Result) in
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: Notification.Name("login"), object: self)
-                print(Result)
-            }
-        }) { (error) in
-            DispatchQueue.main.async {
-                print(error)
-                self.checkError(error: error)
+        if ConnectedClient.instance.isConnectedToNetwork() {
+            APIClient.instance.login(phone: userPhone ?? "", password: userPassword ?? "", onSucces: { (Result) in
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: Notification.Name("login"), object: self)
+                    print(Result)
+                }
+            }) { (error) in
+                DispatchQueue.main.async {
+                    print(error)
+                    self.checkError(error: error)
+                }
             }
         }
+        else {
+            let alert = UIAlertController(
+                title: "Erreur de connexion",
+                message: "Voulez-vous passer en mode hors-ligne ?",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (sender) in
+                NotificationCenter.default.post(name: Notification.Name("offline"), object: self)
+            }))
+            alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+        }
+        
     }
 
     @IBAction func tapOnforgetPassword(_ sender: Any) {

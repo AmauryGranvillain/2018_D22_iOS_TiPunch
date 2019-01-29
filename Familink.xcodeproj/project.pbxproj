@@ -24,6 +24,8 @@
 		CC771FF921F8CEA80058FAD5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC771FF821F8CEA80058FAD5 /* ProfileViewController.swift */; };
 		CC771FFB21F8CEB70058FAD5 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC771FFA21F8CEB70058FAD5 /* AddContactViewController.swift */; };
 		CC937AD121F9CB2A0099858D /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC937AD021F9CB2A0099858D /* SignUpViewController.swift */; };
+		CCA41E1422008879008394A1 /* ConnectedClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA41E1322008879008394A1 /* ConnectedClient.swift */; };
+		CCA41E1622009904008394A1 /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA41E1522009904008394A1 /* CoreDataClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		CC771FF821F8CEA80058FAD5 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CC771FFA21F8CEB70058FAD5 /* AddContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		CC937AD021F9CB2A0099858D /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		CCA41E1322008879008394A1 /* ConnectedClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedClient.swift; sourceTree = "<group>"; };
+		CCA41E1522009904008394A1 /* CoreDataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +123,8 @@
 			children = (
 				CC54AEC521FB25270078AD15 /* UI */,
 				CC54AEC321FB25220078AD15 /* APIClient.swift */,
+				CCA41E1522009904008394A1 /* CoreDataClient.swift */,
+				CCA41E1322008879008394A1 /* ConnectedClient.swift */,
 				CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */,
 				CC2F5B2721F8785F000B1909 /* Assets.xcassets */,
 				CC2F5B2C21F8785F000B1909 /* Info.plist */,
@@ -343,12 +349,14 @@
 			files = (
 				CC771FF721F8CE980058FAD5 /* DetailsContactViewController.swift in Sources */,
 				CC2F5B5321F8C065000B1909 /* LoginViewController.swift in Sources */,
+				CCA41E1422008879008394A1 /* ConnectedClient.swift in Sources */,
 				CC2F5B2021F8785E000B1909 /* MasterViewController.swift in Sources */,
 				CC771FFB21F8CEB70058FAD5 /* AddContactViewController.swift in Sources */,
 				CC937AD121F9CB2A0099858D /* SignUpViewController.swift in Sources */,
 				CC54AEC421FB25220078AD15 /* APIClient.swift in Sources */,
 				CC2F5B2621F8785E000B1909 /* Familink.xcdatamodeld in Sources */,
 				CC771FF121F8CABD0058FAD5 /* ContactListTableViewController.swift in Sources */,
+				CCA41E1622009904008394A1 /* CoreDataClient.swift in Sources */,
 				CC771FF421F8CADF0058FAD5 /* ContactListTableViewCell.swift in Sources */,
 				CC771FF921F8CEA80058FAD5 /* ProfileViewController.swift in Sources */,
 				CC2F5B1E21F8785E000B1909 /* AppDelegate.swift in Sources */,
