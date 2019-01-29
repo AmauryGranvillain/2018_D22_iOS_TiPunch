@@ -49,7 +49,8 @@
         <scene sceneID="OIm-DD-6fX">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="auA-yB-kob" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="yyG-Ei-Vkf" customClass="LoginViewController" customModule="Familink" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="yyG-Ei-Vkf" customClass="LoginViewController" customModule="Familink" customModuleProvider="target" sceneMemberID="viewController">
+
                     <view key="view" contentMode="scaleToFill" id="4IR-eo-NXT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -259,19 +260,24 @@
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+
                         <viewLayoutGuide key="safeArea" id="BiY-TS-rPw"/>
                     </view>
                     <connections>
-                        <outlet property="firstNameTextImput" destination="kfW-F9-r1a" id="lfE-AZ-4UC"/>
-                        <outlet property="firstNameTextLabel" destination="keK-ik-QUa" id="HvI-u3-g30"/>
-                        <outlet property="lastNameTextImput" destination="atc-nc-oG6" id="DvM-yd-BdO"/>
-                        <outlet property="lastNameTextLabel" destination="eFd-Id-PAg" id="ods-1Z-DEs"/>
-                        <outlet property="mailTextImput" destination="0Dg-u3-akk" id="T2r-FU-Wby"/>
-                        <outlet property="mailTextLabel" destination="TFq-3T-O96" id="fKE-DE-Z7N"/>
-                        <outlet property="phoneNumberTextLabel" destination="U0M-hH-8kH" id="o4G-xh-7ov"/>
-                        <outlet property="phoneTextImput" destination="eOk-TS-nzk" id="FPf-Qe-GyU"/>
-                        <outlet property="profilPicker" destination="2EL-d1-DGk" id="oce-UI-fb4"/>
-                        <outlet property="profilPickerTextLabel" destination="i18-yu-gGi" id="5wd-wo-fMb"/>
+                        <outlet property="confirmPasswordTextInput" destination="Iqj-yY-ddW" id="yEK-yo-RRw"/>
+                        <outlet property="confirmPasswordTextLabel" destination="OAi-90-pa6" id="gn7-Zc-zR9"/>
+                        <outlet property="firstNameTextImput" destination="cB8-ET-SvK" id="F5g-C2-2id"/>
+                        <outlet property="firstNameTextLabel" destination="ExJ-vR-fNj" id="clK-Ro-BFS"/>
+                        <outlet property="lastNameTextImput" destination="Krq-Yd-xrp" id="Piy-rZ-I9W"/>
+                        <outlet property="lastNameTextLabel" destination="4Lt-bS-YyT" id="Lxi-rX-b0j"/>
+                        <outlet property="mailTextImput" destination="Dg4-LA-MPN" id="rfE-hR-gQn"/>
+                        <outlet property="mailTextLabel" destination="1tT-MJ-ohb" id="x1V-dd-kLv"/>
+                        <outlet property="passwordTextInput" destination="f6d-3Z-NC0" id="IEG-HV-9wZ"/>
+                        <outlet property="passwordTextLabel" destination="gso-HT-mlL" id="qpV-qs-cQW"/>
+                        <outlet property="phoneNumberTextLabel" destination="LCp-8v-iRI" id="nw4-KF-chL"/>
+                        <outlet property="phoneTextImput" destination="wZ8-S1-64V" id="MTe-Pz-zPK"/>
+                        <outlet property="profilPicker" destination="s3m-lK-Cqs" id="wms-ak-lbY"/>
+                        <outlet property="profilPickerTextLabel" destination="ZhQ-5T-4rZ" id="9Ia-wT-hw7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t2H-Ij-tcr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -773,11 +779,27 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tgS-ys-9xn">
+                                    <rect key="frame" x="193" y="116" width="64" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="43"/>
+                                    <state key="normal" title="+">
+                                        <color key="titleColor" red="0.0" green="1" blue="0.48187491129999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="tapToChangeImage:" destination="OHf-SR-kAu" eventType="touchUpInside" id="gfq-3N-Yyo"/>
+                                    </connections>
+                                </button>
                             </subviews>
                         </scrollView>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="gJG-qQ-crJ"/>
+                    </toolbarItems>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="editButton" destination="YVg-ix-B5q" id="9fm-he-0IN"/>
+                        <outlet property="editGravatar" destination="tgS-ys-9xn" id="r4j-IA-0me"/>
                         <outlet property="emailTextInput" destination="fOp-6E-jBA" id="3tx-b4-zc0"/>
                         <outlet property="firstNameTextInput" destination="Rs9-5i-S6a" id="qhf-Jh-kl5"/>
                         <outlet property="gravatarImageView" destination="N2w-YF-9X0" id="XSW-X0-oqV"/>
@@ -792,7 +814,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7MR-fb-Lq7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1041" y="1120"/>
+            <point key="canvasLocation" x="1796" y="1146.4767616191905"/>
         </scene>
     </scenes>
 </document>
