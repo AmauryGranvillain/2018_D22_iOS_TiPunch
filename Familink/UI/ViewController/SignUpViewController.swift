@@ -46,13 +46,13 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             newUser.email = mailTextImput.text
             newUser.profile = profile ?? "SENIOR"
         
-        if phoneTextImput.text == nil {
+        if phoneTextImput.text == "" {
             self.getAlert(message: "Le champ téléphone est vide")
-        } else if firstNameTextImput.text == nil {
+        } else if firstNameTextImput.text == "" {
             self.getAlert(message: "Le champ prénom est vide")
-        } else if lastNameTextImput.text == nil {
+        } else if lastNameTextImput.text == "" {
             self.getAlert(message: "Le champ nom est vide")
-        } else if mailTextImput.text == nil {
+        } else if mailTextImput.text == "" {
             self.getAlert(message: "Le champ email est vide")
         }
         

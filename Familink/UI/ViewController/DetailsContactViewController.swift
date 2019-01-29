@@ -38,6 +38,9 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet weak var profilPickerTextLabel: UILabel!
     @IBOutlet weak var editGravatar: UIButton!
     
+    var profile: String?
+    var newGravatarUrl: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -91,6 +94,8 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
                     DispatchQueue.main.async {
                         let newImage = UIImage(data: data)
                         self.gravatarImageView.image = newImage
+                        self.newGravatarUrl = textField.text!
+                        print(self.newGravatarUrl ?? "https://s.hs-data.com/bilder/spieler/gross/29566.jpg")
                     }
                 }
             }
@@ -108,7 +113,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     @IBAction func tapToSave(_ sender: UIButton) {
         
-        if !isValidEmail(email:self.emailTextInput.text!) {
+        if !isValidEmail(email: self.emailTextInput.text!) {
             self.present(alert, animated: true)
         } else if (self.phoneTextInput.text?.count)! > 10 {
             self.present(alertPhone, animated: true)
@@ -124,15 +129,21 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
             self.profilPicker.isUserInteractionEnabled = false
             let contact = Contact(context: self.getContext()!)
             contact.firstName = self.firstNameTextInput.text
-            contact.lastName = self.firstNameTextInput.text
-            contact.email = self.firstNameTextInput.text
-            contact.phone = self.firstNameTextInput.text
-            contact.profile = self.profilPickerTextLabel.text
+            contact.lastName = self.lastNameTextInput.text
+            contact.email = self.emailTextInput.text
+            contact.phone = self.phoneTextInput.text
+            contact.profile = profile ?? self.contact.profile
+            contact.gravatar = self.newGravatarUrl
+            contact.id = self.contact.id
+            contact.isFamilinkUser = self.contact.isFamilinkUser
+            contact.isEmergencyUser = self.contact.isEmergencyUser
             
-            /*APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
+            print(contact)
+            APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
+                print("Contact modifié")
             }) { (e) in
                 print("Das Problem")
-            }*/
+            }
         }
     }
     
@@ -169,6 +180,9 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return 3
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        profile = profils[row].uppercased()
     }
     func isValidEmail(email: String) -> Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
