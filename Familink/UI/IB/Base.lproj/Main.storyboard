@@ -470,6 +470,19 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drb-O6-UW6">
+                                        <rect key="frame" x="111" y="461" width="157" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                        <state key="normal" title="Se déconnecter">
+                                            <color key="titleColor" red="1" green="0.081777411758247709" blue="0.09476042401114948" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tapToDisconnect:" destination="ik8-O9-ZMd" eventType="touchUpInside" id="FaS-Py-Aem"/>
+                                            <action selector="userDisconnectButton:" destination="ik8-O9-ZMd" eventType="touchUpInside" id="zJY-q1-vqb"/>
+                                            <segue destination="yyG-Ei-Vkf" kind="show" id="poi-wA-nAF"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -857,4 +870,7 @@
             <point key="canvasLocation" x="1796" y="1146.4767616191905"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="poi-wA-nAF"/>
+    </inferredMetricsTieBreakers>
 </document>

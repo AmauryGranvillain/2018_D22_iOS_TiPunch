@@ -50,6 +50,9 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         self.mailTextImput.isUserInteractionEnabled = bool
         self.profilPicker.isUserInteractionEnabled = bool
     }
+    func DeleteContactFromCoreData() {
+        
+    }
 
     @IBOutlet weak var firstNameTextImput: UITextField!
     @IBOutlet weak var lastNameTextImput: UITextField!
@@ -61,7 +64,8 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var lastNameTextLabel: UILabel!
     @IBOutlet weak var profilPickerTextLabel: UILabel!
     @IBOutlet weak var mailTextLabel: UILabel!
-    
+    @IBAction func userDisconnectButton(_ sender: UIButton) {
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -154,11 +158,21 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 self.navigationController?.popViewController(animated: true)
             }
         }
-        
-        
         // TODO: change UI
     }
-   
+    @IBAction func tapToDisconnect(_ sender: UIButton) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistentContainer.viewContext
+        let contactsFromCoreData = CoreDataClient.instance.getContacts()
+        DispatchQueue.main.async {
+            for contact in contactsFromCoreData {
+                context.delete(contact)
+            }
+            try? context.save()
+        }
+    }
+    
+    
     /*
     // MARK: - Navigation
 
