@@ -192,7 +192,8 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     
     @IBAction func selectAllContact(_ sender: Any) {
         filterContacts.removeAll()
-        loadContactListFromAPI()
+        filterContacts = contacts
+        self.tableView.reloadData()
     }
     @IBAction func selectFamilyContact(_ sender: Any) {
         filterContacts.removeAll()
