@@ -101,21 +101,21 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     @IBAction func tapToSave(_ sender: UIButton) {
         
-        if !isValidEmail(email: self.mailTextImput.text!){
-            displayAlertForInvalidField(message: "Email invalide", toFocus: mailTextImput)
-        } else {
-            self.saveButton.isHidden = true
-            self.editButton.isHidden = false
-            isEnabledTextInput(bool: false)
-        
-            let currentUser = User(context: self.getContext()!)
-            currentUser.firstName = self.firstNameTextImput.text
-            currentUser.lastName = self.lastNameTextImput.text
-            currentUser.email = self.mailTextImput.text
-            
-            APIClient.instance.updateUser(u: currentUser, onSucces: { (user) in
-            }) { (e) in
-                if e == "Security token invalid or expired" {
+        if(ConnectedClient.instance.isConnectedToNetwork()) {
+            if !isValidEmail(email: self.mailTextImput.text!){
+                displayAlertForInvalidField(message: "Email invalide", toFocus: mailTextImput)
+            } else {
+                self.saveButton.isHidden = true
+                self.editButton.isHidden = false
+                isEnabledTextInput(bool: false)
+                let currentUser = User(context: self.getContext()!)
+                currentUser.firstName = self.firstNameTextImput.text
+                currentUser.lastName = self.lastNameTextImput.text
+                currentUser.email = self.mailTextImput.text
+                
+                APIClient.instance.updateUser(u: currentUser, onSucces: { (user) in
+                }) { (e) in
+                    if e == "Security token invalid or expired" {
                     DispatchQueue.main.async {
                         let alert = UIAlertController(
                             title: "Session expiré",
@@ -133,15 +133,28 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                         self.present(alert, animated: true)
                     }
                 }
+                }
+            }
+        } else {
+            ConnectedClient.instance.errorConnectingAlert(view: self) { (alert) in
+                self.navigationController?.popViewController(animated: true)
             }
         }
         
+        
+        
     } //TODO: update avec l'api
     @IBAction func tapToEdit(_ sender: UIButton) {
+        if(ConnectedClient.instance.isConnectedToNetwork()) {
+            self.saveButton.isHidden = false
+            self.editButton.isHidden = true
+            isEnabledTextInput(bool: true)
+        } else {
+            ConnectedClient.instance.errorConnectingAlert(view: self) { (alert) in
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
         
-        self.saveButton.isHidden = false
-        self.editButton.isHidden = true
-        isEnabledTextInput(bool: true)
         
         // TODO: change UI
     }

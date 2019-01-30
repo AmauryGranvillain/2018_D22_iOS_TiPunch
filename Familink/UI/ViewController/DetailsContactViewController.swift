@@ -150,15 +150,66 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBAction func tapToCall(_ sender: UIButton) {
     }
     @IBAction func tapToDelete(_ sender: UIButton) {
-        self.present(alertDelete, animated: true, completion: nil)
+        if(ConnectedClient.instance.isConnectedToNetwork()) {
+             self.present(alertDelete, animated: true, completion: nil)
+        } else {
+            ConnectedClient.instance.errorConnectingAlert(view: self, handler: nil)
+        }
     }
     
     @IBAction func tapToSave(_ sender: UIButton) {
-        
-        if !isValidEmail(email: self.emailTextInput.text!) {
-            self.present(alert, animated: true)
-        } else if (self.phoneTextInput.text?.count)! > 10 {
-            self.present(alertPhone, animated: true)
+        if(ConnectedClient.instance.isConnectedToNetwork()) {
+            if !isValidEmail(email: self.emailTextInput.text!) {
+                self.present(alert, animated: true)
+            } else if (self.phoneTextInput.text?.count)! > 10 {
+                self.present(alertPhone, animated: true)
+            } else {
+                self.saveButton.isHidden = true
+                self.editButton.isHidden = false
+                self.editGravatar.isHidden = true
+                self.firstNameTextInput.isUserInteractionEnabled = false
+                self.lastNameTextInput.isUserInteractionEnabled = false
+                self.phoneTextInput.isUserInteractionEnabled = false
+                self.emailTextInput.isUserInteractionEnabled = false
+                self.firstNameTextInput.isUserInteractionEnabled = false
+                self.profilPicker.isUserInteractionEnabled = false
+                let contact = Contact(context: self.getContext()!)
+                contact.firstName = self.firstNameTextInput.text
+                contact.lastName = self.lastNameTextInput.text
+                contact.email = self.emailTextInput.text
+                contact.phone = self.phoneTextInput.text
+                contact.profile = profile ?? self.contact.profile
+                contact.gravatar = self.newGravatarUrl
+                contact.id = self.contact.id
+                contact.isFamilinkUser = self.contact.isFamilinkUser
+                contact.isEmergencyUser = self.contact.isEmergencyUser
+                
+                print(contact)
+                APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: Notification.Name("updateContact"), object: self)
+                        print("Contact modifié")
+                    }
+                }) { (e) in
+                        if e == "Security token invalid or expired" {
+                            DispatchQueue.main.async {
+                                let alert = UIAlertController(
+                                    title: "Session expiré",
+                                    message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
+                                    preferredStyle: .alert
+                                )
+                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
+                                    let controller = UIStoryboard.init(
+                                        name: "Main",
+                                        bundle: nil).instantiateViewController(
+                                            withIdentifier: "LoginViewController") as! LoginViewController
+
+                                    self.navigationController?.show(controller, sender: self)
+                                }))
+                                self.present(alert, animated: true)
+                            }
+                        }
+            }
         } else {
             self.saveButton.isHidden = true
             self.editButton.isHidden = false
@@ -169,58 +220,31 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
             self.emailTextInput.isUserInteractionEnabled = false
             self.firstNameTextInput.isUserInteractionEnabled = false
             self.profilPicker.isUserInteractionEnabled = false
-            let contact = Contact(context: self.getContext()!)
-            contact.firstName = self.firstNameTextInput.text
-            contact.lastName = self.lastNameTextInput.text
-            contact.email = self.emailTextInput.text
-            contact.phone = self.phoneTextInput.text
-            contact.profile = profile ?? self.contact.profile
-            contact.gravatar = self.newGravatarUrl
-            contact.id = self.contact.id
-            contact.isFamilinkUser = self.contact.isFamilinkUser
-            contact.isEmergencyUser = self.contact.isEmergencyUser
-            
-            print(contact)
-            APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
-                DispatchQueue.main.async {
-                     NotificationCenter.default.post(name: Notification.Name("updateContact"), object: self)
-                     print("Contact modifié")
-                }
-            }) { (e) in
-                if e == "Security token invalid or expired" {
-                    DispatchQueue.main.async {
-                        let alert = UIAlertController(
-                            title: "Session expiré",
-                            message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
-                            preferredStyle: .alert
-                        )
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
-                            let controller = UIStoryboard.init(
-                                name: "Main",
-                                bundle: nil).instantiateViewController(
-                                    withIdentifier: "LoginViewController") as! LoginViewController
-                            
-                            self.navigationController?.show(controller, sender: self)
-                        }))
-                        self.present(alert, animated: true)
-                    }
-                }
-            }
+            self.firstNameTextInput.text = self.contact.firstName
+            self.lastNameTextInput.text = self.contact.lastName
+            self.phoneTextInput.text = self.contact.phone
+            self.emailTextInput.text = self.contact.email
+            ConnectedClient.instance.errorConnectingAlert(view: self, handler: nil)
         }
     }
     
     @IBAction func tapToEdit(_ sender: UIButton) {
         
-        self.saveButton.isHidden = false
-        self.editButton.isHidden = true
-        self.editGravatar.isHidden = false
+        if(ConnectedClient.instance.isConnectedToNetwork()) {
+            self.saveButton.isHidden = false
+            self.editButton.isHidden = true
+            self.editGravatar.isHidden = false
+            
+            self.firstNameTextInput.isUserInteractionEnabled = true
+            self.lastNameTextInput.isUserInteractionEnabled = true
+            self.phoneTextInput.isUserInteractionEnabled = true
+            self.emailTextInput.isUserInteractionEnabled = true
+            self.firstNameTextInput.isUserInteractionEnabled = true
+            self.profilPicker.isUserInteractionEnabled = true
+        } else {
+            ConnectedClient.instance.errorConnectingAlert(view: self, handler: nil)
+        }
         
-        self.firstNameTextInput.isUserInteractionEnabled = true
-        self.lastNameTextInput.isUserInteractionEnabled = true
-        self.phoneTextInput.isUserInteractionEnabled = true
-        self.emailTextInput.isUserInteractionEnabled = true
-        self.firstNameTextInput.isUserInteractionEnabled = true
-        self.profilPicker.isUserInteractionEnabled = true
         // TODO: change UI<
     }
     /*

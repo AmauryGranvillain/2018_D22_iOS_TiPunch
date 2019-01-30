@@ -51,49 +51,58 @@ class AddContactViewController: UIViewController, UIPickerViewDelegate, UIPicker
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    
+    
+    
     @IBOutlet weak var addContactprofilPicker: UIPickerView!
     @IBAction func addContactButton(_ sender: UIButton) {
-        if self.firstNameTextImput.text == "" {
-            alertVerif(message: "Le prénom est vide", toFocus: self.firstNameTextImput)
-        } else if self.lastNameTextImput.text == "" {
-            alertVerif(message: "Le nom est vide", toFocus: self.lastNameTextImput)
-        } else if self.mailTextImput.text == "" {
-            alertVerif(message: "Le mail est vide", toFocus: self.mailTextImput)
-        } else if self.phoneTextImput.text == "" {
-            alertVerif(message: "Le numéro est vide", toFocus: self.phoneTextImput)
-        } else {
-            let contact = Contact(context: self.getContext()!)
-            contact.firstName =  self.firstNameTextImput.text
-            contact.setValue(self.lastNameTextImput.text, forKey: "lastName")
-            contact.setValue(self.mailTextImput.text, forKey: "email")
-            contact.setValue(self.profile, forKey: "profile")
-            contact.setValue(self.phoneTextImput.text, forKey: "phone")
-            contact.setValue(self.imageUrl, forKey: "gravatar")
-            APIClient.instance.createContact(c: contact, onSucces: { (_) in
-                DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: Notification.Name("addContact"), object: self)
-                    self.navigationController?.popViewController(animated: true)
-                }
-            }) {error in
-                if error == "Security token invalid or expired" {
+        
+        if(ConnectedClient.instance.isConnectedToNetwork()) {
+            if self.firstNameTextImput.text == "" {
+                alertVerif(message: "Le prénom est vide", toFocus: self.firstNameTextImput)
+            } else if self.lastNameTextImput.text == "" {
+                alertVerif(message: "Le nom est vide", toFocus: self.lastNameTextImput)
+            } else if self.mailTextImput.text == "" {
+                alertVerif(message: "Le mail est vide", toFocus: self.mailTextImput)
+            } else if self.phoneTextImput.text == "" {
+                alertVerif(message: "Le numéro est vide", toFocus: self.phoneTextImput)
+            } else {
+                let contact = Contact(context: self.getContext()!)
+                contact.firstName =  self.firstNameTextImput.text
+                contact.setValue(self.lastNameTextImput.text, forKey: "lastName")
+                contact.setValue(self.mailTextImput.text, forKey: "email")
+                contact.setValue(self.profile, forKey: "profile")
+                contact.setValue(self.phoneTextImput.text, forKey: "phone")
+                contact.setValue(self.imageUrl, forKey: "gravatar")
+                APIClient.instance.createContact(c: contact, onSucces: { (_) in
                     DispatchQueue.main.async {
-                        let alert = UIAlertController(
-                            title: "Session expiré",
-                            message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
-                            preferredStyle: .alert
-                        )
-                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
-                            let controller = UIStoryboard.init(
-                                name: "Main",
-                                bundle: nil).instantiateViewController(
-                                    withIdentifier: "LoginViewController") as! LoginViewController
-                            
-                            self.navigationController?.show(controller, sender: self)
-                        }))
-                        self.present(alert, animated: true)
+                        NotificationCenter.default.post(name: Notification.Name("addContact"), object: self)
+                        self.navigationController?.popViewController(animated: true)
                     }
-                }
-            }
+                }) {error in
+                    if error == "Security token invalid or expired" {
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(
+                                title: "Session expiré",
+                                message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
+                                preferredStyle: .alert
+                            )
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
+                                let controller = UIStoryboard.init(
+                                    name: "Main",
+                                    bundle: nil).instantiateViewController(
+                                        withIdentifier: "LoginViewController") as! LoginViewController
+
+                                self.navigationController?.show(controller, sender: self)
+                            }))
+                            self.present(alert, animated: true)
+                        }
+                    }
+               }
+        } else {
+            ConnectedClient.instance.errorConnectingAlert(view: self) { (alert) in
+             self.navigationController?.popViewController(animated: true)
         }
     }
     func alertVerif(message: String, toFocus: UITextField) {
