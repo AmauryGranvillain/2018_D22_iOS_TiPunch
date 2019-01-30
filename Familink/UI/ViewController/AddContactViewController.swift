@@ -80,12 +80,29 @@ class AddContactViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         NotificationCenter.default.post(name: Notification.Name("addContact"), object: self)
                         self.navigationController?.popViewController(animated: true)
                     }
-                }) {error in print(error)}
-            }
+                }) {error in
+                    if error == "Security token invalid or expired" {
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(
+                                title: "Session expiré",
+                                message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
+                                preferredStyle: .alert
+                            )
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
+                                let controller = UIStoryboard.init(
+                                    name: "Main",
+                                    bundle: nil).instantiateViewController(
+                                        withIdentifier: "LoginViewController") as! LoginViewController
+
+                                self.navigationController?.show(controller, sender: self)
+                            }))
+                            self.present(alert, animated: true)
+                        }
+                    }
+               }
         } else {
             ConnectedClient.instance.errorConnectingAlert(view: self) { (alert) in
-                self.navigationController?.popViewController(animated: true)
-            }
+             self.navigationController?.popViewController(animated: true)
         }
     }
     func alertVerif(message: String, toFocus: UITextField) {
