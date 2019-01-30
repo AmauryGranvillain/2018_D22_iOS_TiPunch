@@ -38,7 +38,6 @@ class MasterViewController: UIViewController {
             name: Notification.Name("offline"), object: nil)
     }
     @objc func goToContactList() {
-        print("go conatctlist")
         loginContainer.isHidden = true
         contactListContainer.isHidden = false
     }

@@ -71,6 +71,8 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         APIClient.instance.getAllContact(onSucces: { (contactsData) in
             self.contacts = contactsData
             self.filterContacts = self.contacts
+            
+            print("add in core data")
             self.addContactsToCoreData()
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -82,7 +84,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     @objc func loadContactListFromCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let context = appDelegate.persistentContainer.viewContext
-        self.contacts = CoreDataClient.instance.getContacts(context: context)
+        self.contacts = CoreDataClient.instance.getContacts()
         filterContacts = contacts
         self.tableView.reloadData()
     }
@@ -90,14 +92,16 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     func addContactsToCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let context = appDelegate.persistentContainer.viewContext
-        let contactsFromCoreData = CoreDataClient.instance.getContacts(context: context)
-        for contact in contactsFromCoreData {
-            context.delete(contact)
+        let contactsFromCoreData = CoreDataClient.instance.getContacts()
+        DispatchQueue.main.async {
+            for contact in contactsFromCoreData {
+                context.delete(contact)
+            }
+            for contact in self.contacts {
+                context.insert(contact)
+            }
+            try? context.save()
         }
-        for contact in contacts {
-            context.insert(contact)
-        }
-        try? context.save()
     }
 
     // MARK: - Table view data source
@@ -128,7 +132,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     }
     
      @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        loadContactList()
+        loadContactListFromAPI()
         reloadControl.endRefreshing()
     }
 

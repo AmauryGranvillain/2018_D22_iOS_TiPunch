@@ -28,8 +28,9 @@ class LoginViewController: UIViewController {
         userPhone =  phoneTextInput.text
         userPassword = passwordTextInput.text
         if ConnectedClient.instance.isConnectedToNetwork() {
-            APIClient.instance.login(phone: userPhone ?? "", password: userPassword ?? "", onSucces: { (Result) in
+            APIClient.instance.login(phone: userPhone!, password: userPassword!, onSucces: { (Result) in
                 DispatchQueue.main.async {
+                    print("success login before notif")
                     NotificationCenter.default.post(name: Notification.Name("login"), object: self)
                     print(Result)
                 }

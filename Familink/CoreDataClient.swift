@@ -12,7 +12,7 @@ import UIKit
 class CoreDataClient{
     static let instance = CoreDataClient()
 
-    func getContacts(context: NSManagedObjectContext) -> [Contact] {
+    func getContacts() -> [Contact] {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return []
