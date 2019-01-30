@@ -306,7 +306,7 @@
         <scene sceneID="CzG-Od-Dtp">
             <objects>
                 <tableViewController id="U13-ZG-XDU" userLabel="ContactList Controller" customClass="ContactListTableViewController" customModule="Familink" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="56" estimatedRowHeight="-1" sectionHeaderHeight="65" sectionFooterHeight="65" id="ulP-2V-Ei9">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" estimatedRowHeight="-1" sectionHeaderHeight="65" sectionFooterHeight="65" id="ulP-2V-Ei9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -315,6 +315,47 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
+                        <stackView key="tableFooterView" opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" id="9Wh-Qy-6C0">
+                            <rect key="frame" x="0.0" y="603" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VuB-8T-Uhl">
+                                    <rect key="frame" x="0.0" y="7" width="51" height="30"/>
+                                    <state key="normal" title="Tous"/>
+                                    <connections>
+                                        <action selector="selectAllContact:" destination="U13-ZG-XDU" eventType="touchUpInside" id="qWN-Uk-zme"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="73V-7B-PL0">
+                                    <rect key="frame" x="51" y="7" width="74" height="30"/>
+                                    <state key="normal" title="Famille"/>
+                                    <connections>
+                                        <action selector="selectFamilyContact:" destination="U13-ZG-XDU" eventType="touchUpInside" id="4SG-JS-viZ"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OkI-fx-Qj2">
+                                    <rect key="frame" x="125" y="7" width="91" height="30"/>
+                                    <state key="normal" title="Medecin"/>
+                                    <connections>
+                                        <action selector="selectDoctorContact:" destination="U13-ZG-XDU" eventType="touchUpInside" id="bOS-RW-bZP"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S33-5q-mrz">
+                                    <rect key="frame" x="216" y="7" width="68" height="30"/>
+                                    <state key="normal" title="Senior"/>
+                                    <connections>
+                                        <action selector="selectSeniorContact:" destination="U13-ZG-XDU" eventType="touchUpInside" id="ntR-7e-UL1"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bqK-wx-PU5">
+                                    <rect key="frame" x="284" y="7" width="91" height="30"/>
+                                    <state key="normal" title="Urgence"/>
+                                    <connections>
+                                        <action selector="selectUrgencyContact:" destination="U13-ZG-XDU" eventType="touchUpInside" id="d1j-jI-yDM"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </stackView>
                         <sections/>
                         <connections>
                             <outlet property="dataSource" destination="U13-ZG-XDU" id="7Ot-yJ-QCX"/>
@@ -334,6 +375,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="filterAllButton" destination="VuB-8T-Uhl" id="xbO-zk-GFx"/>
+                        <outlet property="filterDoctorButton" destination="OkI-fx-Qj2" id="cx2-HA-tv8"/>
+                        <outlet property="filterFamilyButton" destination="73V-7B-PL0" id="2SQ-oc-23w"/>
+                        <outlet property="filterSeniorButton" destination="S33-5q-mrz" id="VIw-7l-fL1"/>
+                        <outlet property="filterStackView" destination="9Wh-Qy-6C0" id="E6c-5Z-9lc"/>
+                        <outlet property="filterUrgencyButton" destination="bqK-wx-PU5" id="3L0-TJ-uuN"/>
                         <outlet property="searchBar" destination="tSE-cs-aFX" id="YzW-Yx-Zru"/>
                     </connections>
                 </tableViewController>

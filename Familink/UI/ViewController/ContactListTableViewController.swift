@@ -12,6 +12,12 @@ import CoreData
 
 class ContactListTableViewController: UITableViewController, UISearchBarDelegate {
 
+    @IBOutlet weak var filterAllButton: UIButton!
+    @IBOutlet weak var filterFamilyButton: UIButton!
+    @IBOutlet weak var filterDoctorButton: UIButton!
+    @IBOutlet weak var filterSeniorButton: UIButton!
+    @IBOutlet weak var filterUrgencyButton: UIButton!
+    @IBOutlet weak var filterStackView: UIStackView!
     @IBOutlet weak var searchBar: UISearchBar!
     var contacts: [Contact] = []
     var filterContacts: [Contact] = []
@@ -19,7 +25,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     lazy var reloadControl: UIRefreshControl = {
         let reloadControl = UIRefreshControl()
         reloadControl.addTarget(self, action: #selector(handleRefresh(_:)), for: UIControl.Event.valueChanged)
-        reloadControl.tintColor = UIColor.init(red: 0.98, green: 0.139, blue: 0.53, alpha: 1.0)
+        reloadControl.tintColor = UIColor(red: 0.38, green: 0.55, blue: 0.21, alpha: 1.0)
         reloadControl.attributedTitle = NSAttributedString(string: "Rechargement de la liste ...")
         return reloadControl
     }()
@@ -71,9 +77,13 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         APIClient.instance.getAllContact(onSucces: { (contactsData) in
             self.contacts = contactsData
             self.filterContacts = self.contacts
+<<<<<<< Updated upstream
             
             print("add in core data")
             self.addContactsToCoreData()
+=======
+            //self.addContactsToCoreData()
+>>>>>>> Stashed changes
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -92,7 +102,11 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     func addContactsToCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let context = appDelegate.persistentContainer.viewContext
+<<<<<<< Updated upstream
         let contactsFromCoreData = CoreDataClient.instance.getContacts()
+=======
+        let contactsFromCoreData = CoreDataClient.instance.getContacts(context: context)
+>>>>>>> Stashed changes
         DispatchQueue.main.async {
             for contact in contactsFromCoreData {
                 context.delete(contact)
@@ -100,7 +114,10 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
             for contact in self.contacts {
                 context.insert(contact)
             }
+<<<<<<< Updated upstream
             try? context.save()
+=======
+>>>>>>> Stashed changes
         }
     }
 
@@ -169,49 +186,37 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         self.show(controller, sender: self)
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    @IBAction func selectAllContact(_ sender: Any) {
+        filterContacts.removeAll()
+        loadContactListFromAPI()
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    @IBAction func selectFamilyContact(_ sender: Any) {
+        filterContacts.removeAll()
+        filterContacts = contacts.filter({ (contact) -> Bool in
+            return contact.profile == "FAMILLE"
+        })
+        self.tableView.reloadData()
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    @IBAction func selectUrgencyContact(_ sender: Any) {
+        filterContacts.removeAll()
+        filterContacts = contacts.filter({ (contact) -> Bool in
+            return contact.isEmergencyUser == true
+        })
+        self.tableView.reloadData()
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    @IBAction func selectDoctorContact(_ sender: Any) {
+        filterContacts.removeAll()
+        filterContacts = contacts.filter({ (contact) -> Bool in
+            return contact.profile == "MEDECIN"
+        })
+        self.tableView.reloadData()
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func selectSeniorContact(_ sender: Any) {
+        filterContacts.removeAll()
+        filterContacts = contacts.filter({ (contact) -> Bool in
+            return contact.profile == "SENIOR"
+        })
+        self.tableView.reloadData()
     }
-    */
-
+    
 }
