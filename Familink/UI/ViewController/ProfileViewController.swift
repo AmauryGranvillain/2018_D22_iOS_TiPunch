@@ -72,13 +72,29 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         isEnabledTextInput(bool: false)
         
         APIClient.instance.getUser(onSucces: { (user) in
-            print("User présent")
             let currentUser = user[0]
             self.firstNameTextImput.text = currentUser.firstName
             self.lastNameTextImput.text = currentUser.lastName
             self.mailTextImput.text = currentUser.email
-        }) { (Int) in
-            print("Pas là")
+        }) { (e) in
+            if e == "Security token invalid or expired" {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(
+                        title: "Session expiré",
+                        message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
+                        let controller = UIStoryboard.init(
+                            name: "Main",
+                            bundle: nil).instantiateViewController(
+                                withIdentifier: "LoginViewController") as! LoginViewController
+                        
+                        self.navigationController?.show(controller, sender: self)
+                    }))
+                    self.present(alert, animated: true)
+                }
+            }
         }
        
         // Do any additional setup after loading the view.
@@ -99,7 +115,24 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             
             APIClient.instance.updateUser(u: currentUser, onSucces: { (user) in
             }) { (e) in
-                print("Pas update")
+                if e == "Security token invalid or expired" {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(
+                            title: "Session expiré",
+                            message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
+                            preferredStyle: .alert
+                        )
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
+                            let controller = UIStoryboard.init(
+                                name: "Main",
+                                bundle: nil).instantiateViewController(
+                                    withIdentifier: "LoginViewController") as! LoginViewController
+                            
+                            self.navigationController?.show(controller, sender: self)
+                        }))
+                        self.present(alert, animated: true)
+                    }
+                }
             }
         }
         

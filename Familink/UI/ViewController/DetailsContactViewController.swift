@@ -61,7 +61,24 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
                     self.navigationController?.popViewController(animated: true)
                 }
             }) { (e) in
-                print("Contact intacte")
+                if e == "Security token invalid or expired" {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(
+                            title: "Session expiré",
+                            message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
+                            preferredStyle: .alert
+                        )
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
+                            let controller = UIStoryboard.init(
+                                name: "Main",
+                                bundle: nil).instantiateViewController(
+                                    withIdentifier: "LoginViewController") as! LoginViewController
+                            
+                            self.navigationController?.show(controller, sender: self)
+                        }))
+                        self.present(alert, animated: true)
+                    }
+                }
             }
             
             
@@ -170,7 +187,24 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
                      print("Contact modifié")
                 }
             }) { (e) in
-                print("Das Problem")
+                if e == "Security token invalid or expired" {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(
+                            title: "Session expiré",
+                            message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
+                            preferredStyle: .alert
+                        )
+                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
+                            let controller = UIStoryboard.init(
+                                name: "Main",
+                                bundle: nil).instantiateViewController(
+                                    withIdentifier: "LoginViewController") as! LoginViewController
+                            
+                            self.navigationController?.show(controller, sender: self)
+                        }))
+                        self.present(alert, animated: true)
+                    }
+                }
             }
         }
     }

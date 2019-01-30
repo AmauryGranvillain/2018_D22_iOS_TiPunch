@@ -189,7 +189,7 @@ class APIClient {
         return task
     }
     
-    func getUser(onSucces: @escaping ([User])->(), onError: @escaping (Int)->()) -> URLSessionTask {
+    func getUser(onSucces: @escaping ([User])->(), onError: @escaping (String)->()) -> URLSessionTask {
         //préparation de la requete
         var request = URLRequest(url: URL(string: "\(urlServer)\(urlUserCurrent)")! )
         request.httpMethod = "GET"
@@ -201,7 +201,7 @@ class APIClient {
             //test de la validation du token
             if let requestResponse = response as? HTTPURLResponse {
                 if requestResponse.statusCode != 200 && requestResponse.statusCode != 204 {
-                    onError(requestResponse.statusCode)
+                    onError(self.errorToken(data: data))
                 } else {
                     // si j'ai de la donnée
                     if let dataReceive = data {
