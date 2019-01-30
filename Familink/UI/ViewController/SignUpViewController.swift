@@ -112,8 +112,10 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func createUser(u: User, password: String) {
+        let loader = UIViewController.displaySpinner(onView: self.view)
         APIClient.instance.createUser(u: u, password: password, onSucces: { (success) in
             DispatchQueue.main.async {
+                UIViewController.removeSpinner(spinner: loader)
                 let controller = UIStoryboard.init(
                     name: "Main",
                     bundle: nil).instantiateViewController(
@@ -125,6 +127,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             }
         }) { (error) in
             DispatchQueue.main.async {
+                UIViewController.removeSpinner(spinner: loader)
                 print(error)
             }
         }
