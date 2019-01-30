@@ -12,6 +12,8 @@ import SystemConfiguration
 class ConnectedClient {
     static let instance = ConnectedClient()
     
+    var isOffline = false
+    
     func isConnectedToNetwork() -> Bool {
         
         var zeroAddress = sockaddr_in(sin_len: 0, sin_family: 0, sin_port: 0, sin_addr: in_addr(s_addr: 0), sin_zero: (0, 0, 0, 0, 0, 0, 0, 0))
@@ -35,6 +37,16 @@ class ConnectedClient {
         
         return ret
         
+    }
+    
+    func errorConnectingAlert(view: UIViewController,handler: ((UIAlertAction)->())?){
+        let alert = UIAlertController(
+            title: "Erreur de connexion",
+            message: "Cette action n'est pas disponible sans connexion",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: handler))
+        view.present(alert, animated: true)
     }
     
 }

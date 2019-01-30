@@ -70,7 +70,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="S'inscrire"/>
                                         <connections>
-                                            <segue destination="6EW-EX-v9q" kind="show" id="Olw-eU-jjO"/>
+                                            <action selector="tapOnSignUp:" destination="yyG-Ei-Vkf" eventType="touchUpInside" id="kJN-F6-oIT"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc9-Oy-db8">
@@ -146,7 +146,7 @@
         <!--Sign Up View Controller-->
         <scene sceneID="iI8-CX-g7A">
             <objects>
-                <viewController id="6EW-EX-v9q" customClass="SignUpViewController" customModule="Familink" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpViewController" id="6EW-EX-v9q" customClass="SignUpViewController" customModule="Familink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4m0-jX-mli">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -324,12 +324,12 @@
                     <navigationItem key="navigationItem" title="ContactList Controller" id="vMb-ro-Ll7" userLabel="ContactList Controller">
                         <barButtonItem key="leftBarButtonItem" systemItem="action" id="N0Q-Cl-7qR">
                             <connections>
-                                <segue destination="ik8-O9-ZMd" kind="show" id="9lA-WM-qMf"/>
+                                <action selector="tapOnProfileUser:" destination="U13-ZG-XDU" id="dyT-kG-YL9"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="3A6-Rm-WhW">
                             <connections>
-                                <segue destination="m5U-Qc-SbO" kind="show" id="P58-bl-3hr"/>
+                                <action selector="tapOnAddContact:" destination="U13-ZG-XDU" id="EXh-ee-ZA1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -344,7 +344,7 @@
         <!--Profile View Controller-->
         <scene sceneID="VXs-3J-1tU">
             <objects>
-                <viewController id="ik8-O9-ZMd" customClass="ProfileViewController" customModule="Familink" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" id="ik8-O9-ZMd" customClass="ProfileViewController" customModule="Familink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="S4X-dL-8dz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -449,7 +449,7 @@
         <!--Add Contact View Controller-->
         <scene sceneID="f67-l8-rXP">
             <objects>
-                <viewController id="m5U-Qc-SbO" customClass="AddContactViewController" customModule="Familink" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddContactViewController" id="m5U-Qc-SbO" customClass="AddContactViewController" customModule="Familink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CfL-0u-MK7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

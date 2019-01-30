@@ -23,6 +23,19 @@ class LoginViewController: UIViewController {
         if userPhone != nil {
             phoneTextInput.text = userPhone
         }
+        
+        if(!ConnectedClient.instance.isConnectedToNetwork()) {
+            let alert = UIAlertController(
+                title: "Erreur de connexion",
+                message: "Voulez-vous passer en mode hors-ligne ?",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (sender) in
+                NotificationCenter.default.post(name: Notification.Name("offline"), object: self)
+            }))
+            alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+        }
     }
     @IBAction func tapOnLogin(_ sender: UIButton) {
         userPhone =  phoneTextInput.text
@@ -55,7 +68,28 @@ class LoginViewController: UIViewController {
         }
         
     }
-
+    @IBAction func tapOnSignUp(_ sender: UIButton) {
+        if(ConnectedClient.instance.isConnectedToNetwork()) {
+            let controller = UIStoryboard.init(
+                name: "Main",
+                bundle: nil).instantiateViewController(
+                    withIdentifier: "SignUpViewController") as! SignUpViewController
+            
+            self.show(controller, sender: self)
+        } else {
+            let alert = UIAlertController(
+                title: "Erreur de connexion",
+                message: "Voulez-vous passer en mode hors-ligne ?",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (sender) in
+                NotificationCenter.default.post(name: Notification.Name("offline"), object: self)
+            }))
+            alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+        }
+    }
+    
     @IBAction func tapOnforgetPassword(_ sender: Any) {
     }
     @IBAction func switchRemenberMe(_ sender: Any) {

@@ -51,31 +51,41 @@ class AddContactViewController: UIViewController, UIPickerViewDelegate, UIPicker
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    
+    
+    
     @IBOutlet weak var addContactprofilPicker: UIPickerView!
     @IBAction func addContactButton(_ sender: UIButton) {
-        if self.firstNameTextImput.text == "" {
-            alertVerif(message: "Le prénom est vide", toFocus: self.firstNameTextImput)
-        } else if self.lastNameTextImput.text == "" {
-            alertVerif(message: "Le nom est vide", toFocus: self.lastNameTextImput)
-        } else if self.mailTextImput.text == "" {
-            alertVerif(message: "Le mail est vide", toFocus: self.mailTextImput)
-        } else if self.phoneTextImput.text == "" {
-            alertVerif(message: "Le numéro est vide", toFocus: self.phoneTextImput)
+        
+        if(ConnectedClient.instance.isConnectedToNetwork()) {
+            if self.firstNameTextImput.text == "" {
+                alertVerif(message: "Le prénom est vide", toFocus: self.firstNameTextImput)
+            } else if self.lastNameTextImput.text == "" {
+                alertVerif(message: "Le nom est vide", toFocus: self.lastNameTextImput)
+            } else if self.mailTextImput.text == "" {
+                alertVerif(message: "Le mail est vide", toFocus: self.mailTextImput)
+            } else if self.phoneTextImput.text == "" {
+                alertVerif(message: "Le numéro est vide", toFocus: self.phoneTextImput)
+            } else {
+                let contact = Contact(context: self.getContext()!)
+                contact.firstName =  self.firstNameTextImput.text
+                contact.setValue(self.lastNameTextImput.text, forKey: "lastName")
+                contact.setValue(self.mailTextImput.text, forKey: "email")
+                contact.setValue(self.profile, forKey: "profile")
+                contact.setValue(self.phoneTextImput.text, forKey: "phone")
+                contact.setValue(self.imageUrl, forKey: "gravatar")
+                APIClient.instance.createContact(c: contact, onSucces: { (_) in
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: Notification.Name("addContact"), object: self)
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }) {error in print(error)}
+            }
         } else {
-            let contact = Contact(context: self.getContext()!)
-            contact.firstName =  self.firstNameTextImput.text
-            contact.setValue(self.lastNameTextImput.text, forKey: "lastName")
-            contact.setValue(self.mailTextImput.text, forKey: "email")
-            contact.setValue(self.profile, forKey: "profile")
-            contact.setValue(self.phoneTextImput.text, forKey: "phone")
-            contact.setValue(self.imageUrl, forKey: "gravatar")
-            APIClient.instance.createContact(c: contact, onSucces: { (_) in
-                DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: Notification.Name("addContact"), object: self)
-                    self.navigationController?.popViewController(animated: true)
-                }
-            }) {error in print(error)}
-            
+            ConnectedClient.instance.errorConnectingAlert(view: self) { (alert) in
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
     func alertVerif(message: String, toFocus: UITextField) {

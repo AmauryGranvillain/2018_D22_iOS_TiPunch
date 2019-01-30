@@ -39,29 +39,43 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     @IBAction func signUpUiButton(_ sender: UIButton) {
-        let newUser = User(context: self.getContext()!)
+        if(ConnectedClient.instance.isConnectedToNetwork()){
+            let newUser = User(context: self.getContext()!)
             newUser.phone = phoneTextImput.text
             newUser.firstName = firstNameTextImput.text
             newUser.lastName = lastNameTextImput.text
             newUser.email = mailTextImput.text
             newUser.profile = profile ?? "SENIOR"
-        
-        if phoneTextImput.text == "" {
-            self.getAlert(message: "Le champ téléphone est vide")
-        } else if firstNameTextImput.text == "" {
-            self.getAlert(message: "Le champ prénom est vide")
-        } else if lastNameTextImput.text == "" {
-            self.getAlert(message: "Le champ nom est vide")
-        } else if mailTextImput.text == "" {
-            self.getAlert(message: "Le champ email est vide")
-        }
-        
-        if passwordTextInput.text == confirmPasswordTextInput.text {
-            password = passwordTextInput.text
-            createUser(u: newUser, password: password)
+            
+            if phoneTextImput.text == "" {
+                self.getAlert(message: "Le champ téléphone est vide")
+            } else if firstNameTextImput.text == "" { 
+                self.getAlert(message: "Le champ prénom est vide")
+            } else if lastNameTextImput.text == "" {
+                self.getAlert(message: "Le champ nom est vide")
+            } else if mailTextImput.text == "" {
+                self.getAlert(message: "Le champ email est vide")
+            }
+            
+            if passwordTextInput.text == confirmPasswordTextInput.text {
+                password = passwordTextInput.text
+                createUser(u: newUser, password: password)
+            } else {
+                self.getAlert(message: "Les mots de passes sont différents")
+            }
         } else {
-            self.getAlert(message: "Les mots de passes sont différents")
+            let alert = UIAlertController(
+                title: "Erreur de connexion",
+                message: "Voulez-vous passer en mode hors-ligne ?",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { (sender) in
+                NotificationCenter.default.post(name: Notification.Name("offline"), object: self)
+            }))
+            alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
         }
+        
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {

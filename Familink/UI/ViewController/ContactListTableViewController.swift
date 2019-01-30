@@ -16,6 +16,30 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     var contacts: [Contact] = []
     var filterContacts: [Contact] = []
     
+    @IBAction func tapOnProfileUser(_ sender: UIBarButtonItem) {
+        if(ConnectedClient.instance.isConnectedToNetwork()) {
+            let controller = UIStoryboard.init(
+                name: "Main",
+                bundle: nil).instantiateViewController(
+                    withIdentifier: "ProfileViewController") as! ProfileViewController
+            
+            self.show(controller, sender: self)
+        } else {
+            ConnectedClient.instance.errorConnectingAlert(view: self, handler: nil)
+        }
+    }
+    @IBAction func tapOnAddContact(_ sender: UIBarButtonItem) {
+        if(ConnectedClient.instance.isConnectedToNetwork()) {
+            let controller = UIStoryboard.init(
+                name: "Main",
+                bundle: nil).instantiateViewController(
+                    withIdentifier: "AddContactViewController") as! AddContactViewController
+            
+            self.show(controller, sender: self)
+        } else {
+            ConnectedClient.instance.errorConnectingAlert(view: self, handler: nil)
+        }
+    }
     lazy var reloadControl: UIRefreshControl = {
         let reloadControl = UIRefreshControl()
         reloadControl.addTarget(self, action: #selector(handleRefresh(_:)), for: UIControl.Event.valueChanged)
@@ -23,6 +47,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         reloadControl.attributedTitle = NSAttributedString(string: "Rechargement de la liste ...")
         return reloadControl
     }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
