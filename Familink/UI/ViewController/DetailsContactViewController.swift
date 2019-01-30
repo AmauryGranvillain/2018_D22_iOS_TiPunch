@@ -56,8 +56,10 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         alertDelete.addAction(UIAlertAction(title: "OK", style: .default, handler: { (sender) in
             APIClient.instance.deleteContact(c: self.contact, onSucces: { (contactdelete) in
                 print("Contact supprimé")
-                NotificationCenter.default.post(name: Notification.Name("deleteContact"), object: self)
-                self.navigationController?.popViewController(animated: true)
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: Notification.Name("deleteContact"), object: self)
+                    self.navigationController?.popViewController(animated: true)
+                }
             }) { (e) in
                 print("Contact intacte")
             }
@@ -163,8 +165,10 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
             
             print(contact)
             APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
-                print("Contact modifié")
-                NotificationCenter.default.post(name: Notification.Name("updtateContact"), object: self)
+                DispatchQueue.main.async {
+                     NotificationCenter.default.post(name: Notification.Name("updateContact"), object: self)
+                     print("Contact modifié")
+                }
             }) { (e) in
                 print("Das Problem")
             }
