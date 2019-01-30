@@ -322,18 +322,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="ContactList Controller" id="vMb-ro-Ll7" userLabel="ContactList Controller">
-                        <rightBarButtonItems>
-                            <barButtonItem style="plain" systemItem="add" id="3A6-Rm-WhW">
-                                <connections>
-                                    <segue destination="m5U-Qc-SbO" kind="show" id="P58-bl-3hr"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem style="plain" systemItem="bookmarks" id="ui4-TA-EuI">
-                                <connections>
-                                    <segue destination="ik8-O9-ZMd" kind="show" id="Fvt-gF-g8X"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" systemItem="action" id="N0Q-Cl-7qR">
+                            <connections>
+                                <segue destination="ik8-O9-ZMd" kind="show" id="9lA-WM-qMf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="3A6-Rm-WhW">
+                            <connections>
+                                <segue destination="m5U-Qc-SbO" kind="show" id="P58-bl-3hr"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="tSE-cs-aFX" id="YzW-Yx-Zru"/>
@@ -681,7 +679,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <scrollView key="tableHeaderView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" id="tPH-nC-khq">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="648"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rs9-5i-S6a">
@@ -755,7 +753,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVg-ix-B5q">
-                                    <rect key="frame" x="321" y="8" width="46" height="30"/>
+                                    <rect key="frame" x="13" y="8" width="46" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="EDIT"/>
                                     <connections>
@@ -763,7 +761,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rAP-b7-ynE" userLabel="Save Button">
-                                    <rect key="frame" x="321" y="8" width="46" height="30"/>
+                                    <rect key="frame" x="13" y="8" width="46" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="SAVE"/>
                                     <connections>
@@ -792,14 +790,23 @@
                                         <action selector="tapToChangeImage:" destination="OHf-SR-kAu" eventType="touchUpInside" id="gfq-3N-Yyo"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6us-Gy-M79">
+                                    <rect key="frame" x="311" y="6" width="53" height="34"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Delete">
+                                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="tapToDelete:" destination="OHf-SR-kAu" eventType="touchUpInside" id="UU3-lP-dog"/>
+                                    </connections>
+                                </button>
                             </subviews>
                         </scrollView>
                     </tableView>
-                    <toolbarItems>
-                        <barButtonItem title="Item" id="gJG-qQ-crJ"/>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="deleteButton" destination="6us-Gy-M79" id="sEk-gf-G8P"/>
                         <outlet property="editButton" destination="YVg-ix-B5q" id="9fm-he-0IN"/>
                         <outlet property="editGravatar" destination="tgS-ys-9xn" id="r4j-IA-0me"/>
                         <outlet property="emailTextInput" destination="fOp-6E-jBA" id="3tx-b4-zc0"/>
