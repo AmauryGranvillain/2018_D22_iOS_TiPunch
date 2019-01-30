@@ -67,6 +67,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     }
     
     @objc func loadContactListFromAPI() {
+
         APIClient.instance.getAllContact(onSucces: { (contactsData) in
             self.contacts = contactsData
             self.filterContacts = self.contacts
