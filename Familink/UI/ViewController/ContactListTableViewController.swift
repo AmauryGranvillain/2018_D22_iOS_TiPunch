@@ -77,18 +77,29 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         APIClient.instance.getAllContact(onSucces: { (contactsData) in
             self.contacts = contactsData
             self.filterContacts = self.contacts
-<<<<<<< Updated upstream
-            
-            print("add in core data")
             self.addContactsToCoreData()
-=======
-            //self.addContactsToCoreData()
->>>>>>> Stashed changes
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }) { (e) in
-            print(e)
+            if e == "Security token invalid or expired" {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(
+                        title: "Session expiré",
+                        message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
+                        preferredStyle: .alert
+                    )
+                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
+                        let controller = UIStoryboard.init(
+                            name: "Main",
+                            bundle: nil).instantiateViewController(
+                                withIdentifier: "LoginViewController") as! LoginViewController
+                        
+                        self.navigationController?.show(controller, sender: self)
+                    }))
+                    self.present(alert, animated: true)
+                }
+            }
         }
     }
     @objc func loadContactListFromCoreData() {
@@ -102,11 +113,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     func addContactsToCoreData() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let context = appDelegate.persistentContainer.viewContext
-<<<<<<< Updated upstream
         let contactsFromCoreData = CoreDataClient.instance.getContacts()
-=======
-        let contactsFromCoreData = CoreDataClient.instance.getContacts(context: context)
->>>>>>> Stashed changes
         DispatchQueue.main.async {
             for contact in contactsFromCoreData {
                 context.delete(contact)
@@ -114,10 +121,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
             for contact in self.contacts {
                 context.insert(contact)
             }
-<<<<<<< Updated upstream
             try? context.save()
-=======
->>>>>>> Stashed changes
         }
     }
 
@@ -218,5 +222,4 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         })
         self.tableView.reloadData()
     }
-    
 }
