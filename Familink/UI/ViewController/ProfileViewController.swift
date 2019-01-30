@@ -47,21 +47,18 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     func isEnabledTextInput(bool: Bool) {
         self.firstNameTextImput.isUserInteractionEnabled = bool
         self.lastNameTextImput.isUserInteractionEnabled = bool
-        self.phoneTextImput.isUserInteractionEnabled = bool
         self.mailTextImput.isUserInteractionEnabled = bool
         self.profilPicker.isUserInteractionEnabled = bool
     }
 
     @IBOutlet weak var firstNameTextImput: UITextField!
     @IBOutlet weak var lastNameTextImput: UITextField!
-    @IBOutlet weak var phoneTextImput: UITextField!
     @IBOutlet weak var mailTextImput: UITextField!
     @IBOutlet weak var profilPicker: UIPickerView!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var firstNameTextLabel: UILabel!
     @IBOutlet weak var lastNameTextLabel: UILabel!
-    @IBOutlet weak var phoneNumberTextLabel: UILabel!
     @IBOutlet weak var profilPickerTextLabel: UILabel!
     @IBOutlet weak var mailTextLabel: UILabel!
     
@@ -80,7 +77,6 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             self.firstNameTextImput.text = currentUser.firstName
             self.lastNameTextImput.text = currentUser.lastName
             self.mailTextImput.text = currentUser.email
-            self.phoneTextImput.text = currentUser.phone
         }) { (Int) in
             print("Pas là")
         }
@@ -89,9 +85,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     @IBAction func tapToSave(_ sender: UIButton) {
         
-        if (self.phoneTextImput.text?.count)! > 10  {
-            displayAlertForInvalidField(message: "Telephone invalide", toFocus: phoneTextImput)
-        } else if !isValidEmail(email: self.mailTextImput.text!){
+        if !isValidEmail(email: self.mailTextImput.text!){
             displayAlertForInvalidField(message: "Email invalide", toFocus: mailTextImput)
         } else {
             self.saveButton.isHidden = true
@@ -102,12 +96,11 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             currentUser.firstName = self.firstNameTextImput.text
             currentUser.lastName = self.lastNameTextImput.text
             currentUser.email = self.mailTextImput.text
-            currentUser.phone = self.phoneTextImput.text
             
-            /*APIClient.instance.updateUser(u: currentUser, onSucces: { (user) in
+            APIClient.instance.updateUser(u: currentUser, onSucces: { (user) in
             }) { (e) in
                 print("Pas update")
-            }*/
+            }
         }
         
     } //TODO: update avec l'api
