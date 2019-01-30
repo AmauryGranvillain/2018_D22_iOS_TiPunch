@@ -16,8 +16,18 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     var contacts: [Contact] = []
     var filterContacts: [Contact] = []
     
+    lazy var reloadControl: UIRefreshControl = {
+        let reloadControl = UIRefreshControl()
+        reloadControl.addTarget(self, action: #selector(handleRefresh(_:)), for: UIControl.Event.valueChanged)
+        reloadControl.tintColor = UIColor.init(red: 0.98, green: 0.139, blue: 0.53, alpha: 1.0)
+        reloadControl.attributedTitle = NSAttributedString(string: "Rechargement de la liste ...")
+        return reloadControl
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.tableView.addSubview(self.reloadControl)
         
         NotificationCenter.default.addObserver(
             self,
@@ -94,7 +104,6 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         tableView.reloadData()
     }
     
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -103,6 +112,11 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return self.filterContacts.count
+    }
+    
+     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        loadContactList()
+        reloadControl.endRefreshing()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,8 +151,6 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         
         self.show(controller, sender: self)
     }
-    
-
     
     /*
     // Override to support conditional editing of the table view.
