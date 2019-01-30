@@ -8,8 +8,9 @@
 
 import UIKit
 import CoreData
+import MessageUI
 
-class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
 
     var contact: Contact = Contact()
     var imageUrl = ""
@@ -141,13 +142,72 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         self.present(alert, animated: true, completion: nil)
     }
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+    }
     @IBAction func tapToMail(_ sender: UIButton) {
+        
+        if MFMailComposeViewController.canSendMail() {
+            let message:String  = "Changes in mail composer ios 11"
+            let composePicker = MFMailComposeViewController()
+            composePicker.mailComposeDelegate = self
+            composePicker.delegate = self as! UINavigationControllerDelegate
+            composePicker.setToRecipients(["example@gmail.com"])
+            composePicker.setSubject("Testing Email")
+            composePicker.setMessageBody(message, isHTML: false)
+            self.present(composePicker, animated: true, completion: nil)
+        } else {
+            self .showErrorMessage()
+        }
+    }
+    func showErrorMessage() {
+        let alertMessage = UIAlertController(title: "could not sent email", message: "check if your device have email support!", preferredStyle: UIAlertController.Style.alert)
+        let action = UIAlertAction(title:"Okay", style: UIAlertAction.Style.default, handler: nil)
+        alertMessage.addAction(action)
+        self.present(alertMessage, animated: true, completion: nil)
+    }
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result {
+        case .cancelled:
+            print("Mail cancelled")
+        case .saved:
+            print("Mail saved")
+        case .sent:
+            print("Mail sent")
+        case .failed:
+            break
+        }
+        self.dismiss(animated: true, completion: nil)
+        
     }
     
     @IBAction func tapToMessage(_ sender: UIButton) {
+        let composeVC = MFMessageComposeViewController()
+        composeVC.messageComposeDelegate = self
+        
+        composeVC.recipients = ["0641382323"]
+        composeVC.body = "Hola Chico"
+        
+        if MFMessageComposeViewController.canSendText() {
+            self.present(composeVC, animated: true, completion: nil)
+        } else {
+            print("Impossible d'envoyer un message.")
+        }
     }
     
     @IBAction func tapToCall(_ sender: UIButton) {
+        
+        guard let numberString = contact.phone, let url =
+            URL(string:"telprompt://\(numberString)") else {
+                return
+        }
+        UIApplication.shared.open(url)
+        
+        /*if let url = URL(string: "tel://0641382323") {
+         UIApplication.shared.open(url, options: [:], completionHandler: nil)
+         }*/
+    }
+    override var prefersStatusBarHidden: Bool{
+        return true
     }
     @IBAction func tapToDelete(_ sender: UIButton) {
         if(ConnectedClient.instance.isConnectedToNetwork()) {
