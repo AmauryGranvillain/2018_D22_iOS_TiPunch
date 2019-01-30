@@ -123,6 +123,12 @@ class AddContactViewController: UIViewController, UIPickerViewDelegate, UIPicker
         addContactprofilPicker.dataSource = self
         print(self.profile)
         // Do any additional setup after loading the view.
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     

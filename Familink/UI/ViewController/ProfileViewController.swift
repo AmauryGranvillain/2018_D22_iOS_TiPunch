@@ -98,6 +98,12 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
        
         // Do any additional setup after loading the view.
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     @IBAction func tapToSave(_ sender: UIButton) {
         

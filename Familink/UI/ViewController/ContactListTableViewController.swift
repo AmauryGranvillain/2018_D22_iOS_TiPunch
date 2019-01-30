@@ -95,6 +95,12 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
             forCellReuseIdentifier: "ContactListTableViewCell")
         
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     @objc func loadContactListFromAPI() {

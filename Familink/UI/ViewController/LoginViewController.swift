@@ -36,6 +36,12 @@ class LoginViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
             self.present(alert, animated: true)
         }
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     @IBAction func tapOnLogin(_ sender: UIButton) {
         userPhone =  phoneTextInput.text
