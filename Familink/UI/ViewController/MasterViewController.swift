@@ -32,6 +32,10 @@ class MasterViewController: UIViewController {
             self,
             selector: #selector (goToContactList),
             name: Notification.Name("login"), object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector (goToContactList),
+            name: Notification.Name("offline"), object: nil)
     }
     @objc func goToContactList() {
         print("go conatctlist")

@@ -31,24 +31,30 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector (loadContactList),
+            selector: #selector (loadContactListFromAPI),
             name: Notification.Name("login"), object: nil)
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector (loadContactList),
+            selector: #selector (loadContactListFromAPI),
             name: Notification.Name("addContact"), object: nil)
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector (loadContactList),
+            selector: #selector (loadContactListFromCoreData),
+            name: Notification.Name("offline"), object: nil)
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector (loadContactListFromAPI),
             name: Notification.Name("deleteContact"), object: nil)
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector (loadContactList),
+            selector: #selector (loadContactListFromAPI),
             name: Notification.Name("updateContact"), object: nil)
         
+
         
         self.searchBar.delegate = self
         
@@ -60,16 +66,37 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         
     }
     
-    @objc func loadContactList() {
+    @objc func loadContactListFromAPI() {
         APIClient.instance.getAllContact(onSucces: { (contactsData) in
             self.contacts = contactsData
             self.filterContacts = self.contacts
+            self.addContactsToCoreData()
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }) { (e) in
             print(e)
         }
+    }
+    @objc func loadContactListFromCoreData() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistentContainer.viewContext
+        self.contacts = CoreDataClient.instance.getContacts(context: context)
+        filterContacts = contacts
+        self.tableView.reloadData()
+    }
+    
+    func addContactsToCoreData() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let context = appDelegate.persistentContainer.viewContext
+        let contactsFromCoreData = CoreDataClient.instance.getContacts(context: context)
+        for contact in contactsFromCoreData {
+            context.delete(contact)
+        }
+        for contact in contacts {
+            context.insert(contact)
+        }
+        try? context.save()
     }
 
     // MARK: - Table view data source
