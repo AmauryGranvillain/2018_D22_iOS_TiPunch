@@ -12,6 +12,12 @@ import CoreData
 
 class ContactListTableViewController: UITableViewController, UISearchBarDelegate {
 
+    @IBOutlet weak var filterAllButton: UIButton!
+    @IBOutlet weak var filterFamilyButton: UIButton!
+    @IBOutlet weak var filterDoctorButton: UIButton!
+    @IBOutlet weak var filterSeniorButton: UIButton!
+    @IBOutlet weak var filterUrgencyButton: UIButton!
+    @IBOutlet weak var filterStackView: UIStackView!
     @IBOutlet weak var searchBar: UISearchBar!
     var contacts: [Contact] = []
     var filterContacts: [Contact] = []
@@ -43,7 +49,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     lazy var reloadControl: UIRefreshControl = {
         let reloadControl = UIRefreshControl()
         reloadControl.addTarget(self, action: #selector(handleRefresh(_:)), for: UIControl.Event.valueChanged)
-        reloadControl.tintColor = UIColor.init(red: 0.98, green: 0.139, blue: 0.53, alpha: 1.0)
+        reloadControl.tintColor = UIColor(red: 0.38, green: 0.55, blue: 0.21, alpha: 1.0)
         reloadControl.attributedTitle = NSAttributedString(string: "Rechargement de la liste ...")
         return reloadControl
     }()
@@ -96,8 +102,6 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         APIClient.instance.getAllContact(onSucces: { (contactsData) in
             self.contacts = contactsData
             self.filterContacts = self.contacts
-            
-            print("add in core data")
             self.addContactsToCoreData()
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -209,5 +213,39 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         controller.contact = self.filterContacts[indexPath.row]
         
         self.show(controller, sender: self)
+    }
+    
+    @IBAction func selectAllContact(_ sender: Any) {
+        filterContacts.removeAll()
+        filterContacts = contacts
+        self.tableView.reloadData()
+    }
+    @IBAction func selectFamilyContact(_ sender: Any) {
+        filterContacts.removeAll()
+        filterContacts = contacts.filter({ (contact) -> Bool in
+            return contact.profile == "FAMILLE"
+        })
+        self.tableView.reloadData()
+    }
+    @IBAction func selectUrgencyContact(_ sender: Any) {
+        filterContacts.removeAll()
+        filterContacts = contacts.filter({ (contact) -> Bool in
+            return contact.isEmergencyUser == true
+        })
+        self.tableView.reloadData()
+    }
+    @IBAction func selectDoctorContact(_ sender: Any) {
+        filterContacts.removeAll()
+        filterContacts = contacts.filter({ (contact) -> Bool in
+            return contact.profile == "MEDECIN"
+        })
+        self.tableView.reloadData()
+    }
+    @IBAction func selectSeniorContact(_ sender: Any) {
+        filterContacts.removeAll()
+        filterContacts = contacts.filter({ (contact) -> Bool in
+            return contact.profile == "SENIOR"
+        })
+        self.tableView.reloadData()
     }
 }
