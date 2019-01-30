@@ -25,8 +25,15 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         preferredStyle: .alert
     )
     
+    let alertDelete = UIAlertController(
+        title: "Supprimer le contact",
+        message: "Etes vous sur de supprimer le contact?",
+        preferredStyle: .alert
+    )
+
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var lastNameTextInput: UITextField!
     @IBOutlet weak var gravatarImageView: UIImageView!
     @IBOutlet weak var emailTextInput: UITextField!
@@ -46,6 +53,20 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         alertPhone.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        alertDelete.addAction(UIAlertAction(title: "OK", style: .default, handler: { (sender) in
+            APIClient.instance.deleteContact(c: self.contact, onSucces: { (contactdelete) in
+                print("Contact supprimé")
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: Notification.Name("deleteContact"), object: self)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }) { (e) in
+                print("Contact intacte")
+            }
+            
+            
+        }))
+        alertDelete.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: nil))
         profilPicker.delegate = self
         profilPicker.dataSource = self
         self.saveButton.isHidden = true
@@ -86,7 +107,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         }
         
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-            let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
+            let textField = alert!.textFields![0]
             self.imageUrl = textField.text!
             if let url = URL(string: self.imageUrl) {
                 DispatchQueue.global().async {
@@ -111,6 +132,10 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     @IBAction func tapToCall(_ sender: UIButton) {
     }
+    @IBAction func tapToDelete(_ sender: UIButton) {
+        self.present(alertDelete, animated: true, completion: nil)
+    }
+    
     @IBAction func tapToSave(_ sender: UIButton) {
         
         if !isValidEmail(email: self.emailTextInput.text!) {
@@ -140,7 +165,10 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
             
             print(contact)
             APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
-                print("Contact modifié")
+                DispatchQueue.main.async {
+                     NotificationCenter.default.post(name: Notification.Name("updateContact"), object: self)
+                     print("Contact modifié")
+                }
             }) { (e) in
                 print("Das Problem")
             }

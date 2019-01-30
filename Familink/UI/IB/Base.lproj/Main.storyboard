@@ -322,18 +322,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="ContactList Controller" id="vMb-ro-Ll7" userLabel="ContactList Controller">
-                        <rightBarButtonItems>
-                            <barButtonItem style="plain" systemItem="add" id="3A6-Rm-WhW">
-                                <connections>
-                                    <segue destination="m5U-Qc-SbO" kind="show" id="P58-bl-3hr"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem style="plain" systemItem="bookmarks" id="ui4-TA-EuI">
-                                <connections>
-                                    <segue destination="ik8-O9-ZMd" kind="show" id="Fvt-gF-g8X"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" systemItem="action" id="N0Q-Cl-7qR">
+                            <connections>
+                                <segue destination="ik8-O9-ZMd" kind="show" id="9lA-WM-qMf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="3A6-Rm-WhW">
+                            <connections>
+                                <segue destination="m5U-Qc-SbO" kind="show" id="P58-bl-3hr"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="searchBar" destination="tSE-cs-aFX" id="YzW-Yx-Zru"/>
@@ -362,15 +360,8 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NuQ-Di-TAc">
-                                        <rect key="frame" x="10" y="230.5" width="359" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wRo-Pe-Vmo">
-                                        <rect key="frame" x="10" y="297.5" width="359" height="30"/>
+                                        <rect key="frame" x="10" y="240" width="359" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -383,27 +374,15 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Numéro de téléphone :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gFt-X2-R4Y">
-                                        <rect key="frame" x="15" y="201.5" width="175" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mail :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7AL-rJ-tjH">
-                                        <rect key="frame" x="18" y="268.5" width="41" height="21"/>
+                                        <rect key="frame" x="18" y="201" width="41" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cXp-gd-JsE">
-                                        <rect key="frame" x="0.0" y="367.5" width="375" height="109"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </pickerView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Profil:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fSD-I3-Og9">
-                                        <rect key="frame" x="165" y="338.5" width="45" height="21"/>
+                                        <rect key="frame" x="165" y="290" width="45" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -439,6 +418,11 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cXp-gd-JsE">
+                                        <rect key="frame" x="0.0" y="319" width="375" height="109"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </pickerView>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -453,8 +437,6 @@
                         <outlet property="lastNameTextLabel" destination="InO-Wt-2vm" id="FI8-oB-6Sw"/>
                         <outlet property="mailTextImput" destination="wRo-Pe-Vmo" id="21w-yw-MeU"/>
                         <outlet property="mailTextLabel" destination="7AL-rJ-tjH" id="ZQ6-Kn-n4Q"/>
-                        <outlet property="phoneNumberTextLabel" destination="gFt-X2-R4Y" id="o9a-Zl-yrV"/>
-                        <outlet property="phoneTextImput" destination="NuQ-Di-TAc" id="v6F-VN-RBk"/>
                         <outlet property="profilPicker" destination="cXp-gd-JsE" id="DGU-Xv-tuz"/>
                         <outlet property="profilPickerTextLabel" destination="fSD-I3-Og9" id="Euq-9j-mZa"/>
                         <outlet property="saveButton" destination="7bX-tm-1wT" id="krQ-yC-N8d"/>
@@ -681,7 +663,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <scrollView key="tableHeaderView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" id="tPH-nC-khq">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="648"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rs9-5i-S6a">
@@ -755,7 +737,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVg-ix-B5q">
-                                    <rect key="frame" x="321" y="8" width="46" height="30"/>
+                                    <rect key="frame" x="13" y="8" width="46" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="EDIT"/>
                                     <connections>
@@ -763,7 +745,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rAP-b7-ynE" userLabel="Save Button">
-                                    <rect key="frame" x="321" y="8" width="46" height="30"/>
+                                    <rect key="frame" x="13" y="8" width="46" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="SAVE"/>
                                     <connections>
@@ -792,14 +774,23 @@
                                         <action selector="tapToChangeImage:" destination="OHf-SR-kAu" eventType="touchUpInside" id="gfq-3N-Yyo"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6us-Gy-M79">
+                                    <rect key="frame" x="311" y="6" width="53" height="34"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Delete">
+                                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="tapToDelete:" destination="OHf-SR-kAu" eventType="touchUpInside" id="UU3-lP-dog"/>
+                                    </connections>
+                                </button>
                             </subviews>
                         </scrollView>
                     </tableView>
-                    <toolbarItems>
-                        <barButtonItem title="Item" id="gJG-qQ-crJ"/>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="deleteButton" destination="6us-Gy-M79" id="sEk-gf-G8P"/>
                         <outlet property="editButton" destination="YVg-ix-B5q" id="9fm-he-0IN"/>
                         <outlet property="editGravatar" destination="tgS-ys-9xn" id="r4j-IA-0me"/>
                         <outlet property="emailTextInput" destination="fOp-6E-jBA" id="3tx-b4-zc0"/>

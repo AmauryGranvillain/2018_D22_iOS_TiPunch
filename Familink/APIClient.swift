@@ -262,6 +262,38 @@ class APIClient {
         // revoie la tache pour pouvoir l'annuler
         return task
     }
+    func updateUser (u: User, onSucces: @escaping (String)->(), onError: @escaping (String)->()) -> URLSessionTask {
+        //préparation de la requete
+        var request = URLRequest(url: URL(string: "\(urlServer)/secured/users/")! )
+        print(request)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("Bearer: \(self.TOKEN)", forHTTPHeaderField: "Authorization")
+        let json: [String: Any] = ["firstName": u.firstName ?? "",
+                                   "lastName": u.lastName ?? "",
+                                   "email": u.email ?? "",
+                                   "profile": u.profile ?? ""]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        request.httpBody = jsonData
+        // preparation de la tache de telechargezmebnt des données
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let requestResponse = response as? HTTPURLResponse {
+                if requestResponse.statusCode != 200 && requestResponse.statusCode != 204 {
+                    onError(self.errorToken(data: data))
+                } else {
+                    // si j'ai de la donnée
+                    if let data = data {
+                        onSucces("User modifié")
+                    }
+                }
+            }
+        }
+        // lance la tache
+        task.resume()
+        
+        // revoie la tache pour pouvoir l'annuler
+        return task
+    }
     
     func errorToken(data: Data?) -> String {
         if let dataResponse = data {

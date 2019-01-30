@@ -43,6 +43,18 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
             self,
             selector: #selector (loadContactListFromCoreData),
             name: Notification.Name("offline"), object: nil)
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector (loadContactListFromAPI),
+            name: Notification.Name("deleteContact"), object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector (loadContactListFromAPI),
+            name: Notification.Name("updateContact"), object: nil)
+        
+
         
         self.searchBar.delegate = self
         
@@ -55,6 +67,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     }
     
     @objc func loadContactListFromAPI() {
+
         APIClient.instance.getAllContact(onSucces: { (contactsData) in
             self.contacts = contactsData
             self.filterContacts = self.contacts
