@@ -209,6 +209,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
                                 self.present(alert, animated: true)
                             }
                         }
+                }
             }
         } else {
             self.saveButton.isHidden = true

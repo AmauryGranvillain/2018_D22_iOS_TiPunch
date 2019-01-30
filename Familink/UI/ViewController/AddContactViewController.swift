@@ -100,9 +100,11 @@ class AddContactViewController: UIViewController, UIPickerViewDelegate, UIPicker
                         }
                     }
                }
+            }
         } else {
             ConnectedClient.instance.errorConnectingAlert(view: self) { (alert) in
-             self.navigationController?.popViewController(animated: true)
+                 self.navigationController?.popViewController(animated: true)
+            }
         }
     }
     func alertVerif(message: String, toFocus: UITextField) {
@@ -122,16 +124,10 @@ class AddContactViewController: UIViewController, UIPickerViewDelegate, UIPicker
         print(self.profile)
         // Do any additional setup after loading the view.
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
+    
+    
+        
     let profils = ["Senior", "Famille", "Medecin"]
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return profils[row]
