@@ -94,19 +94,42 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
             bundle: nil),
             forCellReuseIdentifier: "ContactListTableViewCell")
         
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        swipe.direction = UISwipeGestureRecognizer.Direction.down
+        swipe.cancelsTouchesInView = false
+        view.addGestureRecognizer(swipe)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
+        let nextTag = textField.tag + 1
+        
+        if let nextResponder = view.viewWithTag(nextTag) {
+            nextResponder.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return true
     }
     
     @objc func loadContactListFromAPI() {
-
+        let loader = UIViewController.displaySpinner(onView: self.view)
         APIClient.instance.getAllContact(onSucces: { (contactsData) in
             self.contacts = contactsData
             self.filterContacts = self.contacts
             self.addContactsToCoreData()
             DispatchQueue.main.async {
+                UIViewController.removeSpinner(spinner: loader)
                 self.tableView.reloadData()
             }
         }) { (e) in
+            UIViewController.removeSpinner(spinner: loader)
             if e == "Security token invalid or expired" {
                 DispatchQueue.main.async {
                     let alert = UIAlertController(

@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var phoneTextInput: UITextField!
     @IBOutlet weak var passwordTextInput: UITextField!
@@ -42,6 +42,30 @@ class LoginViewController: UIViewController {
         if userPhone != "" {
             phoneTextInput.text = userPhone
         }
+        phoneTextInput.delegate = self
+        passwordTextInput.delegate = self
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        swipe.direction = UISwipeGestureRecognizer.Direction.down
+        swipe.cancelsTouchesInView = false
+        view.addGestureRecognizer(swipe)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        let nextTag = textField.tag + 1
+        
+        if let nextResponder = view.viewWithTag(nextTag) {
+            nextResponder.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return true
     }
     @IBAction func tapOnLogin(_ sender: UIButton) {
         userPhone =  phoneTextInput.text
@@ -52,15 +76,18 @@ class LoginViewController: UIViewController {
             defaults.set("", forKey: "Phone")
         }
         if ConnectedClient.instance.isConnectedToNetwork() {
+            let loader = UIViewController.displaySpinner(onView: self.view)
             APIClient.instance.login(phone: userPhone!, password: userPassword!, onSucces: { (Result) in
                 DispatchQueue.main.async {
                     print("success login before notif")
                     NotificationCenter.default.post(name: Notification.Name("login"), object: self)
                     print(Result)
+                    UIViewController.removeSpinner(spinner: loader)
                 }
             }) { (error) in
                 DispatchQueue.main.async {
                     print(error)
+                    UIViewController.removeSpinner(spinner: loader)
                     self.checkError(error: error)
                 }
             }

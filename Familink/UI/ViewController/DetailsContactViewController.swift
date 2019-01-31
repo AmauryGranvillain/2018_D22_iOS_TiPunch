@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
 
     var contact: Contact = Contact()
     var imageUrl = ""
@@ -30,7 +30,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         message: "Etes vous sur de supprimer le contact?",
         preferredStyle: .alert
     )
-
+    
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
@@ -54,13 +54,16 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         alertPhone.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         alertDelete.addAction(UIAlertAction(title: "OK", style: .default, handler: { (sender) in
+            let loader = UIViewController.displaySpinner(onView: self.view)
             APIClient.instance.deleteContact(c: self.contact, onSucces: { (contactdelete) in
                 print("Contact supprimé")
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: Notification.Name("deleteContact"), object: self)
+                    UIViewController.removeSpinner(spinner: loader)
                     self.navigationController?.popViewController(animated: true)
                 }
             }) { (e) in
+                UIViewController.removeSpinner(spinner: loader)
                 if e == "Security token invalid or expired" {
                     DispatchQueue.main.async {
                         let alert = UIAlertController(
@@ -109,9 +112,34 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
                 }
             }
         }
-        
+        phoneTextInput.delegate = self
+        firstNameTextInput.delegate = self
+        lastNameTextInput.delegate = self
+        emailTextInput.delegate = self
+        lastNameTextInput.delegate = self
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        swipe.direction = UISwipeGestureRecognizer.Direction.down
+        swipe.cancelsTouchesInView = false
+        view.addGestureRecognizer(swipe)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
-    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        let nextTag = textField.tag + 1
+        
+        if let nextResponder = view.viewWithTag(nextTag) {
+            nextResponder.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
     @IBAction func tapToChangeImage(_ sender: UIButton) {
         
         let alert = UIAlertController(
@@ -185,30 +213,33 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
                 contact.isEmergencyUser = self.contact.isEmergencyUser
                 
                 print(contact)
+                let loader = UIViewController.displaySpinner(onView: self.view)
                 APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
                     DispatchQueue.main.async {
+                        UIViewController.removeSpinner(spinner: loader)
                         NotificationCenter.default.post(name: Notification.Name("updateContact"), object: self)
                         print("Contact modifié")
                     }
                 }) { (e) in
-                        if e == "Security token invalid or expired" {
-                            DispatchQueue.main.async {
-                                let alert = UIAlertController(
-                                    title: "Session expiré",
-                                    message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
-                                    preferredStyle: .alert
-                                )
-                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
-                                    let controller = UIStoryboard.init(
-                                        name: "Main",
-                                        bundle: nil).instantiateViewController(
-                                            withIdentifier: "LoginViewController") as! LoginViewController
+                    UIViewController.removeSpinner(spinner: loader)
+                    if e == "Security token invalid or expired" {
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(
+                                title: "Session expiré",
+                                message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
+                                preferredStyle: .alert
+                            )
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
+                                let controller = UIStoryboard.init(
+                                    name: "Main",
+                                    bundle: nil).instantiateViewController(
+                                        withIdentifier: "LoginViewController") as! LoginViewController
 
-                                    self.navigationController?.show(controller, sender: self)
-                                }))
-                                self.present(alert, animated: true)
-                            }
+                                self.navigationController?.show(controller, sender: self)
+                            }))
+                            self.present(alert, animated: true)
                         }
+                    }
                 }
             }
         } else {

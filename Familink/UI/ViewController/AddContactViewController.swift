@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class AddContactViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddContactViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     var imageUrl: String = ""
     var profile: String = "Senior"
@@ -75,12 +75,15 @@ class AddContactViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 contact.setValue(self.profile, forKey: "profile")
                 contact.setValue(self.phoneTextImput.text, forKey: "phone")
                 contact.setValue(self.imageUrl, forKey: "gravatar")
+                let loader = UIViewController.displaySpinner(onView: self.view)
                 APIClient.instance.createContact(c: contact, onSucces: { (_) in
                     DispatchQueue.main.async {
+                        UIViewController.removeSpinner(spinner: loader)
                         NotificationCenter.default.post(name: Notification.Name("addContact"), object: self)
                         self.navigationController?.popViewController(animated: true)
                     }
                 }) {error in
+                    UIViewController.removeSpinner(spinner: loader)
                     if error == "Security token invalid or expired" {
                         DispatchQueue.main.async {
                             let alert = UIAlertController(
@@ -122,7 +125,20 @@ class AddContactViewController: UIViewController, UIPickerViewDelegate, UIPicker
         addContactprofilPicker.delegate = self
         addContactprofilPicker.dataSource = self
         print(self.profile)
-        // Do any additional setup after loading the view.
+        phoneTextImput.delegate = self
+        firstNameTextImput.delegate = self
+        lastNameTextImput.delegate = self
+        mailTextImput.delegate = self
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        swipe.direction = UISwipeGestureRecognizer.Direction.down
+        swipe.cancelsTouchesInView = false
+        view.addGestureRecognizer(swipe)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     

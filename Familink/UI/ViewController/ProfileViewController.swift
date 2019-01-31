@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource{
+class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
     let profils = ["Senior" ,"Famille" ,"Medecin"]
     
     func displayAlertForInvalidField(message: String, toFocus: UITextField) {
@@ -70,13 +70,19 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         self.saveButton.isHidden = true
         self.editButton.isHidden = false
         isEnabledTextInput(bool: false)
+        firstNameTextImput.delegate = self
+        lastNameTextImput.delegate = self
+        mailTextImput.delegate = self       
         
+        let loader = UIViewController.displaySpinner(onView: self.view)
         APIClient.instance.getUser(onSucces: { (user) in
+            UIViewController.removeSpinner(spinner: loader)
             let currentUser = user[0]
             self.firstNameTextImput.text = currentUser.firstName
             self.lastNameTextImput.text = currentUser.lastName
             self.mailTextImput.text = currentUser.email
         }) { (e) in
+            UIViewController.removeSpinner(spinner: loader)
             if e == "Security token invalid or expired" {
                 DispatchQueue.main.async {
                     let alert = UIAlertController(
@@ -96,8 +102,28 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 }
             }
         }
-       
-        // Do any additional setup after loading the view.
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        swipe.direction = UISwipeGestureRecognizer.Direction.down
+        swipe.cancelsTouchesInView = false
+        view.addGestureRecognizer(swipe)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        let nextTag = textField.tag + 1
+        
+        if let nextResponder = view.viewWithTag(nextTag) {
+            nextResponder.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return true
     }
     @IBAction func tapToSave(_ sender: UIButton) {
         
@@ -113,8 +139,11 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 currentUser.lastName = self.lastNameTextImput.text
                 currentUser.email = self.mailTextImput.text
                 
+                let loader = UIViewController.displaySpinner(onView: self.view)
                 APIClient.instance.updateUser(u: currentUser, onSucces: { (user) in
+                    UIViewController.removeSpinner(spinner: loader)
                 }) { (e) in
+                    UIViewController.removeSpinner(spinner: loader)
                     if e == "Security token invalid or expired" {
                     DispatchQueue.main.async {
                         let alert = UIAlertController(
