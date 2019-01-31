@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
 
     var contact: Contact = Contact()
     var imageUrl = ""
@@ -30,7 +30,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         message: "Etes vous sur de supprimer le contact?",
         preferredStyle: .alert
     )
-
+    
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
@@ -112,9 +112,34 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
                 }
             }
         }
-        
+        phoneTextInput.delegate = self
+        firstNameTextInput.delegate = self
+        lastNameTextInput.delegate = self
+        emailTextInput.delegate = self
+        lastNameTextInput.delegate = self
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        swipe.direction = UISwipeGestureRecognizer.Direction.down
+        swipe.cancelsTouchesInView = false
+        view.addGestureRecognizer(swipe)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
     }
-    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        let nextTag = textField.tag + 1
+        
+        if let nextResponder = view.viewWithTag(nextTag) {
+            nextResponder.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
     @IBAction func tapToChangeImage(_ sender: UIButton) {
         
         let alert = UIAlertController(
