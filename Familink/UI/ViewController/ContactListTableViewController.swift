@@ -8,10 +8,14 @@
 
 import UIKit
 import CoreData
+import MessageUI
 
-
-class ContactListTableViewController: UITableViewController, UISearchBarDelegate {
-
+class ContactListTableViewController: UITableViewController, UISearchBarDelegate, MFMessageComposeViewControllerDelegate {
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+    }
+    
+    
     @IBOutlet weak var filterAllButton: UIButton!
     @IBOutlet weak var filterFamilyButton: UIButton!
     @IBOutlet weak var filterDoctorButton: UIButton!
@@ -74,7 +78,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
             self,
             selector: #selector (loadContactListFromCoreData),
             name: Notification.Name("offline"), object: nil)
-
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector (loadContactListFromAPI),
@@ -85,51 +89,28 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
             selector: #selector (loadContactListFromAPI),
             name: Notification.Name("updateContact"), object: nil)
         
-
+        
         
         self.searchBar.delegate = self
         
         tableView.register(UINib(
             nibName: "ContactListTableViewCell",
             bundle: nil),
-            forCellReuseIdentifier: "ContactListTableViewCell")
+                           forCellReuseIdentifier: "ContactListTableViewCell")
         
-        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        swipe.direction = UISwipeGestureRecognizer.Direction.down
-        swipe.cancelsTouchesInView = false
-        view.addGestureRecognizer(swipe)
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
-        let nextTag = textField.tag + 1
-        
-        if let nextResponder = view.viewWithTag(nextTag) {
-            nextResponder.becomeFirstResponder()
-        } else {
-            textField.resignFirstResponder()
-        }
-        
-        return true
     }
     
     @objc func loadContactListFromAPI() {
-        let loader = UIViewController.displaySpinner(onView: self.view)
+        
         APIClient.instance.getAllContact(onSucces: { (contactsData) in
             self.contacts = contactsData
             self.filterContacts = self.contacts
             self.addContactsToCoreData()
             DispatchQueue.main.async {
-                UIViewController.removeSpinner(spinner: loader)
                 self.tableView.reloadData()
             }
         }) { (e) in
-            UIViewController.removeSpinner(spinner: loader)
             if e == "Security token invalid or expired" {
                 DispatchQueue.main.async {
                     let alert = UIAlertController(
@@ -172,7 +153,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
             try? context.save()
         }
     }
-
+    
     // MARK: - Table view data source
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
@@ -194,22 +175,22 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return self.filterContacts.count
     }
     
-     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         loadContactListFromAPI()
         reloadControl.endRefreshing()
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: "ContactListTableViewCell",
             for: indexPath) as! ContactListTableViewCell
-
+        
         let contactIndex = self.filterContacts[indexPath.row]
         cell.contactNameLabel.text = contactIndex.firstName! + " " + contactIndex.lastName!
         
@@ -224,7 +205,7 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
                 }
             }
         }
-
+        
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -236,6 +217,42 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         controller.contact = self.filterContacts[indexPath.row]
         
         self.show(controller, sender: self)
+    }
+    override func tableView(_ tableView: UITableView, editActionsForRowAt index: IndexPath) -> [UITableViewRowAction]? {
+        
+        
+        let call = UITableViewRowAction(style: .normal, title: "Appeler") { _, index in
+            guard let phone = self.contacts[index[1]].phone else { return }
+            guard let number = URL(string: "tel://" + phone) else { return }
+            if (UIApplication.shared.canOpenURL(number))
+            {
+                UIApplication.shared.open(number)
+            } else {
+                let alert = UIAlertController(title: "Désolé !", message: "Votre téléphone ne supporte pas de passer des appels", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        
+        call.backgroundColor = .green
+        
+        let message = UITableViewRowAction(style: .normal, title: "Message") { action, index in
+            guard self.contacts[index[1]].phone != nil else { return }
+            let composeVC = MFMessageComposeViewController()
+            composeVC.messageComposeDelegate = self
+            composeVC.recipients = [self.contacts[index[1]].phone] as? [String]
+            composeVC.body = ""
+            
+            if MFMessageComposeViewController.canSendText() {
+                self.present(composeVC, animated: true, completion: nil)
+            } else {
+                print("Impossible d'envoyer un message.")
+            }
+            
+            
+        }
+        message.backgroundColor = .blue
+        return [call, message]
     }
     
     @IBAction func selectAllContact(_ sender: Any) {
@@ -271,4 +288,5 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         })
         self.tableView.reloadData()
     }
+    
 }
