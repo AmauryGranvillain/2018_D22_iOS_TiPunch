@@ -39,7 +39,7 @@ class ConnectedClient {
         
     }
     
-    func errorConnectingAlert(view: UIViewController,handler: ((UIAlertAction)->())?){
+    func errorConnectingAlert(view: UIViewController, handler: ((UIAlertAction)->())?){
         let alert = UIAlertController(
             title: "Erreur de connexion",
             message: "Cette action n'est pas disponible sans connexion",

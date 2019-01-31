@@ -91,8 +91,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     self.checkError(error: error)
                 }
             }
-        }
-        else {
+        } else {
             let alert = UIAlertController(
                 title: "Erreur de connexion",
                 message: "Voulez-vous passer en mode hors-ligne ?",
