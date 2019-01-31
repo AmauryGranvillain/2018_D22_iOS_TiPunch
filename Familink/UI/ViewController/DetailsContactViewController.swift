@@ -30,7 +30,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         message: "Etes vous sur de supprimer le contact?",
         preferredStyle: .alert
     )
-
+    
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
@@ -110,13 +110,15 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
             }
         }
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
+        /*let swipe = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        swipe.direction = UISwipeGestureRecognizer.Direction.down
+        swipe.cancelsTouchesInView = false
+        view.addGestureRecognizer(swipe)*/
     }
-    @objc func dismissKeyboard() {
+    /*@objc func dismissKeyboard() {
         view.endEditing(true)
-    }
+    }*/
+    
     
     @IBAction func tapToChangeImage(_ sender: UIButton) {
         
@@ -290,5 +292,10 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
             return nil
         }
         return appDelegate.persistentContainer.viewContext
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true
     }
 }
