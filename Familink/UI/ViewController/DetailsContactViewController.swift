@@ -151,8 +151,8 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
             let composePicker = MFMailComposeViewController()
             composePicker.mailComposeDelegate = self
             composePicker.delegate = self as! UINavigationControllerDelegate
-            composePicker.setToRecipients(["example@gmail.com"])
-            composePicker.setSubject("Testing Email")
+            composePicker.setToRecipients([contact.email!])
+            composePicker.setSubject("")
             composePicker.setMessageBody(message, isHTML: false)
             self.present(composePicker, animated: true, completion: nil)
         } else {
@@ -184,8 +184,8 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         let composeVC = MFMessageComposeViewController()
         composeVC.messageComposeDelegate = self
         
-        composeVC.recipients = ["0641382323"]
-        composeVC.body = "Hola Chico"
+        composeVC.recipients = [contact.phone!]
+        composeVC.body = ""
         
         if MFMessageComposeViewController.canSendText() {
             self.present(composeVC, animated: true, completion: nil)
