@@ -8,8 +8,13 @@
 
 import UIKit
 import CoreData
+import MessageUI
 
-class ContactListTableViewController: UITableViewController, UISearchBarDelegate {
+class ContactListTableViewController: UITableViewController, UISearchBarDelegate, MFMessageComposeViewControllerDelegate {
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+    }
+    
 
     @IBOutlet weak var filterAllButton: UIButton!
     @IBOutlet weak var filterFamilyButton: UIButton!
@@ -213,24 +218,42 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         
         self.show(controller, sender: self)
     }
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt index: IndexPath) -> [UITableViewRowAction]? {
+       
         
-        let callAction = UIContextualAction(style: .destructive, title: "Call") { (action, sourceView, completionHandler) in
-            print("Call")
-            completionHandler(true)
+        let call = UITableViewRowAction(style: .normal, title: "Appeler") { _, index in
+            guard let phone = self.contacts[index[1]].phone else { return }
+            guard let number = URL(string: "tel://" + phone) else { return }
+            if (UIApplication.shared.canOpenURL(number))
+            {
+                UIApplication.shared.open(number)
+            } else {
+                let alert = UIAlertController(title: "Désolé !", message: "Votre téléphone ne supporte pas de passer des appels", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
         
-        let messageAction = UIContextualAction(style: .normal, title: "Message") { (action, sourceView, completionHandler) in
-            print("Message")
-            completionHandler(true)
-        }
-        let swipeActionConfig = UISwipeActionsConfiguration(actions: [callAction, messageAction])
-        swipeActionConfig.performsFirstActionWithFullSwipe = false
-        return swipeActionConfig
+        call.backgroundColor = .green
+        
+        let message = UITableViewRowAction(style: .normal, title: "Message") { action, index in
+            guard self.contacts[index[1]].phone != nil else { return }
+            let composeVC = MFMessageComposeViewController()
+            composeVC.messageComposeDelegate = self
+            composeVC.recipients = [self.contacts[index[1]].phone] as? [String]
+            composeVC.body = ""
+            
+            if MFMessageComposeViewController.canSendText() {
+                self.present(composeVC, animated: true, completion: nil)
+            } else {
+                print("Impossible d'envoyer un message.")
+            }
+     
+        
     }
-    override var prefersStatusBarHidden: Bool{
-        return true
-    }
+        message.backgroundColor = .blue
+        return [call, message]
+}
     
     @IBAction func selectAllContact(_ sender: Any) {
         filterContacts.removeAll()
