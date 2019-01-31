@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class LoginViewController: UIViewController {
 
@@ -15,14 +16,15 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var phoneNumberTextLabel: UILabel!
     @IBOutlet weak var passwordTextLabel: UILabel!
     @IBOutlet weak var rememberMeTextLabel: UILabel!
+    @IBOutlet weak var remembeMeSwitch: UISwitch!
+    
+    let defaults = UserDefaults.standard
+    
     var userPhone: String?
     var userPassword: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if userPhone != nil {
-            phoneTextInput.text = userPhone
-        }
         
         if(!ConnectedClient.instance.isConnectedToNetwork()) {
             let alert = UIAlertController(
@@ -36,10 +38,17 @@ class LoginViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
             self.present(alert, animated: true)
         }
+        loadUserFromCoreData()
+        if userPhone != "" {
+            phoneTextInput.text = userPhone
+        }
     }
     @IBAction func tapOnLogin(_ sender: UIButton) {
         userPhone =  phoneTextInput.text
         userPassword = passwordTextInput.text
+        if remembeMeSwitch.isOn {
+            addUserToCoreData()
+        }
         if ConnectedClient.instance.isConnectedToNetwork() {
             APIClient.instance.login(phone: userPhone!, password: userPassword!, onSucces: { (Result) in
                 DispatchQueue.main.async {
@@ -74,7 +83,6 @@ class LoginViewController: UIViewController {
                 name: "Main",
                 bundle: nil).instantiateViewController(
                     withIdentifier: "SignUpViewController") as! SignUpViewController
-            
             self.show(controller, sender: self)
         } else {
             let alert = UIAlertController(
@@ -92,7 +100,21 @@ class LoginViewController: UIViewController {
     
     @IBAction func tapOnforgetPassword(_ sender: Any) {
     }
-    @IBAction func switchRemenberMe(_ sender: Any) {
+    
+    func loadUserFromCoreData() {
+        let savedPhone = defaults.object(forKey: "Phone")
+        userPhone = savedPhone as? String ?? ""
+    }
+    
+    func addUserToCoreData() {
+        defaults.set(phoneTextInput.text, forKey: "Phone")
+    }
+    
+    func getContext() -> NSManagedObjectContext? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return nil
+        }
+        return appDelegate.persistentContainer.viewContext
     }
     
     func checkError(error: String) {

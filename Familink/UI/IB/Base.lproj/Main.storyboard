@@ -136,6 +136,7 @@
                         <outlet property="passwordTextLabel" destination="mMl-1n-i11" id="RFi-n5-WPN"/>
                         <outlet property="phoneNumberTextLabel" destination="dRh-ah-TDd" id="B10-wo-6Lb"/>
                         <outlet property="phoneTextInput" destination="u0I-d5-FWp" id="XGi-Cg-ul8"/>
+                        <outlet property="remembeMeSwitch" destination="3ci-oz-or6" id="QXW-qh-cJe"/>
                         <outlet property="rememberMeTextLabel" destination="nUg-f2-0P8" id="v7R-ID-efO"/>
                     </connections>
                 </viewController>
