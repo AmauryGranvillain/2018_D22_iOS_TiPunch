@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CC0E454F2202F904001949CC /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0E454E2202F904001949CC /* SplashViewController.swift */; };
+		CC133EF0220210D0000DE13A /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC133EEF220210D0000DE13A /* LoadingScreen.swift */; };
 		CC2F5B1E21F8785E000B1909 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */; };
 		CC2F5B2021F8785E000B1909 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B1F21F8785E000B1909 /* MasterViewController.swift */; };
 		CC2F5B2321F8785E000B1909 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC2F5B2121F8785E000B1909 /* Main.storyboard */; };
@@ -46,7 +47,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+
 		CC0E454E2202F904001949CC /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		CC133EEF220210D0000DE13A /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		CC2F5B1A21F8785E000B1909 /* Familink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Familink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC2F5B1F21F8785E000B1909 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +127,7 @@
 				CC54AEC521FB25270078AD15 /* UI */,
 				CC54AEC321FB25220078AD15 /* APIClient.swift */,
 				CCA41E1522009904008394A1 /* CoreDataClient.swift */,
+				CC133EEF220210D0000DE13A /* LoadingScreen.swift */,
 				CCA41E1322008879008394A1 /* ConnectedClient.swift */,
 				CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */,
 				CC2F5B2721F8785F000B1909 /* Assets.xcassets */,
@@ -355,6 +359,7 @@
 				CC937AD121F9CB2A0099858D /* SignUpViewController.swift in Sources */,
 				CC54AEC421FB25220078AD15 /* APIClient.swift in Sources */,
 				CC2F5B2621F8785E000B1909 /* Familink.xcdatamodeld in Sources */,
+				CC133EF0220210D0000DE13A /* LoadingScreen.swift in Sources */,
 				CC771FF121F8CABD0058FAD5 /* ContactListTableViewController.swift in Sources */,
 				CCA41E1622009904008394A1 /* CoreDataClient.swift in Sources */,
 				CC771FF421F8CADF0058FAD5 /* ContactListTableViewCell.swift in Sources */,

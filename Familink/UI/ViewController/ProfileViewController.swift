@@ -71,12 +71,15 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         self.editButton.isHidden = false
         isEnabledTextInput(bool: false)
         
+        let loader = UIViewController.displaySpinner(onView: self.view)
         APIClient.instance.getUser(onSucces: { (user) in
+            UIViewController.removeSpinner(spinner: loader)
             let currentUser = user[0]
             self.firstNameTextImput.text = currentUser.firstName
             self.lastNameTextImput.text = currentUser.lastName
             self.mailTextImput.text = currentUser.email
         }) { (e) in
+            UIViewController.removeSpinner(spinner: loader)
             if e == "Security token invalid or expired" {
                 DispatchQueue.main.async {
                     let alert = UIAlertController(
@@ -113,8 +116,11 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 currentUser.lastName = self.lastNameTextImput.text
                 currentUser.email = self.mailTextImput.text
                 
+                let loader = UIViewController.displaySpinner(onView: self.view)
                 APIClient.instance.updateUser(u: currentUser, onSucces: { (user) in
+                    UIViewController.removeSpinner(spinner: loader)
                 }) { (e) in
+                    UIViewController.removeSpinner(spinner: loader)
                     if e == "Security token invalid or expired" {
                     DispatchQueue.main.async {
                         let alert = UIAlertController(

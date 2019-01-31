@@ -41,15 +41,18 @@ class LoginViewController: UIViewController {
         userPhone =  phoneTextInput.text
         userPassword = passwordTextInput.text
         if ConnectedClient.instance.isConnectedToNetwork() {
+            let loader = UIViewController.displaySpinner(onView: self.view)
             APIClient.instance.login(phone: userPhone!, password: userPassword!, onSucces: { (Result) in
                 DispatchQueue.main.async {
                     print("success login before notif")
                     NotificationCenter.default.post(name: Notification.Name("login"), object: self)
                     print(Result)
+                    UIViewController.removeSpinner(spinner: loader)
                 }
             }) { (error) in
                 DispatchQueue.main.async {
                     print(error)
+                    UIViewController.removeSpinner(spinner: loader)
                     self.checkError(error: error)
                 }
             }

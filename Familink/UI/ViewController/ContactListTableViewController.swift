@@ -98,15 +98,17 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
     }
     
     @objc func loadContactListFromAPI() {
-
+        let loader = UIViewController.displaySpinner(onView: self.view)
         APIClient.instance.getAllContact(onSucces: { (contactsData) in
             self.contacts = contactsData
             self.filterContacts = self.contacts
             self.addContactsToCoreData()
             DispatchQueue.main.async {
+                UIViewController.removeSpinner(spinner: loader)
                 self.tableView.reloadData()
             }
         }) { (e) in
+            UIViewController.removeSpinner(spinner: loader)
             if e == "Security token invalid or expired" {
                 DispatchQueue.main.async {
                     let alert = UIAlertController(

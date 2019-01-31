@@ -54,13 +54,16 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         alertPhone.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         alertDelete.addAction(UIAlertAction(title: "OK", style: .default, handler: { (sender) in
+            let loader = UIViewController.displaySpinner(onView: self.view)
             APIClient.instance.deleteContact(c: self.contact, onSucces: { (contactdelete) in
                 print("Contact supprimé")
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: Notification.Name("deleteContact"), object: self)
+                    UIViewController.removeSpinner(spinner: loader)
                     self.navigationController?.popViewController(animated: true)
                 }
             }) { (e) in
+                UIViewController.removeSpinner(spinner: loader)
                 if e == "Security token invalid or expired" {
                     DispatchQueue.main.async {
                         let alert = UIAlertController(
@@ -185,30 +188,33 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
                 contact.isEmergencyUser = self.contact.isEmergencyUser
                 
                 print(contact)
+                let loader = UIViewController.displaySpinner(onView: self.view)
                 APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
                     DispatchQueue.main.async {
+                        UIViewController.removeSpinner(spinner: loader)
                         NotificationCenter.default.post(name: Notification.Name("updateContact"), object: self)
                         print("Contact modifié")
                     }
                 }) { (e) in
-                        if e == "Security token invalid or expired" {
-                            DispatchQueue.main.async {
-                                let alert = UIAlertController(
-                                    title: "Session expiré",
-                                    message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
-                                    preferredStyle: .alert
-                                )
-                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
-                                    let controller = UIStoryboard.init(
-                                        name: "Main",
-                                        bundle: nil).instantiateViewController(
-                                            withIdentifier: "LoginViewController") as! LoginViewController
+                    UIViewController.removeSpinner(spinner: loader)
+                    if e == "Security token invalid or expired" {
+                        DispatchQueue.main.async {
+                            let alert = UIAlertController(
+                                title: "Session expiré",
+                                message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
+                                preferredStyle: .alert
+                            )
+                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
+                                let controller = UIStoryboard.init(
+                                    name: "Main",
+                                    bundle: nil).instantiateViewController(
+                                        withIdentifier: "LoginViewController") as! LoginViewController
 
-                                    self.navigationController?.show(controller, sender: self)
-                                }))
-                                self.present(alert, animated: true)
-                            }
+                                self.navigationController?.show(controller, sender: self)
+                            }))
+                            self.present(alert, animated: true)
                         }
+                    }
                 }
             }
         } else {

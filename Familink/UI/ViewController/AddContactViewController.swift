@@ -75,12 +75,15 @@ class AddContactViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 contact.setValue(self.profile, forKey: "profile")
                 contact.setValue(self.phoneTextImput.text, forKey: "phone")
                 contact.setValue(self.imageUrl, forKey: "gravatar")
+                let loader = UIViewController.displaySpinner(onView: self.view)
                 APIClient.instance.createContact(c: contact, onSucces: { (_) in
                     DispatchQueue.main.async {
+                        UIViewController.removeSpinner(spinner: loader)
                         NotificationCenter.default.post(name: Notification.Name("addContact"), object: self)
                         self.navigationController?.popViewController(animated: true)
                     }
                 }) {error in
+                    UIViewController.removeSpinner(spinner: loader)
                     if error == "Security token invalid or expired" {
                         DispatchQueue.main.async {
                             let alert = UIAlertController(
