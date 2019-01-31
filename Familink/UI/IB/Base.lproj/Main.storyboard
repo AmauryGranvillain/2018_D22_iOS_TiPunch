@@ -133,11 +133,11 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="password"/>
                                     </textField>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ci-oz-or6">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ci-oz-or6" userLabel="Remember Me Switch">
                                         <rect key="frame" x="57" y="271" width="49" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
-                                            <action selector="switchRemenberMe:" destination="yyG-Ei-Vkf" eventType="valueChanged" id="wtO-vq-yBS"/>
+                                            <action selector="rememberMeSwitch:" destination="yyG-Ei-Vkf" eventType="valueChanged" id="tOM-q0-uP8"/>
                                         </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="se souvenir de moi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUg-f2-0P8">
@@ -167,6 +167,7 @@
                         <outlet property="passwordTextLabel" destination="mMl-1n-i11" id="RFi-n5-WPN"/>
                         <outlet property="phoneNumberTextLabel" destination="dRh-ah-TDd" id="B10-wo-6Lb"/>
                         <outlet property="phoneTextInput" destination="u0I-d5-FWp" id="XGi-Cg-ul8"/>
+                        <outlet property="rememberMeSwitch" destination="3ci-oz-or6" id="Sma-3s-ovc"/>
                         <outlet property="rememberMeTextLabel" destination="nUg-f2-0P8" id="v7R-ID-efO"/>
                     </connections>
                 </viewController>

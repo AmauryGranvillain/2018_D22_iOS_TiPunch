@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -15,14 +16,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var phoneNumberTextLabel: UILabel!
     @IBOutlet weak var passwordTextLabel: UILabel!
     @IBOutlet weak var rememberMeTextLabel: UILabel!
+    @IBOutlet weak var rememberMeSwitch: UISwitch!
+    
+    let defaults = UserDefaults.standard
+    
     var userPhone: String?
     var userPassword: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if userPhone != nil {
-            phoneTextInput.text = userPhone
-        }
         
         if(!ConnectedClient.instance.isConnectedToNetwork()) {
             let alert = UIAlertController(
@@ -35,6 +37,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }))
             alert.addAction(UIAlertAction(title: "Non", style: .cancel, handler: nil))
             self.present(alert, animated: true)
+        }
+        loadUserFromCoreData()
+        if userPhone != "" {
+            phoneTextInput.text = userPhone
         }
         phoneTextInput.delegate = self
         passwordTextInput.delegate = self
@@ -64,6 +70,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func tapOnLogin(_ sender: UIButton) {
         userPhone =  phoneTextInput.text
         userPassword = passwordTextInput.text
+        if rememberMeSwitch.isOn {
+            defaults.set(phoneTextInput.text, forKey: "Phone")
+        } else {
+            defaults.set("", forKey: "Phone")
+        }
         if ConnectedClient.instance.isConnectedToNetwork() {
             let loader = UIViewController.displaySpinner(onView: self.view)
             APIClient.instance.login(phone: userPhone!, password: userPassword!, onSucces: { (Result) in
@@ -101,7 +112,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 name: "Main",
                 bundle: nil).instantiateViewController(
                     withIdentifier: "SignUpViewController") as! SignUpViewController
-            
             self.show(controller, sender: self)
         } else {
             let alert = UIAlertController(
@@ -119,7 +129,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func tapOnforgetPassword(_ sender: Any) {
     }
-    @IBAction func switchRemenberMe(_ sender: Any) {
+    @IBAction func rememberMeSwitch(_ sender: Any) {
+    }
+    
+    func loadUserFromCoreData() {
+        let savedPhone = defaults.object(forKey: "Phone")
+        userPhone = savedPhone as? String ?? ""
+    }
+    
+    func getContext() -> NSManagedObjectContext? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return nil
+        }
+        return appDelegate.persistentContainer.viewContext
     }
     
     func checkError(error: String) {
