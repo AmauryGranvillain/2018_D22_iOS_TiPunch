@@ -164,6 +164,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         let context = appDelegate.persistentContainer.viewContext
         let contactsFromCoreData = CoreDataClient.instance.getContacts()
         DispatchQueue.main.async {
+            UserDefaults.standard.set("", forKey: "Phone")
             for contact in contactsFromCoreData {
                 context.delete(contact)
             }
