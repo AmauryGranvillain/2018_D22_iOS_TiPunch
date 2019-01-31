@@ -68,7 +68,10 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBAction func signUpUiButton(_ sender: UIButton) {
         if(ConnectedClient.instance.isConnectedToNetwork()){
-            let newUser = User(context: self.getContext()!)
+            var newUser = User();
+            DispatchQueue.main.async {
+                newUser = User(context: self.getContext()!)
+            }
             newUser.phone = phoneTextImput.text
             newUser.firstName = firstNameTextImput.text
             newUser.lastName = lastNameTextImput.text
@@ -120,10 +123,10 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func getContext() -> NSManagedObjectContext? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return nil
-        }
-        return appDelegate.persistentContainer.viewContext
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return nil
+            }
+            return appDelegate.persistentContainer.viewContext
     }
     
     func getAlert(message: String) {
