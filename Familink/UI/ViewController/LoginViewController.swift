@@ -16,7 +16,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var phoneNumberTextLabel: UILabel!
     @IBOutlet weak var passwordTextLabel: UILabel!
     @IBOutlet weak var rememberMeTextLabel: UILabel!
-    @IBOutlet weak var remembeMeSwitch: UISwitch!
+    @IBOutlet weak var rememberMeSwitch: UISwitch!
     
     let defaults = UserDefaults.standard
     
@@ -46,8 +46,10 @@ class LoginViewController: UIViewController {
     @IBAction func tapOnLogin(_ sender: UIButton) {
         userPhone =  phoneTextInput.text
         userPassword = passwordTextInput.text
-        if remembeMeSwitch.isOn {
-            addUserToCoreData()
+        if rememberMeSwitch.isOn {
+            defaults.set(phoneTextInput.text, forKey: "Phone")
+        } else {
+            defaults.set("", forKey: "Phone")
         }
         if ConnectedClient.instance.isConnectedToNetwork() {
             APIClient.instance.login(phone: userPhone!, password: userPassword!, onSucces: { (Result) in
@@ -100,14 +102,12 @@ class LoginViewController: UIViewController {
     
     @IBAction func tapOnforgetPassword(_ sender: Any) {
     }
+    @IBAction func rememberMeSwitch(_ sender: Any) {
+    }
     
     func loadUserFromCoreData() {
         let savedPhone = defaults.object(forKey: "Phone")
         userPhone = savedPhone as? String ?? ""
-    }
-    
-    func addUserToCoreData() {
-        defaults.set(phoneTextInput.text, forKey: "Phone")
     }
     
     func getContext() -> NSManagedObjectContext? {
