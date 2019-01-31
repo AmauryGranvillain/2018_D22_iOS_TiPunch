@@ -8,9 +8,10 @@
 
 import UIKit
 import CoreData
+import MessageUI
 
 
-class ContactListTableViewController: UITableViewController, UISearchBarDelegate {
+class ContactListTableViewController: UITableViewController, UISearchBarDelegate,  MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
 
     @IBOutlet weak var filterAllButton: UIButton!
     @IBOutlet weak var filterFamilyButton: UIButton!
@@ -214,6 +215,57 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         
         self.show(controller, sender: self)
     }
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let callAction = UIContextualAction(style: .destructive, title: "Call") { (action, sourceView, completionHandler) in
+            print("Call")
+            self.tapToCall (action)
+            completionHandler(true)
+        }
+        
+        let messageAction = UIContextualAction(style: .normal, title: "Message") { (action, sourceView, completionHandler) in
+            print("Message")
+            self.messageAction(action)
+            completionHandler(true)
+        }
+        let swipeActionConfig = UISwipeActionsConfiguration(actions: [callAction, messageAction])
+        swipeActionConfig.performsFirstActionWithFullSwipe = false
+        return swipeActionConfig
+    }
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+    }
+    func messageAction(_ sender: UIContextualAction) {
+        let controller = UIStoryboard.init(
+            name: "Main",
+            bundle: nil).instantiateViewController(
+                withIdentifier: "DetailsContactViewController") as! DetailsContactViewController
+        let composeVC = MFMessageComposeViewController()
+        composeVC.messageComposeDelegate = self
+        
+        composeVC.recipients = [controller.contact.phone] as? [String]
+        composeVC.body = ""
+        
+        if MFMessageComposeViewController.canSendText() {
+            self.present(composeVC, animated: true, completion: nil)
+        } else {
+            print("Impossible d'envoyer un message.")
+        }
+    }
+    
+   func callAction(_ sender: UIContextualAction) {
+    let controller = UIStoryboard.init(
+        name: "Main",
+        bundle: nil).instantiateViewController(
+            withIdentifier: "DetailsContactViewController") as! DetailsContactViewController
+        guard let numberString = controller.contact.phone, let url =
+            URL(string:"telprompt://\(numberString)") else {
+                return
+        }
+        UIApplication.shared.open(url)
+    }
+    override var prefersStatusBarHidden: Bool{
+        return true
+    }
     
     @IBAction func selectAllContact(_ sender: Any) {
         filterContacts.removeAll()
@@ -248,4 +300,5 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         })
         self.tableView.reloadData()
     }
+   
 }
