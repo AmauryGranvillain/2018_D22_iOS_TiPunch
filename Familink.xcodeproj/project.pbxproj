@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC0E454F2202F904001949CC /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0E454E2202F904001949CC /* SplashViewController.swift */; };
 		CC133EF0220210D0000DE13A /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC133EEF220210D0000DE13A /* LoadingScreen.swift */; };
 		CC2F5B1E21F8785E000B1909 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */; };
 		CC2F5B2021F8785E000B1909 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B1F21F8785E000B1909 /* MasterViewController.swift */; };
 		CC2F5B2321F8785E000B1909 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC2F5B2121F8785E000B1909 /* Main.storyboard */; };
 		CC2F5B2621F8785E000B1909 /* Familink.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B2421F8785E000B1909 /* Familink.xcdatamodeld */; };
 		CC2F5B2821F8785F000B1909 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC2F5B2721F8785F000B1909 /* Assets.xcassets */; };
-		CC2F5B2B21F8785F000B1909 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC2F5B2921F8785F000B1909 /* LaunchScreen.storyboard */; };
 		CC2F5B3621F8785F000B1909 /* FamilinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B3521F8785F000B1909 /* FamilinkTests.swift */; };
 		CC2F5B4121F8785F000B1909 /* FamilinkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B4021F8785F000B1909 /* FamilinkUITests.swift */; };
 		CC2F5B5321F8C065000B1909 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B5221F8C065000B1909 /* LoginViewController.swift */; };
@@ -47,6 +47,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+
+		CC0E454E2202F904001949CC /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		CC133EEF220210D0000DE13A /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		CC2F5B1A21F8785E000B1909 /* Familink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Familink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -54,7 +56,6 @@
 		CC2F5B2221F8785E000B1909 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CC2F5B2521F8785E000B1909 /* Familink.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Familink.xcdatamodel; sourceTree = "<group>"; };
 		CC2F5B2721F8785F000B1909 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		CC2F5B2A21F8785F000B1909 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CC2F5B2C21F8785F000B1909 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC2F5B3121F8785F000B1909 /* FamilinkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FamilinkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2F5B3521F8785F000B1909 /* FamilinkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilinkTests.swift; sourceTree = "<group>"; };
@@ -176,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				CC2F5B2121F8785E000B1909 /* Main.storyboard */,
-				CC2F5B2921F8785F000B1909 /* LaunchScreen.storyboard */,
 				CC771FF321F8CADF0058FAD5 /* ContactListTableViewCell.xib */,
 			);
 			path = IB;
@@ -192,6 +192,7 @@
 				CC771FF821F8CEA80058FAD5 /* ProfileViewController.swift */,
 				CC771FFA21F8CEB70058FAD5 /* AddContactViewController.swift */,
 				CC937AD021F9CB2A0099858D /* SignUpViewController.swift */,
+				CC0E454E2202F904001949CC /* SplashViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -302,7 +303,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC771FF521F8CADF0058FAD5 /* ContactListTableViewCell.xib in Resources */,
-				CC2F5B2B21F8785F000B1909 /* LaunchScreen.storyboard in Resources */,
 				CC2F5B2821F8785F000B1909 /* Assets.xcassets in Resources */,
 				CC2F5B2321F8785E000B1909 /* Main.storyboard in Resources */,
 			);
@@ -355,6 +355,7 @@
 				CCA41E1422008879008394A1 /* ConnectedClient.swift in Sources */,
 				CC2F5B2021F8785E000B1909 /* MasterViewController.swift in Sources */,
 				CC771FFB21F8CEB70058FAD5 /* AddContactViewController.swift in Sources */,
+				CC0E454F2202F904001949CC /* SplashViewController.swift in Sources */,
 				CC937AD121F9CB2A0099858D /* SignUpViewController.swift in Sources */,
 				CC54AEC421FB25220078AD15 /* APIClient.swift in Sources */,
 				CC2F5B2621F8785E000B1909 /* Familink.xcdatamodeld in Sources */,
@@ -405,14 +406,6 @@
 				CC2F5B2221F8785E000B1909 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		CC2F5B2921F8785F000B1909 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CC2F5B2A21F8785F000B1909 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
