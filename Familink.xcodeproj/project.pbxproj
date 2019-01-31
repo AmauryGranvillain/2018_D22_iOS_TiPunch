@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7CDAA57D22035976000C36E3 /* CustomUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDAA57C22035976000C36E3 /* CustomUI.swift */; };
 		CC0E454F2202F904001949CC /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0E454E2202F904001949CC /* SplashViewController.swift */; };
 		CC133EF0220210D0000DE13A /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC133EEF220210D0000DE13A /* LoadingScreen.swift */; };
 		CC2F5B1E21F8785E000B1909 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2F5B1D21F8785E000B1909 /* AppDelegate.swift */; };
@@ -47,7 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-
+		7CDAA57C22035976000C36E3 /* CustomUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUI.swift; sourceTree = "<group>"; };
 		CC0E454E2202F904001949CC /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		CC133EEF220210D0000DE13A /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		CC2F5B1A21F8785E000B1909 /* Familink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Familink.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +134,7 @@
 				CC2F5B2721F8785F000B1909 /* Assets.xcassets */,
 				CC2F5B2C21F8785F000B1909 /* Info.plist */,
 				CC2F5B2421F8785E000B1909 /* Familink.xcdatamodeld */,
+				7CDAA57C22035976000C36E3 /* CustomUI.swift */,
 			);
 			path = Familink;
 			sourceTree = "<group>";
@@ -352,6 +354,7 @@
 			files = (
 				CC771FF721F8CE980058FAD5 /* DetailsContactViewController.swift in Sources */,
 				CC2F5B5321F8C065000B1909 /* LoginViewController.swift in Sources */,
+				7CDAA57D22035976000C36E3 /* CustomUI.swift in Sources */,
 				CCA41E1422008879008394A1 /* ConnectedClient.swift in Sources */,
 				CC2F5B2021F8785E000B1909 /* MasterViewController.swift in Sources */,
 				CC771FFB21F8CEB70058FAD5 /* AddContactViewController.swift in Sources */,

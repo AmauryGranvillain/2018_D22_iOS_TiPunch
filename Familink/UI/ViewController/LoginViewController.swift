@@ -125,9 +125,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.present(alert, animated: true)
         }
     }
-    
-    @IBAction func tapOnforgetPassword(_ sender: Any) {
-    }
     @IBAction func rememberMeSwitch(_ sender: Any) {
     }
     
@@ -142,7 +139,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         return appDelegate.persistentContainer.viewContext
     }
-    
+    override func viewDidLayoutSubviews() {
+        let lineColor = UIColor(red:0.38, green:0.55, blue:0.21, alpha:1.0)
+        self.phoneTextInput.setBottomLine(borderColor: lineColor)
+        self.passwordTextInput.setBottomLine(borderColor: lineColor)
+    }
     func checkError(error: String) {
         switch error {
         case "User not found":
