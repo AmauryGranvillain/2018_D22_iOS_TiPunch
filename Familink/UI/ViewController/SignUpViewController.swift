@@ -11,7 +11,7 @@ import CoreData
 
 class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
     
-    let profils = ["Senior" ,"Famille" ,"Medecin"]
+    let profils = ["Senior", "Famille", "Medecin"]
     
     @IBOutlet weak var phoneTextImput: UITextField!
     @IBOutlet weak var lastNameTextImput: UITextField!
@@ -68,7 +68,7 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBAction func signUpUiButton(_ sender: UIButton) {
         if(ConnectedClient.instance.isConnectedToNetwork()){
-            var newUser = User();
+            var newUser = User()
             DispatchQueue.main.async {
                 newUser = User(context: self.getContext()!)
             }

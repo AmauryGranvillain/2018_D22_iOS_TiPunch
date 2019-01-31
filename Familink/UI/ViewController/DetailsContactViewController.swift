@@ -290,7 +290,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     */
 
-    let profils = ["Senior" ,"Famille" ,"Medecin"]
+    let profils = ["Senior", "Famille", "Medecin"]
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return profils[row]
     }

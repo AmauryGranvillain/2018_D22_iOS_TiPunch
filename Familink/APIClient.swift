@@ -118,7 +118,7 @@ class APIClient {
                    onError(self.errorToken(data: data))
                 } else {
                     // si j'ai de la donnée
-                    if let data = data {
+                    if data != nil {
                         onSucces("Contact ajouté !")
                     }
                 }
@@ -147,7 +147,7 @@ class APIClient {
                    onError(self.errorToken(data: data))
                 } else {
                     // si j'ai de la donnée
-                    if let data = data {
+                    if data != nil {
                         onSucces("Contact supprimé")
                     }
                 }
@@ -176,7 +176,7 @@ class APIClient {
                     onError(self.errorToken(data: data))
                 } else {
                     // si j'ai de la donnée
-                    if let data = data {
+                    if data != nil {
                         onSucces("Contact modifié")
                     }
                 }
@@ -253,7 +253,7 @@ class APIClient {
                     onError(self.errorToken(data: data))
                 } else {
                     // si j'ai de la donnée
-                    if let data = data {
+                    if data != nil {
                         onSucces("Compte crée")
                     }
                 }
@@ -285,7 +285,7 @@ class APIClient {
                     onError(self.errorToken(data: data))
                 } else {
                     // si j'ai de la donnée
-                    if let data = data {
+                    if data != nil {
                         onSucces("User modifié")
                     }
                 }

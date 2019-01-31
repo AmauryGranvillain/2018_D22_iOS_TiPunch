@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
-    let profils = ["Senior" ,"Famille" ,"Medecin"]
+    let profils = ["Senior", "Famille", "Medecin"]
     
     func displayAlertForInvalidField(message: String, toFocus: UITextField) {
         let alert = UIAlertController(
@@ -33,7 +33,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
     func isValidEmail(email: String) -> Bool {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-        var validEmail = NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email)
+        let validEmail = NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email)
         return validEmail
     }
     

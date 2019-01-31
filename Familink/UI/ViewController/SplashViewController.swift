@@ -20,7 +20,7 @@ class SplashViewController: UIViewController {
             
             self.logoImage.frame = CGRect(x: originFrameLogo.origin.x, y: originFrameLogo.origin.y, width: 160, height: 160)
         }) { (completed) in
-            UIView.animate(withDuration: 0.2 , animations: {
+            UIView.animate(withDuration: 0.2, animations: {
                 self.logoImage.frame = CGRect(x: originFrameLogo.origin.x+15, y: originFrameLogo.origin.y+15, width: 130, height: 130)
             }, completion: { (completed) in
                 Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { (timer) in
