@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource{
+class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate{
     
     let profils = ["Senior" ,"Famille" ,"Medecin"]
     
@@ -36,12 +36,34 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         super.viewDidLoad()
         profilPicker.delegate = self
         profilPicker.dataSource = self
+        phoneTextImput.delegate = self
+        firstNameTextImput.delegate = self
+        lastNameTextImput.delegate = self
+        mailTextImput.delegate = self
+        passwordTextInput.delegate = self
+        confirmPasswordTextInput.delegate = self
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        swipe.direction = UISwipeGestureRecognizer.Direction.down
+        swipe.cancelsTouchesInView = false
+        view.addGestureRecognizer(swipe)
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
     @objc func dismissKeyboard() {
         view.endEditing(true)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        let nextTag = textField.tag + 1
+        
+        if let nextResponder = view.viewWithTag(nextTag) {
+            nextResponder.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return true
     }
     
     @IBAction func signUpUiButton(_ sender: UIButton) {
