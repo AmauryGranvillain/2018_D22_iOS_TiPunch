@@ -64,8 +64,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     @IBOutlet weak var lastNameTextLabel: UILabel!
     @IBOutlet weak var profilPickerTextLabel: UILabel!
     @IBOutlet weak var mailTextLabel: UILabel!
-    @IBAction func userDisconnectButton(_ sender: UIButton) {
-    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
