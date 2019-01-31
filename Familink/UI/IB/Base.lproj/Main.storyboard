@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NLk-qz-I3T">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,10 +10,41 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--SplashController-->
+        <scene sceneID="6o8-p0-RU1">
+            <objects>
+                <viewController id="NLk-qz-I3T" userLabel="SplashController" customClass="SplashViewController" customModule="Familink" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="du4-Lp-icU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="logoFamilink" translatesAutoresizingMaskIntoConstraints="NO" id="G3M-SJ-6qy">
+                                <rect key="frame" x="112.5" y="268.5" width="0.0" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="axp-gB-I5L"/>
+                                    <constraint firstAttribute="width" id="cCb-Ay-YqH"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="G3M-SJ-6qy" firstAttribute="centerX" secondItem="IpH-KE-OYd" secondAttribute="centerX" id="lXd-wW-PSc"/>
+                            <constraint firstItem="G3M-SJ-6qy" firstAttribute="centerY" secondItem="IpH-KE-OYd" secondAttribute="centerY" id="yvd-Ut-FQn"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="IpH-KE-OYd"/>
+                    </view>
+                    <connections>
+                        <outlet property="logoImage" destination="G3M-SJ-6qy" id="FZm-TY-yky"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3c8-oD-T11" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2370.4000000000001" y="-99.400299850074973"/>
+        </scene>
         <!--Master View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MasterViewController" customModule="Familink" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MasterViewController" id="BYZ-38-t0r" customClass="MasterViewController" customModule="Familink" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -284,7 +315,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t2H-Ij-tcr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1063" y="-305"/>
+            <point key="canvasLocation" x="1025" y="-305"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zzj-en-rW3">
@@ -857,4 +888,7 @@
             <point key="canvasLocation" x="1796" y="1146.4767616191905"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logoFamilink" width="150" height="150"/>
+    </resources>
 </document>
