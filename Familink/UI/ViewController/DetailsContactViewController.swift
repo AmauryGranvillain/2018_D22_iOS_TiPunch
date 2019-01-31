@@ -201,46 +201,47 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
                 self.emailTextInput.isUserInteractionEnabled = false
                 self.firstNameTextInput.isUserInteractionEnabled = false
                 self.profilPicker.isUserInteractionEnabled = false
-                let contact = Contact(context: self.getContext()!)
-                contact.firstName = self.firstNameTextInput.text
-                contact.lastName = self.lastNameTextInput.text
-                contact.email = self.emailTextInput.text
-                contact.phone = self.phoneTextInput.text
-                contact.profile = profile ?? self.contact.profile
-                contact.gravatar = self.newGravatarUrl
-                contact.id = self.contact.id
-                contact.isFamilinkUser = self.contact.isFamilinkUser
-                contact.isEmergencyUser = self.contact.isEmergencyUser
-                
-                print(contact)
-                let loader = UIViewController.displaySpinner(onView: self.view)
-                APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
-                    DispatchQueue.main.async {
-                        UIViewController.removeSpinner(spinner: loader)
-                        NotificationCenter.default.post(name: Notification.Name("updateContact"), object: self)
-                        print("Contact modifié")
-                    }
-                }) { (e) in
-                    UIViewController.removeSpinner(spinner: loader)
-                    if e == "Security token invalid or expired" {
+                DispatchQueue.main.async {
+                    let contact = Contact(context: self.getContext()!)
+                    contact.firstName = self.firstNameTextInput.text
+                    contact.lastName = self.lastNameTextInput.text
+                    contact.email = self.emailTextInput.text
+                    contact.phone = self.phoneTextInput.text
+                    contact.profile = self.profile ?? self.contact.profile
+                    contact.gravatar = self.newGravatarUrl
+                    contact.id = self.contact.id
+                    contact.isFamilinkUser = self.contact.isFamilinkUser
+                    contact.isEmergencyUser = self.contact.isEmergencyUser
+                    let loader = UIViewController.displaySpinner(onView: self.view)
+                    APIClient.instance.updateContact(c: contact, onSucces: { (contactUpdated) in
                         DispatchQueue.main.async {
-                            let alert = UIAlertController(
-                                title: "Session expiré",
-                                message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
-                                preferredStyle: .alert
-                            )
-                            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
-                                let controller = UIStoryboard.init(
-                                    name: "Main",
-                                    bundle: nil).instantiateViewController(
-                                        withIdentifier: "LoginViewController") as! LoginViewController
-
-                                self.navigationController?.show(controller, sender: self)
-                            }))
-                            self.present(alert, animated: true)
+                            UIViewController.removeSpinner(spinner: loader)
+                            NotificationCenter.default.post(name: Notification.Name("updateContact"), object: self)
+                            print("Contact modifié")
+                        }
+                    }) { (e) in
+                        UIViewController.removeSpinner(spinner: loader)
+                        if e == "Security token invalid or expired" {
+                            DispatchQueue.main.async {
+                                let alert = UIAlertController(
+                                    title: "Session expiré",
+                                    message: "Veuillez-vous reconnecter pour accèder aux fonctionnalités",
+                                    preferredStyle: .alert
+                                )
+                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (sender) in
+                                    let controller = UIStoryboard.init(
+                                        name: "Main",
+                                        bundle: nil).instantiateViewController(
+                                            withIdentifier: "LoginViewController") as! LoginViewController
+                                    
+                                    self.navigationController?.show(controller, sender: self)
+                                }))
+                                self.present(alert, animated: true)
+                            }
                         }
                     }
                 }
+                
             }
         } else {
             self.saveButton.isHidden = true
@@ -311,6 +312,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         return validEmail
     }
     func getContext() -> NSManagedObjectContext? {
+        
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return nil
         }

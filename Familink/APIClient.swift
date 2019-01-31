@@ -71,26 +71,26 @@ class APIClient {
                 } else {
                     // si j'ai de la donnée
                     if let dataReceive = data {
-                        
-                        // Je la transforme en Array
-                        let dataArray = try! JSONSerialization.jsonObject(with: dataReceive, options: []) as! [Any]
-                        var contactToReturn = [Contact]()
-                        for object in dataArray {
-                            let objectDictionary = object as! [String: Any]
-                            let c = Contact(context: self.getContext()!)
-                            c.id = (objectDictionary["_id"] as! String)
-                            c.phone = (objectDictionary["phone"] as! String)
-                            c.firstName = (objectDictionary["firstName"] as! String)
-                            c.lastName = (objectDictionary["lastName"] as! String)
-                            c.email = (objectDictionary["email"] as! String)
-                            c.profile = (objectDictionary["profile"] as! String)
-                            c.gravatar = (objectDictionary["gravatar"] as! String)
-                            c.isEmergencyUser = (objectDictionary["isEmergencyUser"] as! Bool)
-                            c.isFamilinkUser = (objectDictionary["isFamilinkUser"] as! Bool)
-                            contactToReturn.append(c)
+                        DispatchQueue.main.async {
+                            // Je la transforme en Array
+                            let dataArray = try! JSONSerialization.jsonObject(with: dataReceive, options: []) as! [Any]
+                            var contactToReturn = [Contact]()
+                            for object in dataArray {
+                                let objectDictionary = object as! [String: Any]
+                                let c = Contact(context: self.getContext()!)
+                                c.id = (objectDictionary["_id"] as! String)
+                                c.phone = (objectDictionary["phone"] as! String)
+                                c.firstName = (objectDictionary["firstName"] as! String)
+                                c.lastName = (objectDictionary["lastName"] as! String)
+                                c.email = (objectDictionary["email"] as! String)
+                                c.profile = (objectDictionary["profile"] as! String)
+                                c.gravatar = (objectDictionary["gravatar"] as! String)
+                                c.isEmergencyUser = (objectDictionary["isEmergencyUser"] as! Bool)
+                                c.isFamilinkUser = (objectDictionary["isFamilinkUser"] as! Bool)
+                                contactToReturn.append(c)
+                            }
+                            onSucces(contactToReturn)
                         }
-                        onSucces(contactToReturn)
-                        
                     }
                 }
             }
@@ -133,7 +133,7 @@ class APIClient {
     
     func deleteContact (c: Contact, onSucces: @escaping (String)->(), onError: @escaping (String)->()) -> URLSessionTask {
         //préparation de la requete
-        var request = URLRequest(url: URL(string: "\(urlServer)\(urlContact)\(c.id!)")! )
+        var request = URLRequest(url: URL(string: "\(urlServer)\(urlContact)\(c.id ?? "50000")")! )
         request.httpMethod = "DELETE"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("Bearer: \(self.TOKEN)", forHTTPHeaderField: "Authorization")
@@ -162,7 +162,7 @@ class APIClient {
     
     func updateContact (c: Contact, onSucces: @escaping (String)->(), onError: @escaping (String)->()) -> URLSessionTask {
         //préparation de la requete
-        var request = URLRequest(url: URL(string: "\(urlServer)\(urlContact)\(c.id!)")! )
+        var request = URLRequest(url: URL(string: "\(urlServer)\(urlContact)\(c.id ?? "50000")")! )
         print(request)
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -206,17 +206,20 @@ class APIClient {
                     // si j'ai de la donnée
                     if let dataReceive = data {
                         var userToReturn = [User]()
-                        if let jsonResponse = try? JSONSerialization.jsonObject(with: dataReceive, options: [])
-                            as! [String: String] {
-                            let u = User(context: self.getContext()!)
-                            u.phone = jsonResponse["phone"]
-                            u.firstName = jsonResponse["firstName"]
-                            u.lastName = jsonResponse["lastName"]
-                            u.email = jsonResponse["email"]
-                            u.profile = jsonResponse["profile"]
-                            userToReturn.append(u)
+                        DispatchQueue.main.async {
+                            if let jsonResponse = try? JSONSerialization.jsonObject(with: dataReceive, options: [])
+                                as! [String: String] {
+                                
+                                let u = User(context: self.getContext()!)
+                                u.phone = jsonResponse["phone"]
+                                u.firstName = jsonResponse["firstName"]
+                                u.lastName = jsonResponse["lastName"]
+                                u.email = jsonResponse["email"]
+                                u.profile = jsonResponse["profile"]
+                                userToReturn.append(u)
+                            }
+                            onSucces(userToReturn)
                         }
-                        onSucces(userToReturn)
                     }
                 }
             }
@@ -307,10 +310,12 @@ class APIClient {
     }
     
     func getContext() -> NSManagedObjectContext? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return nil
-        }
-        return appDelegate.persistentContainer.viewContext
+        
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return nil
+            }
+            return appDelegate.persistentContainer.viewContext
+        
     }
     
     func getJsonForContact (c: Contact) -> Data? {
