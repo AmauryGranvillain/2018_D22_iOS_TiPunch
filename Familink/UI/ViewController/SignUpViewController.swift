@@ -68,16 +68,12 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBAction func signUpUiButton(_ sender: UIButton) {
         if(ConnectedClient.instance.isConnectedToNetwork()){
-            var newUser = User()
-            DispatchQueue.main.async {
-                newUser = User(context: self.getContext()!)
-            }
-            newUser.phone = phoneTextImput.text
-            newUser.firstName = firstNameTextImput.text
-            newUser.lastName = lastNameTextImput.text
-            newUser.email = mailTextImput.text
-            newUser.profile = profile ?? "SENIOR"
-            
+                let newUser = User(context: self.getContext()!)
+                newUser.phone = self.phoneTextImput.text
+                newUser.firstName = self.firstNameTextImput.text
+                newUser.lastName = self.lastNameTextImput.text
+                newUser.email = self.mailTextImput.text
+                newUser.profile = self.profile ?? "SENIOR"
             if phoneTextImput.text == "" {
                 self.getAlert(message: "Le champ téléphone est vide")
             } else if firstNameTextImput.text == "" { 
@@ -141,7 +137,15 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             self.present(alert, animated: true)
         }
     }
-    
+    override func viewDidLayoutSubviews() {
+        let lineColor = UIColor(red:0.38, green:0.55, blue:0.21, alpha:1.0)
+        self.phoneTextImput.setBottomLine(borderColor: lineColor)
+        self.lastNameTextImput.setBottomLine(borderColor: lineColor)
+        self.mailTextImput.setBottomLine(borderColor: lineColor)
+        self.firstNameTextImput.setBottomLine(borderColor: lineColor)
+        self.passwordTextInput.setBottomLine(borderColor: lineColor)
+        self.confirmPasswordTextInput.setBottomLine(borderColor: lineColor)
+    }
     func createUser(u: User, password: String) {
         let loader = UIViewController.displaySpinner(onView: self.view)
         APIClient.instance.createUser(u: u, password: password, onSucces: { (success) in

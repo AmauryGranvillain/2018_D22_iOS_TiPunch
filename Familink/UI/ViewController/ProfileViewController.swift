@@ -99,8 +99,6 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 }
             }
         }
-        
-        // Do any additional setup after loading the view.
     }
     @IBAction func tapToSave(_ sender: UIButton) {
         
@@ -146,7 +144,7 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         
         
         
-    } //TODO: update avec l'api
+    }
     @IBAction func tapToEdit(_ sender: UIButton) {
         if(ConnectedClient.instance.isConnectedToNetwork()) {
             self.saveButton.isHidden = false
@@ -157,7 +155,6 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
                 self.navigationController?.popViewController(animated: true)
             }
         }
-        // TODO: change UI
     }
     @IBAction func tapToDisconnect(_ sender: UIButton) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -171,16 +168,10 @@ class ProfileViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
             try? context.save()
         }
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+    override func viewDidLayoutSubviews() {
+        let lineColor = UIColor(red:0.38, green:0.55, blue:0.21, alpha:1.0)
+        self.firstNameTextImput.setBottomLine(borderColor: lineColor)
+        self.lastNameTextImput.setBottomLine(borderColor: lineColor)
+        self.mailTextImput.setBottomLine(borderColor: lineColor)
+    }
 }
