@@ -51,7 +51,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     @IBOutlet weak var mailTextLabel: UILabel!
     @IBOutlet weak var profilPickerTextLabel: UILabel!
     @IBOutlet weak var editGravatar: UIButton!
-    
+
     var profile: String?
     var newGravatarUrl: String?
     
@@ -313,4 +313,3 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         self.lastNameTextInput.setBottomLine(borderColor: lineColor)
     }
 }
-
