@@ -68,16 +68,12 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBAction func signUpUiButton(_ sender: UIButton) {
         if(ConnectedClient.instance.isConnectedToNetwork()){
-            var newUser = User()
-            DispatchQueue.main.async {
-                newUser = User(context: self.getContext()!)
-            }
-            newUser.phone = phoneTextImput.text
-            newUser.firstName = firstNameTextImput.text
-            newUser.lastName = lastNameTextImput.text
-            newUser.email = mailTextImput.text
-            newUser.profile = profile ?? "SENIOR"
-            
+                let newUser = User(context: self.getContext()!)
+                newUser.phone = self.phoneTextImput.text
+                newUser.firstName = self.firstNameTextImput.text
+                newUser.lastName = self.lastNameTextImput.text
+                newUser.email = self.mailTextImput.text
+                newUser.profile = self.profile ?? "SENIOR"
             if phoneTextImput.text == "" {
                 self.getAlert(message: "Le champ téléphone est vide")
             } else if firstNameTextImput.text == "" { 
