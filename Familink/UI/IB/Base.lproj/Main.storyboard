@@ -556,6 +556,18 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKX-jg-OBf">
+                                        <rect key="frame" x="113" y="489" width="151" height="42"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <state key="normal" title="Deconnection">
+                                            <color key="titleColor" red="1" green="0.081777411760000002" blue="0.094760424009999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tapToDisconnect:" destination="ik8-O9-ZMd" eventType="touchUpInside" id="OI6-Vp-sJx"/>
+                                            <segue destination="yyG-Ei-Vkf" kind="show" id="3p5-gr-Gos"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -946,4 +958,7 @@
     <resources>
         <image name="logoFamilink" width="150" height="150"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="3p5-gr-Gos"/>
+    </inferredMetricsTieBreakers>
 </document>
