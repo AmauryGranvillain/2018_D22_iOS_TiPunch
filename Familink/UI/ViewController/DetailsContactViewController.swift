@@ -190,10 +190,6 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
                 return
         }
         UIApplication.shared.open(url)
-        
-        /*if let url = URL(string: "tel://0641382323") {
-         UIApplication.shared.open(url, options: [:], completionHandler: nil)
-         }*/
     }
     override var prefersStatusBarHidden: Bool{
         return true
@@ -280,18 +276,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         } else {
             ConnectedClient.instance.errorConnectingAlert(view: self, handler: nil)
         }
-        
-        // TODO: change UI<
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
     let profils = ["Senior" ,"Famille" ,"Medecin"]
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -319,6 +304,13 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
             return nil
         }
         return appDelegate.persistentContainer.viewContext
+    }
+    override func viewDidLayoutSubviews() {
+        let lineColor = UIColor(red:0.38, green:0.55, blue:0.21, alpha:1.0)
+        self.emailTextInput.setBottomLine(borderColor: lineColor)
+        self.phoneTextInput.setBottomLine(borderColor: lineColor)
+        self.firstNameTextInput.setBottomLine(borderColor: lineColor)
+        self.lastNameTextInput.setBottomLine(borderColor: lineColor)
     }
 }
 
