@@ -140,42 +140,30 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         self.present(alert, animated: true, completion: nil)
     }
-    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-    }
     @IBAction func tapToMail(_ sender: UIButton) {
         
-        if MFMailComposeViewController.canSendMail() {
-            let message:String  = "Changes in mail composer ios 11"
-            let composePicker = MFMailComposeViewController()
-            composePicker.mailComposeDelegate = self
-            composePicker.delegate = self as! UINavigationControllerDelegate
-            composePicker.setToRecipients([contact.email!])
-            composePicker.setSubject("")
-            composePicker.setMessageBody(message, isHTML: false)
-            self.present(composePicker, animated: true, completion: nil)
-        } else {
+        if !MFMailComposeViewController.canSendMail() {
             self .showErrorMessage()
         }
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        
+        composeVC.setToRecipients([contact.email!])
+        composeVC.setSubject("")
+        composeVC.setMessageBody("", isHTML: false)
+        
+        self.present(composeVC, animated: true, completion: nil)
     }
+    
     func showErrorMessage() {
-        let alertMessage = UIAlertController(title: "could not sent email", message: "check if your device have email support!", preferredStyle: UIAlertController.Style.alert)
+        let alertMessage = UIAlertController(title: "Oups...", message: "Envoie d'email impossible sur le téléphone!", preferredStyle: UIAlertController.Style.alert)
         let action = UIAlertAction(title:"Okay", style: UIAlertAction.Style.default, handler: nil)
         alertMessage.addAction(action)
         self.present(alertMessage, animated: true, completion: nil)
     }
+    
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        switch result {
-        case .cancelled:
-            print("Mail cancelled")
-        case .saved:
-            print("Mail saved")
-        case .sent:
-            print("Mail sent")
-        case .failed:
-            break
-        }
-        self.dismiss(animated: true, completion: nil)
-        
+        controller.popViewController(animated: true)
     }
     
     @IBAction func tapToMessage(_ sender: UIButton) {
@@ -190,6 +178,9 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         } else {
             print("Impossible d'envoyer un message.")
         }
+    }
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func tapToCall(_ sender: UIButton) {
