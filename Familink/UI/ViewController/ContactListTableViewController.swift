@@ -12,10 +12,6 @@ import MessageUI
 
 class ContactListTableViewController: UITableViewController, UISearchBarDelegate, MFMessageComposeViewControllerDelegate {
     
-    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-    }
-    
-    
     @IBOutlet weak var filterAllButton: UIButton!
     @IBOutlet weak var filterFamilyButton: UIButton!
     @IBOutlet weak var filterDoctorButton: UIButton!
@@ -258,6 +254,9 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         }
         message.backgroundColor = .blue
         return [call, message]
+    }
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func selectAllContact(_ sender: Any) {
