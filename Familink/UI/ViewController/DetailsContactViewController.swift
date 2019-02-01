@@ -142,7 +142,8 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     @IBAction func tapToMail(_ sender: UIButton) {
         
-        if !MFMailComposeViewController.canSendMail() {
+         open(scheme: "mail:\(contact.email!)")
+        /*if !MFMailComposeViewController.canSendMail() {
             self .showErrorMessage()
         }
         let composeVC = MFMailComposeViewController()
@@ -152,7 +153,7 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         composeVC.setSubject("")
         composeVC.setMessageBody("", isHTML: false)
         
-        self.present(composeVC, animated: true, completion: nil)
+        self.present(composeVC, animated: true, completion: nil)*/
     }
     
     func showErrorMessage() {
@@ -162,9 +163,25 @@ class DetailsContactViewController: UIViewController, UIPickerViewDelegate, UIPi
         self.present(alertMessage, animated: true, completion: nil)
     }
     
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    /*func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.popViewController(animated: true)
+    }*/
+    func open(scheme: String) {
+        if let url = URL(string: scheme) {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: {
+                    (success) in
+                    print("Open \(scheme): \(success)")
+                })
+            } else {
+                let success = UIApplication.shared.openURL(url)
+                print("Open \(scheme): \(success)")
+            }
+        } else {
+            self .showErrorMessage()
+        }
     }
+
     
     @IBAction func tapToMessage(_ sender: UIButton) {
         let composeVC = MFMessageComposeViewController()
