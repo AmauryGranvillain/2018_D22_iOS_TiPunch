@@ -541,13 +541,15 @@
                             <outlet property="delegate" destination="U13-ZG-XDU" id="e5z-e3-dox"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="ContactList Controller" id="vMb-ro-Ll7" userLabel="ContactList Controller">
+                    <navigationItem key="navigationItem" title="Liste de contact" id="vMb-ro-Ll7" userLabel="ContactList Controller">
                         <barButtonItem key="leftBarButtonItem" systemItem="action" id="N0Q-Cl-7qR">
+                            <color key="tintColor" red="0.38431372549999998" green="0.5450980392" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="tapOnProfileUser:" destination="U13-ZG-XDU" id="dyT-kG-YL9"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="3A6-Rm-WhW">
+                            <color key="tintColor" red="0.38431372549999998" green="0.5450980392" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="tapOnAddContact:" destination="U13-ZG-XDU" id="EXh-ee-ZA1"/>
                             </connections>
