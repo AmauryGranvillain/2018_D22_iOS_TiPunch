@@ -101,6 +101,11 @@ class ContactListTableViewController: UITableViewController, UISearchBarDelegate
         
     }
     
+    deinit {
+        print("Remove NotificationCenter Deinit")
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @objc func loadContactListFromAPI() {
         
         APIClient.instance.getAllContact(onSucces: { (contactsData) in
