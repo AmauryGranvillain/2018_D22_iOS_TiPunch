@@ -137,7 +137,15 @@ class SignUpViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             self.present(alert, animated: true)
         }
     }
-    
+    override func viewDidLayoutSubviews() {
+        let lineColor = UIColor(red:0.38, green:0.55, blue:0.21, alpha:1.0)
+        self.phoneTextImput.setBottomLine(borderColor: lineColor)
+        self.lastNameTextImput.setBottomLine(borderColor: lineColor)
+        self.mailTextImput.setBottomLine(borderColor: lineColor)
+        self.firstNameTextImput.setBottomLine(borderColor: lineColor)
+        self.passwordTextInput.setBottomLine(borderColor: lineColor)
+        self.confirmPasswordTextInput.setBottomLine(borderColor: lineColor)
+    }
     func createUser(u: User, password: String) {
         let loader = UIViewController.displaySpinner(onView: self.view)
         APIClient.instance.createUser(u: u, password: password, onSucces: { (success) in
