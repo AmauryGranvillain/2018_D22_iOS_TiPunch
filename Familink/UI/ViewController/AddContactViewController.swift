@@ -163,4 +163,11 @@ class AddContactViewController: UIViewController, UIPickerViewDelegate, UIPicker
         }
         return appDelegate.persistentContainer.viewContext
     }
+    override func viewDidLayoutSubviews() {
+        let lineColor = UIColor(red:0.38, green:0.55, blue:0.21, alpha:1.0)
+        self.phoneTextImput.setBottomLine(borderColor: lineColor)
+        self.lastNameTextImput.setBottomLine(borderColor: lineColor)
+        self.mailTextImput.setBottomLine(borderColor: lineColor)
+        self.firstNameTextImput.setBottomLine(borderColor: lineColor)
+    }
 }
